@@ -1,0 +1,9 @@
+{
+    "tabWidth": 4,
+    "semi": true,
+    "printWidth": 80,
+    "useTabs": false,
+    "proseWrap": "always",
+    "filepath": "./**"
+
+}
