@@ -11,7 +11,7 @@ export const getCurrentWeather = async (location: string) => {
             new URLSearchParams({
                 key: apiKey,
                 q: location,
-                aqi: "no",
+                aqi: "yes",
             }),
     );
 

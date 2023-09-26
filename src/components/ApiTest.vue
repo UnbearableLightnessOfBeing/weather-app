@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useQuery } from "@tanstack/vue-query";
 import { getCurrentWeather } from "../api/requests";
-
+import ClearSvgUrl from "/day/clear.svg";
+import ClearNightSvgUrl from "/night/clear.svg";
 const location = ref("Bryansk");
-
 const { data } = useQuery({
     queryKey: ["currentWeather", location],
     queryFn: () => getCurrentWeather(location.value),
@@ -11,6 +11,12 @@ const { data } = useQuery({
 </script>
 
 <template>
+    <div class="icons">
+        <BasicConditionIcon :icon-src="ClearSvgUrl" />
+        <BasicConditionIcon :icon-src="ClearNightSvgUrl" />
+        <BasicConditionIcon type="big" :icon-src="ClearSvgUrl" />
+        <BasicConditionIcon type="big" :icon-src="ClearNightSvgUrl" />
+    </div>
     <div class="cities">
         <div class="cities__city" @click="location = 'Bryansk'">Bryansk</div>
         <div class="cities__city" @click="location = 'Moscow'">Moscow</div>
@@ -22,6 +28,8 @@ const { data } = useQuery({
 </template>
 
 <style scoped lang="scss">
+.icons {
+}
 .cities {
     display: flex;
     gap: 20px;
