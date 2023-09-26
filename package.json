@@ -13,8 +13,7 @@
   },
   "dependencies": {
     "@tanstack/vue-query": "^4.35.3",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^6.4.0",

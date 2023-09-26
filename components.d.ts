@@ -7,9 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
-    TheAboba: typeof import('./src/components/TheAboba.vue')['default']
+    ApiTest: typeof import('./src/components/ApiTest.vue')['default']
   }
 }
