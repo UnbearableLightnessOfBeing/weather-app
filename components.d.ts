@@ -9,5 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     ApiTest: typeof import('./src/components/ApiTest.vue')['default']
     BasicConditionIcon: typeof import('./src/components/BasicConditionIcon.vue')['default']
+    BasicForecastCard: typeof import('./src/components/BasicForecastCard.vue')['default']
   }
 }

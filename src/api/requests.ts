@@ -19,5 +19,8 @@ export const getCurrentWeather = async (location: string) => {
         throw new Error("ooops!");
     }
 
-    return response.json();
+    const data = response.json();
+    console.log(data);
+
+    return data;
 };

@@ -23,6 +23,8 @@ withDefaults(
 
 <style scoped lang="scss">
 .basic-condition-icon {
+    filter: blur(0.3px);
+
     &--type {
         &--big {
             width: 143px;

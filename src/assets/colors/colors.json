@@ -1,0 +1,6 @@
+{
+    "basic-light": "white",
+    "basic-dark": "black",
+
+    "basic-light-dull": "rgba(255, 255, 255, 0.3)"
+}

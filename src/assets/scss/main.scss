@@ -1,0 +1,27 @@
+@import './vendor/normalize';
+@import './vendor/fonts';
+
+
+:root {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    text-shadow: -1.5099999904632568px 2.259999990463257px 0.75px rgba(0, 0, 0, 0.10);
+
+    --fs-huge: 164px;
+    --fs-large: 36px;
+    --fs-heading: 28px;
+    --fs-normal: 24px;
+    --fs-stats: 22px;
+    --fs-stats-smaller: 19px;
+
+    --fw-thin: 100;
+    --fw-normal-thiner: 300;
+    --fw-normal: 400;
+    --fw-bold: 600;
+
+// temporary dev styles
+    background: linear-gradient(48deg, #082276 7.07%, #030F34 97.3%), #082276;
+    color: white;
+}

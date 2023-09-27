@@ -7,24 +7,36 @@ const location = ref("Bryansk");
 const { data } = useQuery({
     queryKey: ["currentWeather", location],
     queryFn: () => getCurrentWeather(location.value),
+    refetchInterval: 30000,
 });
 </script>
 
 <template>
-    <div class="icons">
-        <BasicConditionIcon :icon-src="ClearSvgUrl" />
-        <BasicConditionIcon :icon-src="ClearNightSvgUrl" />
-        <BasicConditionIcon type="big" :icon-src="ClearSvgUrl" />
-        <BasicConditionIcon type="big" :icon-src="ClearNightSvgUrl" />
-    </div>
-    <div class="cities">
-        <div class="cities__city" @click="location = 'Bryansk'">Bryansk</div>
-        <div class="cities__city" @click="location = 'Moscow'">Moscow</div>
-        <div class="cities__city" @click="location = 'New York'">New York</div>
-    </div>
-    <pre>
+    <div>
+        <div class="icons">
+            <BasicConditionIcon :icon-src="ClearSvgUrl" />
+            <BasicConditionIcon :icon-src="ClearNightSvgUrl" />
+            <BasicConditionIcon type="big" :icon-src="ClearSvgUrl" />
+            <BasicConditionIcon type="big" :icon-src="ClearNightSvgUrl" />
+        </div>
+        <BasicForecastCard
+            :temperature="'24°C'"
+            :day="'Mon'"
+            :icon-src="ClearSvgUrl"
+        />
+        <div class="cities">
+            <div class="cities__city" @click="location = 'Bryansk'">
+                Bryansk
+            </div>
+            <div class="cities__city" @click="location = 'Moscow'">Moscow</div>
+            <div class="cities__city" @click="location = 'New York'">
+                New York
+            </div>
+        </div>
+        <pre>
         {{ data }}
-    </pre>
+        </pre>
+    </div>
 </template>
 
 <style scoped lang="scss">
