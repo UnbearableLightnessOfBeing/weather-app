@@ -10,5 +10,10 @@ declare module 'vue' {
     ApiTest: typeof import('./src/components/ApiTest.vue')['default']
     BasicConditionIcon: typeof import('./src/components/BasicConditionIcon.vue')['default']
     BasicForecastCard: typeof import('./src/components/BasicForecastCard.vue')['default']
+    BasicStatIcon: typeof import('./src/components/BasicStatIcon.vue')['default']
+    BasicTemperature: typeof import('./src/components/BasicTemperature.vue')['default']
+    BasicVerticalDivider: typeof import('./src/components/BasicVerticalDivider.vue')['default']
+    BasicWeatherStats: typeof import('./src/components/BasicWeatherStats.vue')['default']
+    CurrentDateInfo: typeof import('./src/components/CurrentDateInfo.vue')['default']
   }
 }

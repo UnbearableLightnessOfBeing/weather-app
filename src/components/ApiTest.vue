@@ -3,16 +3,38 @@ import { useQuery } from "@tanstack/vue-query";
 import { getCurrentWeather } from "../api/requests";
 import ClearSvgUrl from "/day/clear.svg";
 import ClearNightSvgUrl from "/night/clear.svg";
+import { useDark, useToggle } from "@vueuse/core";
+
 const location = ref("Bryansk");
+
 const { data } = useQuery({
     queryKey: ["currentWeather", location],
     queryFn: () => getCurrentWeather(location.value),
-    refetchInterval: 30000,
+    refetchOnWindowFocus: false,
+    // refetchInterval: 30000,
 });
+
+const unixDate = ref(new Date());
+
+let interval: number = 0;
+
+onMounted(() => {
+    interval = setInterval(() => {
+        unixDate.value = new Date();
+    }, 1000);
+});
+
+onUnmounted(() => {
+    clearInterval(interval);
+});
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 </script>
 
 <template>
     <div>
+        <button @click="toggleDark()">Is dark: {{ isDark }}</button>
         <div class="icons">
             <BasicConditionIcon :icon-src="ClearSvgUrl" />
             <BasicConditionIcon :icon-src="ClearNightSvgUrl" />
@@ -23,6 +45,13 @@ const { data } = useQuery({
             :temperature="'24°C'"
             :day="'Mon'"
             :icon-src="ClearSvgUrl"
+        />
+        <BasicTemperature :value="data.current.temp_c" :mesurement="'C'" />
+        <CurrentDateInfo :language="'en'" :unix-date="unixDate" />
+        <BasicWeatherStats
+            :wind-speed="data.current.wind_kph"
+            :humidity="data.current.humidity"
+            :percipitations="data.current.precip_in"
         />
         <div class="cities">
             <div class="cities__city" @click="location = 'Bryansk'">
