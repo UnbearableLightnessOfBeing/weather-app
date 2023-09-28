@@ -32,7 +32,12 @@ const year = computed(() => {
 
 const day = computed(() => monthNames.value[props.unixDate.getDay()]);
 
-const time = computed(() => props.unixDate.toLocaleTimeString(props.language));
+const time = computed(() => {
+    const timeString = props.unixDate.toLocaleTimeString(props.language);
+    const [time, dayPeriod] = timeString.split(" ");
+    const splitTime = time.split(":");
+    return splitTime[0] + ":" + splitTime[1] + " " + dayPeriod;
+});
 </script>
 
 <template>

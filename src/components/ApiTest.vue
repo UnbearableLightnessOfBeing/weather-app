@@ -46,10 +46,16 @@ const toggleDark = useToggle(isDark);
             :day="'Mon'"
             :icon-src="ClearSvgUrl"
         />
-        <BasicTemperature :value="data.current.temp_c" :mesurement="'C'" />
+        <BasicTemperature
+            v-if="data"
+            :value="data.current.temp_c"
+            :mesurement="'C'"
+        />
         <CurrentDateInfo :language="'en'" :unix-date="unixDate" />
         <BasicWeatherStats
+            v-if="data"
             :wind-speed="data.current.wind_kph"
+            :wind-degree="data.current.wind_degree"
             :humidity="data.current.humidity"
             :percipitations="data.current.precip_in"
         />
@@ -62,15 +68,13 @@ const toggleDark = useToggle(isDark);
                 New York
             </div>
         </div>
-        <pre>
+        <!-- <pre>
         {{ data }}
-        </pre>
+        </pre> -->
     </div>
 </template>
 
 <style scoped lang="scss">
-.icons {
-}
 .cities {
     display: flex;
     gap: 20px;

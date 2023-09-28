@@ -22,14 +22,23 @@ defineProps<{
     gap: 10px;
 
     &__value {
-        font-size: var(--fs-huge);
-        font-weight: var(--fw-thin);
+        font-size: var(--fs-huge-smaller);
+        font-weight: var(--fw-normal-thiner);
         text-shadow: -4px 2.5px 0.75px rgba(0, 0, 0, 0.1);
     }
 
     &__mesurement {
         font-size: var(--fs-large-smaller);
         text-shadow: -4px 2.5px 0.75px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .basic-temperature {
+        &__value {
+            font-size: var(--fs-huge);
+            font-weight: var(--fw-thin);
+        }
     }
 }
 </style>
