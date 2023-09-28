@@ -15,5 +15,6 @@ declare module 'vue' {
     BasicVerticalDivider: typeof import('./src/components/BasicVerticalDivider.vue')['default']
     BasicWeatherStats: typeof import('./src/components/BasicWeatherStats.vue')['default']
     CurrentDateInfo: typeof import('./src/components/CurrentDateInfo.vue')['default']
+    MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']
   }
 }

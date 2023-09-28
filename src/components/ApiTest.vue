@@ -30,6 +30,8 @@ onUnmounted(() => {
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+
+const measurement = ref<"F" | "C">("C");
 </script>
 
 <template>
@@ -59,6 +61,7 @@ const toggleDark = useToggle(isDark);
             :humidity="data.current.humidity"
             :percipitations="data.current.precip_in"
         />
+        <MeasurementToggler v-model="measurement" />
         <div class="cities">
             <div class="cities__city" @click="location = 'Bryansk'">
                 Bryansk
