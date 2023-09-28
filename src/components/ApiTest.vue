@@ -62,6 +62,9 @@ const measurement = ref<"F" | "C">("C");
             :percipitations="data.current.precip_in"
         />
         <MeasurementToggler v-model="measurement" />
+        <div style="max-width: 450px">
+            <LocationInterface />
+        </div>
         <div class="cities">
             <div class="cities__city" @click="location = 'Bryansk'">
                 Bryansk

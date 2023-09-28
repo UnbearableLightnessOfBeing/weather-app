@@ -1,5 +1,5 @@
-import { createApp } from "vue";
 import "./assets/scss/main.scss";
+import { createApp } from "vue";
 import App from "./App.vue";
 import { VueQueryPlugin } from "@tanstack/vue-query";
 import colors from "./assets/colors/colors.json";
