@@ -21,13 +21,7 @@ const emits = defineEmits<{
 
 const isSearchActive = ref(false);
 
-watch(isSearchActive, () => {
-    if (isSearchActive.value === false) {
-        setTimeout(() => {
-            emits("update:active", false);
-        }, 300);
-    }
-});
+const isInputShown = ref(false);
 
 watch(
     computed(() => props.active),
@@ -38,7 +32,43 @@ watch(
     },
 );
 
+watch(isSearchActive, () => {
+    if (isSearchActive.value === false) {
+        isInputShown.value = false;
+        setTimeout(() => {
+            emits("update:active", false);
+        }, 300);
+    } else {
+        setTimeout(() => {
+            isInputShown.value = true;
+        }, 300);
+    }
+});
+
 const searchValue = ref("");
+
+const textInput = ref<HTMLInputElement | null>(null);
+
+const openSearch = () => {
+    if (!isSearchActive.value) {
+        emits("update:active", true);
+    }
+    if (textInput.value) {
+        textInput.value.focus();
+    }
+};
+
+const bodyClickCallback = (): void => {
+    isSearchActive.value = false;
+};
+
+onMounted(() => {
+    document.body.addEventListener("click", bodyClickCallback);
+});
+
+onUnmounted(() => {
+    document.body.removeEventListener("click", bodyClickCallback);
+});
 </script>
 
 <template>
@@ -46,21 +76,15 @@ const searchValue = ref("");
         class="basic-search"
         :class="{ 'basic-search--active': isSearchActive }"
         :active="active"
-        @click="
-            () => {
-                if (!isSearchActive) {
-                    $emit('update:active', true);
-                }
-            }
-        "
+        @click.stop="openSearch"
     >
         <InlineSvg :src="SearchSvgUrl" class="basic-search__icon" />
         <Transition name="input" appear>
             <BasicTextInput
-                v-if="isSearchActive"
-                ref="input"
+                v-if="isInputShown"
+                ref="textInput"
                 v-model="searchValue"
-                @focusout="isSearchActive = false"
+                placeholder="Search"
             />
         </Transition>
     </BasicGlassWrapper>
@@ -116,6 +140,8 @@ const searchValue = ref("");
     &__icon {
         width: 26px;
         height: 26px;
+        min-width: 26px;
+        min-height: 26px;
     }
 
     &--active,
@@ -129,7 +155,7 @@ const searchValue = ref("");
 
 .input {
     &-enter-active {
-        transition: all 0.3s 0.3s ease-out;
+        transition: all 0.3s ease-out;
     }
 
     &-enter-from {

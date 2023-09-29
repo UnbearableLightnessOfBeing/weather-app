@@ -23,8 +23,12 @@ const toggle = () => {
         :class="{ 'measurement-toggler--toggled': isToggled }"
         @click="toggle"
     >
-        <div class="measurement-toggler__option">C</div>
-        <div class="measurement-toggler__option">F</div>
+        <div class="measurement-toggler__option">
+            <span class="measurement-toggler__degree-sign">°</span>C
+        </div>
+        <div class="measurement-toggler__option">
+            <span class="measurement-toggler__degree-sign">°</span>F
+        </div>
     </div>
 </template>
 
@@ -41,10 +45,15 @@ const toggle = () => {
     &__option {
         width: 100%;
         height: 58px;
-        display: grid;
-        place-content: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-size: var(--fs-stats);
         font-weight: var(--fw-normal-thiner);
+    }
+
+    &__degree-sign {
+        display: inline;
     }
 
     &::before {
@@ -69,7 +78,7 @@ const toggle = () => {
 @media screen and (min-width: 600px) {
     .measurement-toggler {
         height: 40px;
-        width: fit-content;
+        width: 102px;
         display: flex;
         border-radius: 100px;
         padding: 6px 20px;
@@ -79,6 +88,10 @@ const toggle = () => {
             width: fit-content;
             height: fit-content;
             font-size: var(--fs-normal);
+        }
+
+        &__degree-sign {
+            display: none;
         }
 
         &::before {

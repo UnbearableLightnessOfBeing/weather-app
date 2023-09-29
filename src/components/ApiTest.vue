@@ -3,6 +3,10 @@ import { useQuery } from "@tanstack/vue-query";
 import { getCurrentWeather } from "../api/requests";
 import ClearSvgUrl from "/day/clear.svg";
 import ClearNightSvgUrl from "/night/clear.svg";
+import FeelsLikeSvgUrl from "/interface/feels-like.svg";
+import CloudCoverSvgUrl from "/interface/cloud-cover.svg";
+import WindGustSvgUrl from "/interface/wind-gust.svg";
+import PressureSvgUrl from "/interface/pressure.svg";
 import { useDark, useToggle } from "@vueuse/core";
 
 const location = ref("Bryansk");
@@ -65,6 +69,30 @@ const measurement = ref<"F" | "C">("C");
         <div style="max-width: 450px">
             <LocationInterface />
         </div>
+        <BasicStatCard
+            v-if="data"
+            :icon-src="FeelsLikeSvgUrl"
+            :title="'feels like'"
+            :value="`${data.current.feelslike_c}°`"
+        />
+        <BasicStatCard
+            v-if="data"
+            :icon-src="CloudCoverSvgUrl"
+            :title="'cloud coverage'"
+            :value="`${data.current.cloud}%`"
+        />
+        <BasicStatCard
+            v-if="data"
+            :icon-src="WindGustSvgUrl"
+            :title="'wind gust'"
+            :value="`${data.current.gust_kph} km/h`"
+        />
+        <BasicStatCard
+            v-if="data"
+            :icon-src="PressureSvgUrl"
+            :title="'pressure'"
+            :value="`${data.current.pressure_mb} hPa`"
+        />
         <div class="cities">
             <div class="cities__city" @click="location = 'Bryansk'">
                 Bryansk
