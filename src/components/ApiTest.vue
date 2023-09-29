@@ -73,25 +73,41 @@ const measurement = ref<"F" | "C">("C");
             v-if="data"
             :icon-src="FeelsLikeSvgUrl"
             :title="'feels like'"
-            :value="`${data.current.feelslike_c}°`"
+            :value="`${data.current.feelslike_c}`"
+            :measurement="'°C'"
         />
         <BasicStatCard
             v-if="data"
             :icon-src="CloudCoverSvgUrl"
             :title="'cloud coverage'"
-            :value="`${data.current.cloud}%`"
+            :value="`${data.current.cloud}`"
+            :measurement="'%'"
         />
         <BasicStatCard
             v-if="data"
             :icon-src="WindGustSvgUrl"
             :title="'wind gust'"
-            :value="`${data.current.gust_kph} km/h`"
+            :value="`${data.current.gust_kph}`"
+            :measurement="'km/h'"
         />
         <BasicStatCard
             v-if="data"
             :icon-src="PressureSvgUrl"
             :title="'pressure'"
-            :value="`${data.current.pressure_mb} hPa`"
+            :value="`${data.current.pressure_mb}`"
+            :measurement="'hPa'"
+        />
+        <BasicQualityMonitor
+            v-if="data"
+            :value="data.current.air_quality['gb-defra-index']"
+            :max-value="5"
+            :evaluation="'Moderate'"
+        />
+        <BasicQualityMonitor
+            v-if="data"
+            :value="data.current.uv"
+            :max-value="10"
+            :evaluation="'Good'"
         />
         <div class="cities">
             <div class="cities__city" @click="location = 'Bryansk'">
