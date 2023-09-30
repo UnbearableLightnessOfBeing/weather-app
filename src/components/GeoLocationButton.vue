@@ -58,6 +58,7 @@ const showCoords = () => {
                 animation-delay: 1s;
                 animation-duration: 4s;
                 animation-iteration-count: infinite;
+                color: var(--accent);
             }
         }
 

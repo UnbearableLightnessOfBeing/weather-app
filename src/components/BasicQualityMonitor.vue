@@ -60,7 +60,7 @@ const onEnter = (el: any, done: any) => {
 <style scoped lang="scss">
 .basic-quality-monitor {
     width: 180px;
-    height: 90px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
