@@ -12,7 +12,14 @@ const showCoords = () => {
 </script>
 
 <template>
-    <div class="geo-location-button" @click="showCoords">
+    <div
+        v-tooltip="{
+            theme: 'custom-tooltip',
+            content: 'Set current location',
+        }"
+        class="geo-location-button"
+        @click="showCoords"
+    >
         <InlineSvg :src="LocationSvgUrl" class="geo-location-button__icon" />
     </div>
 </template>

@@ -11,6 +11,7 @@ declare module 'vue' {
     BasicConditionIcon: typeof import('./src/components/BasicConditionIcon.vue')['default']
     BasicForecastCard: typeof import('./src/components/BasicForecastCard.vue')['default']
     BasicGlassWrapper: typeof import('./src/components/BasicGlassWrapper.vue')['default']
+    BasicQualityCard: typeof import('./src/components/BasicQualityCard.vue')['default']
     BasicQualityMonitor: typeof import('./src/components/BasicQualityMonitor.vue')['default']
     BasicSearch: typeof import('./src/components/BasicSearch.vue')['default']
     BasicStatCard: typeof import('./src/components/BasicStatCard.vue')['default']

@@ -97,17 +97,19 @@ const measurement = ref<"F" | "C">("C");
             :value="`${data.current.pressure_mb}`"
             :measurement="'hPa'"
         />
-        <BasicQualityMonitor
+        <BasicQualityCard 
             v-if="data"
             :value="data.current.air_quality['gb-defra-index']"
             :max-value="5"
             :evaluation="'Moderate'"
+            :title="'Air Quality'"
         />
-        <BasicQualityMonitor
+        <BasicQualityCard 
             v-if="data"
             :value="data.current.uv"
             :max-value="10"
             :evaluation="'Good'"
+            :title="'UV Index'"
         />
         <div class="cities">
             <div class="cities__city" @click="location = 'Bryansk'">

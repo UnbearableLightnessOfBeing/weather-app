@@ -9,7 +9,7 @@ const props = withDefaults(
     }>(),
     {
         active: false,
-    },
+    }
 );
 
 const emits = defineEmits<{
@@ -29,7 +29,7 @@ watch(
         setTimeout(() => {
             isSearchActive.value = props.active;
         }, 300);
-    },
+    }
 );
 
 watch(isSearchActive, () => {
@@ -73,6 +73,11 @@ onUnmounted(() => {
 
 <template>
     <BasicGlassWrapper
+        v-tooltip="{
+            theme: 'custom-tooltip',
+            content: 'Search for location',
+            disabled: active,
+        }"
         class="basic-search"
         :class="{ 'basic-search--active': isSearchActive }"
         :active="active"
@@ -127,9 +132,7 @@ onUnmounted(() => {
         var(--myColor3)
     );
 
-    transition:
-        --myColor1 0.3s,
-        --myColor3 0.3s,
+    transition: --myColor1 0.3s, --myColor3 0.3s,
         width 0.3s cubic-bezier(0.7, -0.01, 0.87, 0.21);
 
     &:hover {

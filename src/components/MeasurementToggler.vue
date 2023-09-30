@@ -19,6 +19,10 @@ const toggle = () => {
 
 <template>
     <div
+        v-tooltip="{
+            content: 'Click to change the measurement type',
+            theme: 'custom-tooltip',
+        }"
         class="measurement-toggler"
         :class="{ 'measurement-toggler--toggled': isToggled }"
         @click="toggle"

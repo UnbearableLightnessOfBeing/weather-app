@@ -3,5 +3,8 @@
     "basic-dark": "black",
 
     "basic-light-dull": "rgba(255, 255, 255, 0.3)",
-    "basic-light-faded": "rgba(255, 255, 255, 0.7)"
+    "basic-light-faded": "rgba(255, 255, 255, 0.7)",
+
+    "tooltip-bg": "#0a0a0add",
+    "tooltip-text": "white"
 }

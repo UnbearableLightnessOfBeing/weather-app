@@ -65,6 +65,7 @@ const onEnter = (el: any, done: any) => {
     justify-content: center;
     align-items: flex-end;
     position: relative;
+    overflow: hidden;
 
     &__meter {
         position: absolute;
