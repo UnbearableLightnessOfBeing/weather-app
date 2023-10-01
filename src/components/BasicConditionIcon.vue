@@ -8,7 +8,7 @@ withDefaults(
     }>(),
     {
         type: "small",
-    },
+    }
 );
 </script>
 
@@ -17,7 +17,11 @@ withDefaults(
         class="basic-condition-icon"
         :class="`basic-condition-icon--type--${type}`"
     >
-        <InlineSvg :src="iconSrc" />
+        <InlineSvg
+            :width="type === 'big' ? 143 : 60"
+            :height="type === 'big' ? 100 : 43"
+            :src="iconSrc"
+        />
     </div>
 </template>
 

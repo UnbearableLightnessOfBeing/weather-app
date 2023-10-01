@@ -24,9 +24,11 @@ declare module 'vue' {
     BasicVerticalDivider: typeof import('./src/components/BasicVerticalDivider.vue')['default']
     BasicWeatherStats: typeof import('./src/components/BasicWeatherStats.vue')['default']
     CurrentDateInfo: typeof import('./src/components/CurrentDateInfo.vue')['default']
+    ForecastCardSwiper: typeof import('./src/components/ForecastCardSwiper.vue')['default']
     GeoLocationButton: typeof import('./src/components/GeoLocationButton.vue')['default']
     ItemListWrapper: typeof import('./src/components/ItemListWrapper.vue')['default']
     LocationInterface: typeof import('./src/components/LocationInterface.vue')['default']
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']
+    TestSwiper: typeof import('./src/components/TestSwiper.vue')['default']
   }
 }

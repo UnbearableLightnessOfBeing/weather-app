@@ -8,6 +8,7 @@ import CloudCoverSvgUrl from "/interface/cloud-cover.svg";
 import WindGustSvgUrl from "/interface/wind-gust.svg";
 import PressureSvgUrl from "/interface/pressure.svg";
 import { useDark, useToggle } from "@vueuse/core";
+import { useConditionIcons } from "../utils/useConditionIcons";
 
 const location = ref("Bryansk");
 
@@ -36,16 +37,27 @@ const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
 const measurement = ref<"F" | "C">("C");
+
+const { getIcon } = useConditionIcons();
 </script>
 
 <template>
     <div>
         <button @click="toggleDark()">Is dark: {{ isDark }}</button>
+        <div style="width: 100%; padding-block: 30px; padding-inline: 10px">
+            <ForecastCardSwiper />
+        </div>
         <div class="icons">
             <BasicConditionIcon :icon-src="ClearSvgUrl" />
             <BasicConditionIcon :icon-src="ClearNightSvgUrl" />
             <BasicConditionIcon type="big" :icon-src="ClearSvgUrl" />
-            <BasicConditionIcon type="big" :icon-src="ClearNightSvgUrl" />
+            <BasicConditionIcon
+                v-if="data"
+                type="big"
+                :icon-src="getIcon(true, data.current.condition.code)"
+            />
+            <img src="/day/1003-day.png" :width="143" alt="" />
+            <img src="/day/1000-day.png" :width="143" alt="" />
         </div>
         <BasicForecastCard
             :temperature="'24°C'"
@@ -120,9 +132,9 @@ const measurement = ref<"F" | "C">("C");
                 New York
             </div>
         </div>
-        <!-- <pre>
-        {{ data }}
-        </pre> -->
+        <pre>
+            {{ data }}
+        </pre>
     </div>
 </template>
 
