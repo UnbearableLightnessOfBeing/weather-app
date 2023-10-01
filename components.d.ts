@@ -11,9 +11,11 @@ declare module 'vue' {
     BasicConditionIcon: typeof import('./src/components/BasicConditionIcon.vue')['default']
     BasicForecastCard: typeof import('./src/components/BasicForecastCard.vue')['default']
     BasicGlassWrapper: typeof import('./src/components/BasicGlassWrapper.vue')['default']
+    BasicLocationItem: typeof import('./src/components/BasicLocationItem.vue')['default']
     BasicQualityCard: typeof import('./src/components/BasicQualityCard.vue')['default']
     BasicQualityMonitor: typeof import('./src/components/BasicQualityMonitor.vue')['default']
     BasicSearch: typeof import('./src/components/BasicSearch.vue')['default']
+    BasicSearchMessage: typeof import('./src/components/BasicSearchMessage.vue')['default']
     BasicStatCard: typeof import('./src/components/BasicStatCard.vue')['default']
     BasicStatIcon: typeof import('./src/components/BasicStatIcon.vue')['default']
     BasicStatTitle: typeof import('./src/components/BasicStatTitle.vue')['default']
@@ -23,8 +25,8 @@ declare module 'vue' {
     BasicWeatherStats: typeof import('./src/components/BasicWeatherStats.vue')['default']
     CurrentDateInfo: typeof import('./src/components/CurrentDateInfo.vue')['default']
     GeoLocationButton: typeof import('./src/components/GeoLocationButton.vue')['default']
+    ItemListWrapper: typeof import('./src/components/ItemListWrapper.vue')['default']
     LocationInterface: typeof import('./src/components/LocationInterface.vue')['default']
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']
-    SearchLocationItem: typeof import('./src/components/SearchLocationItem.vue')['default']
   }
 }

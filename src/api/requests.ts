@@ -28,7 +28,7 @@ export const getCurrentWeather = async (location: string) => {
 
 export const getSearchResults = async (location: string) => {
     const response = await fetch(
-        `${base}/${endPoints.search}?` +
+        `${base}123/${endPoints.search}?` +
             new URLSearchParams({
                 key: apiKey,
                 q: location,

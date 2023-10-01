@@ -15,23 +15,6 @@ const isActive = ref(false);
 
 const searchValue = ref("");
 
-const popperWidth = ref(450 - 40);
-
-const calculatePopperWidth = () => {
-    if (document.body.clientWidth <= 450) {
-        popperWidth.value = document.body.clientWidth - 40;
-    }
-};
-
-onMounted(() => {
-    window.addEventListener("resize", calculatePopperWidth);
-    calculatePopperWidth();
-});
-
-onUnmounted(() => {
-    window.removeEventListener("resize", calculatePopperWidth);
-});
-
 const {
     data: searchData,
     isFetching,
@@ -75,13 +58,11 @@ watch(searchValue, () => {
             </Transition>
         </template>
         <template #popper>
-            <div v-if="isFetching">Loading...</div>
-            <div
-                v-else-if="searchData && searchData.length"
-                :style="`width: ${popperWidth}px`"
-                @click.stop
-            >
-                <SearchLocationItem
+            <ItemListWrapper v-if="isFetching">
+                <BasicSearchMessage message="Loading..." />
+            </ItemListWrapper>
+            <ItemListWrapper v-else-if="searchData && searchData.length">
+                <BasicLocationItem
                     v-for="item in searchData"
                     :key="item.id"
                     :city="item.name"
@@ -93,9 +74,16 @@ watch(searchValue, () => {
                         }
                     "
                 />
-            </div>
-            <div v-else-if="!isError">not found</div>
-            <div v-else>{{ (<Error>error).message }}</div>
+            </ItemListWrapper>
+            <ItemListWrapper v-else-if="!isError">
+                <BasicSearchMessage message="Nothing was found" />
+            </ItemListWrapper>
+            <ItemListWrapper v-else>
+                <BasicSearchMessage
+                    type="error"
+                    :message="(<Error>error).message"
+                />
+            </ItemListWrapper>
         </template>
     </VDropdown>
 </template>

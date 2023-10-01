@@ -13,10 +13,10 @@ defineEmits<{
 
 <template>
     <div
-        class="search-location-item"
+        class="basic-location-item"
         @click="$emit('update:location', `${city}, ${country}`)"
     >
-        <span class="search-location-item__city">
+        <span class="basic-location-item__city">
             {{ city }}
         </span>
         {{ country }}
@@ -24,7 +24,7 @@ defineEmits<{
 </template>
 
 <style scoped lang="scss">
-.search-location-item {
+.basic-location-item {
     width: 100%;
     border-radius: 5px;
     padding: 10px;

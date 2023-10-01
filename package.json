@@ -17,6 +17,7 @@
     "css-vars-ponyfill": "^2.4.8",
     "floating-vue": "^2.0.0-beta.24",
     "gsap": "^3.12.2",
+    "swiper": "^10.3.1",
     "vue": "^3.3.4",
     "vue-inline-svg": "^3.1.2"
   },
