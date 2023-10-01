@@ -14,6 +14,8 @@
     --fw-normal-thiner: 300;
     --fw-normal: 400;
     --fw-bold: 600;
+
+    --bg-light: linear-gradient(249deg, #f0b5ce 0%, #8c6bae 100%);
 }
 
 * {
@@ -25,7 +27,7 @@
 }
 
 html {
-    background: linear-gradient(249deg, #f0b5ce 0%, #8c6bae 100%);
+    background: var(--bg-light);
     color: white;
 
     &.dark {

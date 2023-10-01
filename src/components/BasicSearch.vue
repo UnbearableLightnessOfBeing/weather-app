@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import SearchSvgUrl from "/interface/search.svg";
 import InlineSvg from "vue-inline-svg";
+import { createDebounce } from "../utils/debounce";
 
 const props = withDefaults(
     defineProps<{
         active?: boolean;
-        // modelValue: string;
+        modelValue: string;
     }>(),
     {
         active: false,
@@ -15,7 +16,7 @@ const props = withDefaults(
 const emits = defineEmits<{
     /* eslint-disable */
     (e: "update:active", value: boolean): void;
-    // (e: "update:modelValue", value: string): void;
+    (e: "update:modelValue", value: string): void;
     /* eslint-enable */
 }>();
 
@@ -45,8 +46,6 @@ watch(isSearchActive, () => {
     }
 });
 
-const searchValue = ref("");
-
 const textInput = ref<HTMLInputElement | null>(null);
 
 const openSearch = () => {
@@ -69,6 +68,12 @@ onMounted(() => {
 onUnmounted(() => {
     document.body.removeEventListener("click", bodyClickCallback);
 });
+
+const updateModelValue = (value: string) => {
+    emits("update:modelValue", value);
+};
+
+const debounceModelValue = createDebounce(updateModelValue, 400);
 </script>
 
 <template>
@@ -88,8 +93,9 @@ onUnmounted(() => {
             <BasicTextInput
                 v-if="isInputShown"
                 ref="textInput"
-                v-model="searchValue"
+                :model-value="modelValue"
                 placeholder="Search"
+                @update:model-value="debounceModelValue"
             />
         </Transition>
     </BasicGlassWrapper>

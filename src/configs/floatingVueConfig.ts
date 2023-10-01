@@ -4,6 +4,16 @@ const config = {
             $extend: "tooltip",
             $resetCss: true,
         },
+        "custom-dropdown": {
+            $extend: "dropdown",
+            $resetCss: true,
+            distance: -8,
+            placement: "bottom-start",
+            autoHide: false,
+            triggers: [],
+            popperTriggers: [],
+            skidding: 20,
+        },
     },
 };
 

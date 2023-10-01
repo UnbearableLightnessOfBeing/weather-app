@@ -17,3 +17,16 @@
         }
     }
 }
+
+.v-popper--theme-custom-dropdown {
+    .v-popper {
+        &__inner {
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        &__arrow-container {
+            display: none;
+        }
+    }
+}

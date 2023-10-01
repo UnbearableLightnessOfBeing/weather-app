@@ -67,7 +67,7 @@ const measurement = ref<"F" | "C">("C");
         />
         <MeasurementToggler v-model="measurement" />
         <div style="max-width: 450px">
-            <LocationInterface />
+            <LocationInterface v-model="location" />
         </div>
         <BasicStatCard
             v-if="data"
@@ -97,14 +97,14 @@ const measurement = ref<"F" | "C">("C");
             :value="`${data.current.pressure_mb}`"
             :measurement="'hPa'"
         />
-        <BasicQualityCard 
+        <BasicQualityCard
             v-if="data"
             :value="data.current.air_quality['gb-defra-index']"
             :max-value="5"
             :evaluation="'Moderate'"
             :title="'Air Quality'"
         />
-        <BasicQualityCard 
+        <BasicQualityCard
             v-if="data"
             :value="data.current.uv"
             :max-value="10"

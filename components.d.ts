@@ -25,5 +25,6 @@ declare module 'vue' {
     GeoLocationButton: typeof import('./src/components/GeoLocationButton.vue')['default']
     LocationInterface: typeof import('./src/components/LocationInterface.vue')['default']
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']
+    SearchLocationItem: typeof import('./src/components/SearchLocationItem.vue')['default']
   }
 }

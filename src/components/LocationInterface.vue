@@ -1,20 +1,103 @@
 <script setup lang="ts">
+import { useQuery } from "@tanstack/vue-query";
+import { getSearchResults } from "../api/requests";
+
+defineProps<{
+    modelValue: string;
+}>();
+
+defineEmits<{
+    //eslint-disable-next-line
+    (e: "update:modelValue", vlaue: string): void;
+}>();
+
 const isActive = ref(false);
+
+const searchValue = ref("");
+
+const popperWidth = ref(450 - 40);
+
+const calculatePopperWidth = () => {
+    if (document.body.clientWidth <= 450) {
+        popperWidth.value = document.body.clientWidth - 40;
+    }
+};
+
+onMounted(() => {
+    window.addEventListener("resize", calculatePopperWidth);
+    calculatePopperWidth();
+});
+
+onUnmounted(() => {
+    window.removeEventListener("resize", calculatePopperWidth);
+});
+
+const {
+    data: searchData,
+    isFetching,
+    refetch,
+    isError,
+    error,
+} = useQuery({
+    queryKey: ["search", searchValue],
+    queryFn: () => getSearchResults(searchValue.value),
+    refetchOnWindowFocus: false,
+    enabled: false,
+});
+
+watch(searchValue, () => {
+    if (searchValue.value.length) {
+        refetch();
+    }
+});
 </script>
 
 <template>
-    <div class="location-interface">
-        <BasicSearch
-            :active="isActive"
-            @update:active="(value) => (isActive = value)"
-        />
-        <Transition appear name="location">
-            <div v-if="!isActive" class="location-interface__location">
-                <GeoLocationButton />
-                <div class="location-interface__location-name">Location</div>
+    <VDropdown
+        :theme="'custom-dropdown'"
+        :disabled="!isActive"
+        :shown="isActive && Boolean(searchValue.length)"
+        class="location-interface"
+    >
+        <template #default>
+            <BasicSearch
+                v-model="searchValue"
+                :active="isActive"
+                @update:active="(value) => (isActive = value)"
+            />
+            <Transition appear name="location">
+                <div v-if="!isActive" class="location-interface__location">
+                    <GeoLocationButton />
+                    <div class="location-interface__location-name">
+                        {{ modelValue }}
+                    </div>
+                </div>
+            </Transition>
+        </template>
+        <template #popper>
+            <div v-if="isFetching">Loading...</div>
+            <div
+                v-else-if="searchData && searchData.length"
+                :style="`width: ${popperWidth}px`"
+                @click.stop
+            >
+                <SearchLocationItem
+                    v-for="item in searchData"
+                    :key="item.id"
+                    :city="item.name"
+                    :country="item.country"
+                    @update:location="
+                        (value) => {
+                            $emit('update:modelValue', value);
+                            isActive = false;
+                        }
+                    "
+                />
             </div>
-        </Transition>
-    </div>
+            <div v-else-if="!isError">not found</div>
+            <div v-else>{{ (<Error>error).message }}</div>
+        </template>
+    </VDropdown>
 </template>
 <style scoped lang="scss">
 .location-interface {
