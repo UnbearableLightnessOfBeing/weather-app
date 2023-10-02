@@ -122,6 +122,7 @@ const debounceModelValue = createDebounce(updateModelValue, 400);
 
 .basic-search {
     width: 58px;
+    min-width: 58px;
     height: 58px;
     padding: 15px;
     display: flex;

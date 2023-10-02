@@ -68,15 +68,33 @@ const time = computed(() => {
 
     &__dmy {
         font-size: var(--fs-large);
-        font-weight: var(--fw-normal);
+        font-weight: var(--fw-normal-thiner);
     }
 
     &__day-time {
-        font-size: var(--fs-heading);
-        font-weight: var(--fw-normal-thiner);
         display: flex;
         gap: 20px;
         align-items: center;
+    }
+
+    &__day,
+    &__time {
+        font-size: var(--fs-normal);
+        font-weight: var(--fw-normal-thiner);
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .current-date-info {
+        &__dmy {
+            font-weight: var(--fw-normal);
+        }
+
+        &__day,
+        &__time {
+            font-size: var(--fs-heading);
+            font-weight: var(--fw-normal-thiner);
+        }
     }
 }
 </style>

@@ -11,6 +11,7 @@ declare module 'vue' {
     BasicConditionIcon: typeof import('./src/components/BasicConditionIcon.vue')['default']
     BasicForecastCard: typeof import('./src/components/BasicForecastCard.vue')['default']
     BasicGlassWrapper: typeof import('./src/components/BasicGlassWrapper.vue')['default']
+    BasicHorizontalDivider: typeof import('./src/components/BasicHorizontalDivider.vue')['default']
     BasicLocationItem: typeof import('./src/components/BasicLocationItem.vue')['default']
     BasicQualityCard: typeof import('./src/components/BasicQualityCard.vue')['default']
     BasicQualityMonitor: typeof import('./src/components/BasicQualityMonitor.vue')['default']
@@ -28,7 +29,9 @@ declare module 'vue' {
     GeoLocationButton: typeof import('./src/components/GeoLocationButton.vue')['default']
     ItemListWrapper: typeof import('./src/components/ItemListWrapper.vue')['default']
     LocationInterface: typeof import('./src/components/LocationInterface.vue')['default']
+    MainInfo: typeof import('./src/components/MainInfo.vue')['default']
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']
-    TestSwiper: typeof import('./src/components/TestSwiper.vue')['default']
+    QualityCards: typeof import('./src/components/QualityCards.vue')['default']
+    StatCards: typeof import('./src/components/StatCards.vue')['default']
   }
 }

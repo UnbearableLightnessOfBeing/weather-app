@@ -72,17 +72,14 @@ const onEnter = (el: any, done: any) => {
         top: 0;
         left: 0;
         width: 100%;
-        z-index: -1;
     }
 
     &__indicator {
         position: absolute;
-        z-index: -1;
         bottom: 0;
         left: 0;
         width: 100%;
         height: 16px;
-        // transition: all 2s ease-out;
     }
 
     &__point {

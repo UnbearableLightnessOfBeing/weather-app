@@ -22,13 +22,21 @@ defineProps<{
 .basic-quality-card {
     width: fit-content;
     & > * + * {
-        margin-top: 33px;
+        margin-top: 12px;
     }
 
     &__title {
         font-size: var(--fs-heading);
         font-weight: var(--fw-normal-thiner);
         text-align: center;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .basic-quality-card {
+        & > * + * {
+            margin-top: 33px;
+        }
     }
 }
 </style>

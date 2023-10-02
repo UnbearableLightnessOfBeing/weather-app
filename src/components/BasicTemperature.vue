@@ -1,16 +1,16 @@
 <script setup lang="ts">
-type MesurementType = "C" | "F";
+type MeasurementType = "C" | "F";
 
 defineProps<{
     value: number;
-    mesurement: MesurementType;
+    measurement: MeasurementType;
 }>();
 </script>
 
 <template>
     <div class="basic-temperature">
         <div class="basic-temperature__value">{{ value }}</div>
-        <div class="basic-temperature__mesurement">°{{ mesurement }}</div>
+        <div class="basic-temperature__mesurement">°{{ measurement }}</div>
     </div>
 </template>
 

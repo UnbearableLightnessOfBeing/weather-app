@@ -93,17 +93,27 @@ watch(searchValue, () => {
     align-items: center;
     justify-content: space-between;
     flex-direction: row-reverse;
-    padding-inline: 20px;
-    padding-block: 10px;
 
     &__location {
         display: flex;
-        gap: 30px;
+        gap: 10px;
         align-items: center;
 
         &-name {
-            font-size: var(--fs-large-smaller);
+            font-size: var(--fs-normal);
             font-weight: var(--fw-normal-thiner);
+        }
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .location-interface {
+        &__location {
+            gap: 30px;
+
+            &-name {
+                font-size: var(--fs-large-smaller);
+            }
         }
     }
 }

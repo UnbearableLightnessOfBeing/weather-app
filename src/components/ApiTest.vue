@@ -67,7 +67,7 @@ const { getIcon } = useConditionIcons();
         <BasicTemperature
             v-if="data"
             :value="data.current.temp_c"
-            :mesurement="'C'"
+            :measurement="'C'"
         />
         <CurrentDateInfo :language="'en'" :unix-date="unixDate" />
         <BasicWeatherStats

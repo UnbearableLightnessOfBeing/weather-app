@@ -7,12 +7,12 @@ const config = {
         "custom-dropdown": {
             $extend: "dropdown",
             $resetCss: true,
-            distance: -8,
+            distance: 1,
             placement: "bottom-start",
             autoHide: false,
             triggers: [],
             popperTriggers: [],
-            skidding: 20,
+            skidding: 0,
         },
     },
 };

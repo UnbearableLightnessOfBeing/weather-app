@@ -32,7 +32,7 @@ defineProps<{
         <div class="basic-weather-stats__stat">
             <BasicStatIcon :icon-src="RainSvgUrl" />
             <div>Rain</div>
-            <div>{{ percipitations }} %</div>
+            <div>{{ percipitations }} mm</div>
         </div>
     </div>
 </template>
@@ -40,6 +40,10 @@ defineProps<{
 <style scoped lang="scss">
 .basic-weather-stats {
     display: block;
+
+    & > * + * {
+        margin-top: 5px;
+    }
 
     &__stat {
         display: flex;
@@ -68,6 +72,9 @@ defineProps<{
         gap: 25px;
         align-items: center;
         width: 100%;
+        & > * + * {
+            margin: 0;
+        }
 
         &__divider {
             display: inline-block;

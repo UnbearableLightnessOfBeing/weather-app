@@ -27,6 +27,7 @@ const showCoords = () => {
 <style scoped lang="scss">
 .geo-location-button {
     width: 35px;
+    min-width: 35px;
     height: 35px;
     cursor: pointer;
     position: relative;

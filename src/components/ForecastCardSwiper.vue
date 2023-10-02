@@ -8,10 +8,10 @@ import ClearSvgUrl from "/day/clear.svg";
 
 <template>
     <Swiper
-        ref="swiper"
         :slides-per-view="2.5"
         :space-between="20"
         :modules="[Navigation]"
+        :class="'swiper'"
         :breakpoints="{
             620: {
                 slidesPerView: 4,
@@ -33,4 +33,14 @@ import ClearSvgUrl from "/day/clear.svg";
     </Swiper>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.swiper {
+    padding-inline: 16px;
+}
+
+@media screen and (min-width: 1440px) {
+    .swiper {
+        padding-inline: 66px;
+    }
+}
+</style>

@@ -15,7 +15,7 @@
     --fw-normal: 400;
     --fw-bold: 600;
 
-    --bg-light: linear-gradient(249deg, #f0b5ce 0%, #8c6bae 100%);
+    --bg-light: linear-gradient(250deg, #8c6bae 0%, #f0b5ce 100% );
 }
 
 * {
@@ -27,11 +27,10 @@
 }
 
 html {
-    background: var(--bg-light);
     color: white;
 
-    &.dark {
-        background: linear-gradient(48deg, #082276 7.07%, #030f34 97.3%),
-            #082276;
-    }
+    // &.dark {
+    //     background: linear-gradient(48deg, #082276 7.07%, #030f34 97.3%),
+    //         #082276;
+    // }
 }
