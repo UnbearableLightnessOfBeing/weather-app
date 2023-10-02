@@ -1,46 +1,45 @@
+import axios from "axios";
+
 const base = "http://api.weatherapi.com/v1";
 const apiKey = "f9c31516a55b4bd7ae0112903232509";
 
 const endPoints = {
-    current: "current.json",
-    search: "search.json",
+    current: "/current.json",
+    search: "/search.json",
 };
 
+const axiosInstance = axios.create({
+    baseURL: base,
+    params: {
+        key: apiKey,
+    },
+});
+
 export const getCurrentWeather = async (location: string) => {
-    const response = await fetch(
-        `${base}/${endPoints.current}?` +
-            new URLSearchParams({
-                key: apiKey,
-                q: location,
-                aqi: "yes",
-            })
-    );
+    const response = await axiosInstance.get(endPoints.current, {
+        params: {
+            q: location,
+            aqi: "yes",
+        },
+    });
 
-    if (!response.ok) {
-        throw new Error("ooops!");
+    if (response.status === 200) {
+        return response.data;
+    } else {
+        throw new Error("error has occured");
     }
-
-    const data = response.json();
-    console.log(data);
-
-    return data;
 };
 
 export const getSearchResults = async (location: string) => {
-    const response = await fetch(
-        `${base}/${endPoints.search}?` +
-            new URLSearchParams({
-                key: apiKey,
-                q: location,
-            })
-    );
+    const response = await axiosInstance.get(endPoints.search, {
+        params: {
+            q: location,
+        },
+    });
 
-    if (!response.ok) {
-        throw new Error("Error has occured during search");
+    if (response.status === 200) {
+        return response.data;
+    } else {
+        throw new Error("error has occured");
     }
-
-    const data = response.json();
-    console.log(data);
-
-    return data;
 };
