@@ -1,20 +1,8 @@
 <script setup lang="ts">
-const props = defineProps<{
-    modelValue: "C" | "F";
-}>();
+import { useMeasurement } from "../composables/useMeasurement";
+const { measurement, toggleMeasurement } = useMeasurement();
 
-const emits = defineEmits<{
-    //eslint-disable-next-line
-    (e: "update:modelValue", value: "C" | "F"): void;
-}>();
-
-const isToggled = computed(() => props.modelValue === "F");
-
-const toggle = () => {
-    if (isToggled.value) {
-        emits("update:modelValue", "C");
-    } else emits("update:modelValue", "F");
-};
+const isToggled = computed(() => measurement.value === "F");
 </script>
 
 <template>
@@ -25,7 +13,7 @@ const toggle = () => {
         }"
         class="measurement-toggler"
         :class="{ 'measurement-toggler--toggled': isToggled }"
-        @click="toggle"
+        @click="toggleMeasurement"
     >
         <div class="measurement-toggler__option">
             <span class="measurement-toggler__degree-sign">°</span>C

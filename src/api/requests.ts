@@ -25,7 +25,7 @@ export const getCurrentWeather = async (location: string) => {
 
     if (response.status === 200) {
         //test
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        // await new Promise((resolve) => setTimeout(resolve, 2000));
 
         return response.data;
     } else {

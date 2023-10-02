@@ -51,7 +51,13 @@ watch(searchValue, () => {
             <Transition appear name="location">
                 <div v-if="!isActive" class="location-interface__location">
                     <GeoLocationButton />
-                    <div class="location-interface__location-name">
+                    <div
+                        v-tooltip="{
+                            content: modelValue,
+                            theme: 'custom-tooltip',
+                        }"
+                        class="location-interface__location-name"
+                    >
                         {{ modelValue }}
                     </div>
                 </div>
@@ -114,6 +120,17 @@ watch(searchValue, () => {
             &-name {
                 font-size: var(--fs-large-smaller);
             }
+        }
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .location-interface {
+        &__location-name {
+            max-width: 319px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }

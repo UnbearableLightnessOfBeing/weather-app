@@ -3,44 +3,58 @@ import FeelsLikeSvgUrl from "/interface/feels-like.svg";
 import CloudCoverSvgUrl from "/interface/cloud-cover.svg";
 import WindGustSvgUrl from "/interface/wind-gust.svg";
 import PressureSvgUrl from "/interface/pressure.svg";
+import { useMeasurement } from "../composables/useMeasurement";
 
 defineProps<{
     current: any;
     isLoading: boolean;
     isError: boolean;
 }>();
+
+const { measurement } = useMeasurement();
 </script>
 
 <template>
     <div class="stat-cards">
-        <div v-if="isLoading" class="stat-cards__loading">Loading...</div>
-        <div v-else-if="current && !isError" class="stat-cards__content">
+        <div v-if="isError" class="stat-cards__error">error</div>
+        <div v-else class="stat-cards__content">
+            <BasicLoader v-if="isLoading" class="stat-cards__loader" />
             <BasicStatCard
+                v-else
                 :icon-src="FeelsLikeSvgUrl"
                 :title="'feels like'"
-                :value="`${current.feelslike_c}`"
-                :measurement="'°C'"
+                :value="
+                    measurement === 'C'
+                        ? current.feelslike_c
+                        : current.feelslike_f
+                "
+                :measurement="`°${measurement}`"
             />
+            <BasicLoader v-if="isLoading" class="stat-cards__loader" />
             <BasicStatCard
+                v-else
                 :icon-src="CloudCoverSvgUrl"
                 :title="'cloud coverage'"
                 :value="`${current.cloud}`"
                 :measurement="'%'"
             />
+            <BasicLoader v-if="isLoading" class="stat-cards__loader" />
             <BasicStatCard
+                v-else
                 :icon-src="WindGustSvgUrl"
                 :title="'wind gust'"
                 :value="`${current.gust_kph}`"
                 :measurement="'km/h'"
             />
+            <BasicLoader v-if="isLoading" class="stat-cards__loader" />
             <BasicStatCard
+                v-else
                 :icon-src="PressureSvgUrl"
                 :title="'pressure'"
                 :value="`${current.pressure_mb}`"
                 :measurement="'hPa'"
             />
         </div>
-        <div v-else class="stat-cards__error">error</div>
     </div>
 </template>
 
@@ -56,6 +70,12 @@ defineProps<{
         justify-content: center;
         align-items: center;
         justify-items: center;
+    }
+
+    &__loader {
+        width: 180px;
+        height: 180px;
+        border-radius: 15px;
     }
 }
 

@@ -12,6 +12,7 @@ declare module 'vue' {
     BasicForecastCard: typeof import('./src/components/BasicForecastCard.vue')['default']
     BasicGlassWrapper: typeof import('./src/components/BasicGlassWrapper.vue')['default']
     BasicHorizontalDivider: typeof import('./src/components/BasicHorizontalDivider.vue')['default']
+    BasicLoader: typeof import('./src/components/BasicLoader.vue')['default']
     BasicLocationItem: typeof import('./src/components/BasicLocationItem.vue')['default']
     BasicQualityCard: typeof import('./src/components/BasicQualityCard.vue')['default']
     BasicQualityMonitor: typeof import('./src/components/BasicQualityMonitor.vue')['default']
@@ -33,5 +34,6 @@ declare module 'vue' {
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']
     QualityCards: typeof import('./src/components/QualityCards.vue')['default']
     StatCards: typeof import('./src/components/StatCards.vue')['default']
+    SwiperButton: typeof import('./src/components/SwiperButton.vue')['default']
   }
 }

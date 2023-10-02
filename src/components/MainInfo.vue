@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { useMeasurement } from "../composables/useMeasurement";
+
 defineProps<{
     current: any;
     isLoading: boolean;
     isError: boolean;
 }>();
+
+const { measurement } = useMeasurement();
 
 const unixCurrentDate = ref(new Date());
 
@@ -22,18 +26,24 @@ onUnmounted(() => {
 
 <template>
     <div class="main-info">
-        <div v-if="isLoading" class="main-info__loading">Loading...</div>
-        <div v-else-if="current && !isError" class="main-info__content">
-            <BasicTemperature :value="current.temp_c" :measurement="'C'" />
+        <div v-if="isError" class="main-info__error">Error</div>
+        <div v-else class="main-info__content">
+            <BasicLoader v-if="isLoading" class="main-info__temp-loader" />
+            <BasicTemperature
+                v-else
+                :value="measurement === 'C' ? current.temp_c : current.temp_f"
+                :measurement="measurement"
+            />
             <CurrentDateInfo :language="'en'" :unix-date="unixCurrentDate" />
+            <BasicLoader v-if="isLoading" class="main-info__stats-loader" />
             <BasicWeatherStats
+                v-else
                 :wind-speed="current.wind_kph"
                 :wind-degree="current.wind_degree"
                 :humidity="current.humidity"
                 :percipitations="current.precip_in"
             />
         </div>
-        <div v-else class="main-info__error">Error</div>
     </div>
 </template>
 
@@ -42,6 +52,28 @@ onUnmounted(() => {
     &__content {
         & > * + * {
             margin-top: 25px;
+        }
+    }
+
+    &__temp-loader {
+        width: 165px;
+        height: 115px;
+    }
+
+    &__stats-loader {
+        height: 89px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .main-info {
+        &__stats-loader {
+            height: 26px;
+        }
+
+        &__temp-loader {
+            width: 197px;
+            height: 197px;
         }
     }
 }

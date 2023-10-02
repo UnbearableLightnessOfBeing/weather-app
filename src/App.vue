@@ -12,8 +12,6 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
 
 const location = ref("Bryansk");
 
-const measurement = ref<"F" | "C">("C");
-
 const { data, isLoading, isError } = useQuery({
     queryKey: ["currentWeather", location],
     queryFn: () => getCurrentWeather(location.value),
@@ -33,7 +31,7 @@ const { data, isLoading, isError } = useQuery({
                             type="big"
                             :icon-src="ClearSvgUrl"
                         />
-                        <MeasurementToggler v-model="measurement" />
+                        <MeasurementToggler />
                     </div>
                     <MainInfo
                         :current="
@@ -118,6 +116,9 @@ const { data, isLoading, isError } = useQuery({
             justify-content: center;
             align-content: center;
             padding: 0;
+            height: 815px;
+            border-radius: 20px;
+            overflow: hidden;
 
             & > * + * {
                 margin-top: 0;
@@ -127,7 +128,7 @@ const { data, isLoading, isError } = useQuery({
         &__left,
         &__right {
             margin-inline: 0;
-            height: 100%;
+            height: 815px;
         }
 
         &__left {
