@@ -84,10 +84,6 @@ const { data, isLoading, isError } = useQuery({
         }
     }
 
-    &__location-right {
-        display: none;
-    }
-
     &__main-info {
         & > * + * {
             margin-top: 25px;
@@ -147,14 +143,6 @@ const { data, isLoading, isError } = useQuery({
             box-shadow: -5px -5px 250px 0px rgba(255, 255, 255, 0.02) inset;
             border-left: 2px solid var(--basic-light-dull);
             backdrop-filter: blur(21px);
-        }
-
-        &__location-left {
-            display: none;
-        }
-
-        &__location-right {
-            display: flex;
         }
     }
 
