@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useConditionIcons } from "../composables/useConditionIcons";
+import { WeatherCondition } from "../types/requestTypes";
 
 defineProps<{
-    condition: any;
+    condition?: WeatherCondition;
 }>();
 
 const { getIconUrl } = useConditionIcons();

@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { CurrentWeather } from "../types/requestTypes";
+
 const props = defineProps<{
-    current: any;
-    isLoading: boolean;
-    isError: boolean;
+    current?: CurrentWeather;
 }>();
 
 const usEpaIndecies: Record<number, string> = {
@@ -14,9 +14,11 @@ const usEpaIndecies: Record<number, string> = {
     6: "Hazardous",
 };
 
-const epaIndex = computed(
-    () => props.current.air_quality["us-epa-index"] as number,
-);
+const epaIndex = computed(() => {
+    if (props.current) {
+        return props.current.air_quality["us-epa-index"] as number;
+    } else return 0;
+});
 
 const evaluation = computed(() => {
     return usEpaIndecies[epaIndex.value];
@@ -38,9 +40,8 @@ const uvIndecies: Record<number, string> = {
 
 <template>
     <div class="quality-cards">
-        <div v-if="isError" class="quality-cards__error">Error</div>
-        <div v-else class="quality-cards__content">
-            <BasicLoader v-if="isLoading" class="quality-cards__loader" />
+        <div class="quality-cards__content">
+            <BasicLoader v-if="!current" class="quality-cards__loader" />
             <BasicQualityCard
                 v-else
                 :value="epaIndex"
@@ -48,7 +49,7 @@ const uvIndecies: Record<number, string> = {
                 :evaluation="evaluation"
                 :title="'Air Quality'"
             />
-            <BasicLoader v-if="isLoading" class="quality-cards__loader" />
+            <BasicLoader v-if="!current" class="quality-cards__loader" />
             <BasicQualityCard
                 v-else
                 :value="current.uv"

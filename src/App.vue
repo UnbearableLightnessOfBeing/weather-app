@@ -26,12 +26,6 @@ const { data, isLoading, isError } = useQuery({
                 <div class="info-block">
                     <LocationInterface v-if="!isDesktop" v-model="location" />
                     <div class="flex-between">
-                        <!-- <BasicConditionIcon
-                            v-if="data"
-                            type="big"
-                            :icon-src="getIconUrl(data.current.condition.code)"
-                        />
-                        <BasicLoader v-else :width="143" :height="100" /> -->
                         <WeatherCondition
                             :condition="
                                 data ? data.current.condition : undefined
@@ -39,29 +33,15 @@ const { data, isLoading, isError } = useQuery({
                         />
                         <MeasurementToggler />
                     </div>
-                    <MainInfo
-                        :current="
-                            data && data.current ? data.current : undefined
-                        "
-                        :is-loading="isLoading"
-                        :is-error="isError"
-                    />
+                    <MainInfo :current="data ? data.current : undefined" />
                 </div>
                 <ForecastCardSwiper />
             </div>
             <div class="info-block app-layout__right">
                 <LocationInterface v-if="isDesktop" v-model="location" />
-                <StatCards
-                    :current="data && data.current ? data.current : undefined"
-                    :is-loading="isLoading"
-                    :is-error="isError"
-                />
+                <StatCards :current="data ? data.current : undefined" />
                 <BasicHorizontalDivider />
-                <QualityCards
-                    :current="data && data.current ? data.current : undefined"
-                    :is-loading="isLoading"
-                    :is-error="isError"
-                />
+                <QualityCards :current="data ? data.current : undefined" />
             </div>
         </div>
     </div>

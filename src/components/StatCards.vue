@@ -4,11 +4,10 @@ import CloudCoverSvgUrl from "/interface/cloud-cover.svg";
 import WindGustSvgUrl from "/interface/wind-gust.svg";
 import PressureSvgUrl from "/interface/pressure.svg";
 import { useMeasurement } from "../composables/useMeasurement";
+import { CurrentWeather } from "../types/requestTypes";
 
 defineProps<{
-    current: any;
-    isLoading: boolean;
-    isError: boolean;
+    current?: CurrentWeather;
 }>();
 
 const { measurement } = useMeasurement();
@@ -16,9 +15,8 @@ const { measurement } = useMeasurement();
 
 <template>
     <div class="stat-cards">
-        <div v-if="isError" class="stat-cards__error">error</div>
-        <div v-else class="stat-cards__content">
-            <BasicLoader v-if="isLoading" class="stat-cards__loader" />
+        <div class="stat-cards__content">
+            <BasicLoader v-if="!current" class="stat-cards__loader" />
             <BasicStatCard
                 v-else
                 :icon-src="FeelsLikeSvgUrl"
@@ -30,7 +28,7 @@ const { measurement } = useMeasurement();
                 "
                 :measurement="`°${measurement}`"
             />
-            <BasicLoader v-if="isLoading" class="stat-cards__loader" />
+            <BasicLoader v-if="!current" class="stat-cards__loader" />
             <BasicStatCard
                 v-else
                 :icon-src="CloudCoverSvgUrl"
@@ -38,7 +36,7 @@ const { measurement } = useMeasurement();
                 :value="`${current.cloud}`"
                 :measurement="'%'"
             />
-            <BasicLoader v-if="isLoading" class="stat-cards__loader" />
+            <BasicLoader v-if="!current" class="stat-cards__loader" />
             <BasicStatCard
                 v-else
                 :icon-src="WindGustSvgUrl"
@@ -46,7 +44,7 @@ const { measurement } = useMeasurement();
                 :value="`${current.gust_kph}`"
                 :measurement="'km/h'"
             />
-            <BasicLoader v-if="isLoading" class="stat-cards__loader" />
+            <BasicLoader v-if="!current" class="stat-cards__loader" />
             <BasicStatCard
                 v-else
                 :icon-src="PressureSvgUrl"
