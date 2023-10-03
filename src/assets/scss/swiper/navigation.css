@@ -1,5 +1,5 @@
 :root {
-    --swiper-navigation-size: 44px;
+    --swiper-navigation-size: 33px;
     /*
   --swiper-navigation-top-offset: 50%;
   --swiper-navigation-sides-offset: 10px;
@@ -85,3 +85,10 @@
     content: "next";
 }
 /* Navigation font end */
+
+@media screen and (max-width: 600px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none;
+    }
+}

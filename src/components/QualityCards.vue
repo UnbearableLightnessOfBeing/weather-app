@@ -1,9 +1,39 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
     current: any;
     isLoading: boolean;
     isError: boolean;
 }>();
+
+const usEpaIndecies: Record<number, string> = {
+    1: "Good",
+    2: "Moderate",
+    3: "Unhealthy",
+    4: "Unhealthy",
+    5: "Very Unhealthy",
+    6: "Hazardous",
+};
+
+const epaIndex = computed(
+    () => props.current.air_quality["us-epa-index"] as number,
+);
+
+const evaluation = computed(() => {
+    return usEpaIndecies[epaIndex.value];
+});
+
+const uvIndecies: Record<number, string> = {
+    1: "Low",
+    2: "Low",
+    3: "Moderate",
+    4: "Moderate",
+    5: "Moderate",
+    6: "High",
+    7: "High",
+    8: "Very high",
+    9: "Very high",
+    10: "Very high",
+};
 </script>
 
 <template>
@@ -13,9 +43,9 @@ defineProps<{
             <BasicLoader v-if="isLoading" class="quality-cards__loader" />
             <BasicQualityCard
                 v-else
-                :value="current.air_quality['gb-defra-index']"
-                :max-value="5"
-                :evaluation="'Moderate'"
+                :value="epaIndex"
+                :max-value="6"
+                :evaluation="evaluation"
                 :title="'Air Quality'"
             />
             <BasicLoader v-if="isLoading" class="quality-cards__loader" />
@@ -23,7 +53,7 @@ defineProps<{
                 v-else
                 :value="current.uv"
                 :max-value="10"
-                :evaluation="'Good'"
+                :evaluation="uvIndecies[Math.round(Number(current.uv))]"
                 :title="'UV Index'"
             />
         </div>
