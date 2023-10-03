@@ -20,7 +20,7 @@ export const getCurrentWeather = async (location: string) => {
     const response = await axiosInstance
         .get<GetCurrentWeatherResponse>(endPoints.current, {
             params: {
-                q: location,
+                q: location + "asf",
                 aqi: "yes",
             },
         })
@@ -29,7 +29,7 @@ export const getCurrentWeather = async (location: string) => {
         });
 
     //test
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
 
     return response.data;
 };

@@ -2,6 +2,11 @@
 import { useQuery } from "@tanstack/vue-query";
 import { getCurrentWeather } from "./api/requests";
 import { useBreakpoints } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
+
+locale.value = "ru";
 
 const breakPoints = useBreakpoints({
     desktop: 1400,
@@ -11,7 +16,7 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
 
 const location = ref("Bryansk");
 
-const { data, isLoading, isError } = useQuery({
+const { data, isError } = useQuery({
     queryKey: ["currentWeather", location],
     queryFn: () => getCurrentWeather(location.value),
     refetchOnWindowFocus: false,
@@ -22,7 +27,10 @@ const { data, isLoading, isError } = useQuery({
     <!-- <ApiTest /> -->
     <div class="app-layout">
         <div class="app-layout__wrapper">
-            <div class="app-layout__left">
+            <div v-if="isError" class="app-layout__error">
+                {{ t("dataLoadingError") }}
+            </div>
+            <div v-else class="app-layout__left">
                 <div class="info-block">
                     <LocationInterface v-if="!isDesktop" v-model="location" />
                     <div class="flex-between">
@@ -66,6 +74,16 @@ const { data, isLoading, isError } = useQuery({
         & > * + * {
             margin-top: 30px;
         }
+    }
+
+    &__error {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: var(--error);
+        font-size: var(--fs-heading);
+        font-weight: var(--fw-normal-thiner);
     }
 
     &__main-info {
