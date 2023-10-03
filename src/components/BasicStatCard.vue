@@ -2,7 +2,7 @@
 defineProps<{
     iconSrc: string;
     title: string;
-    value: string;
+    value: string | number;
     measurement?: string;
 }>();
 </script>

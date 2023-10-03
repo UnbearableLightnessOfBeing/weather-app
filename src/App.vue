@@ -2,7 +2,10 @@
 import { useQuery } from "@tanstack/vue-query";
 import { getCurrentWeather } from "./api/requests";
 import { useBreakpoints } from "@vueuse/core";
-import ClearSvgUrl from "/day/clear.svg";
+
+import { useConditionIcons } from "./composables/useConditionIcons";
+
+const { getIconUrl } = useConditionIcons();
 
 const breakPoints = useBreakpoints({
     desktop: 1400,
@@ -28,8 +31,9 @@ const { data, isLoading, isError } = useQuery({
                     <LocationInterface v-if="!isDesktop" v-model="location" />
                     <div class="flex-between">
                         <BasicConditionIcon
+                            v-if="data"
                             type="big"
-                            :icon-src="ClearSvgUrl"
+                            :icon-src="getIconUrl(data.current.condition.code)"
                         />
                         <MeasurementToggler />
                     </div>

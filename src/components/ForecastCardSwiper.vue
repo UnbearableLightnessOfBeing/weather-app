@@ -3,8 +3,10 @@ import "../assets/scss/swiper/swiper.css";
 import "../assets/scss/swiper/navigation.css";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
-import ClearSvgUrl from "/day/clear.svg";
 import { useMeasurement } from "../composables/useMeasurement";
+import { useConditionIcons } from "../composables/useConditionIcons";
+
+const { getIconUrl } = useConditionIcons();
 
 const { measurement } = useMeasurement();
 </script>
@@ -31,7 +33,7 @@ const { measurement } = useMeasurement();
             <BasicForecastCard
                 :temperature="'24°' + measurement"
                 :day="'Mon'"
-                :icon-src="ClearSvgUrl"
+                :icon-src="getIconUrl(1003)"
             />
         </SwiperSlide>
     </Swiper>

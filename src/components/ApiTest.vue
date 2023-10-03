@@ -8,7 +8,7 @@ import CloudCoverSvgUrl from "/interface/cloud-cover.svg";
 import WindGustSvgUrl from "/interface/wind-gust.svg";
 import PressureSvgUrl from "/interface/pressure.svg";
 import { useDark, useToggle } from "@vueuse/core";
-import { useConditionIcons } from "../utils/useConditionIcons";
+import { useConditionIcons } from "../composables/useConditionIcons";
 
 const location = ref("Bryansk");
 
@@ -38,7 +38,7 @@ const toggleDark = useToggle(isDark);
 
 const measurement = ref<"F" | "C">("C");
 
-const { getIcon } = useConditionIcons();
+const { getIconUrl } = useConditionIcons();
 </script>
 
 <template>
@@ -54,7 +54,7 @@ const { getIcon } = useConditionIcons();
             <BasicConditionIcon
                 v-if="data"
                 type="big"
-                :icon-src="getIcon(true, data.current.condition.code)"
+                :icon-src="getIconUrl(data.current.condition.code)"
             />
             <img src="/day/1003-day.png" :width="143" alt="" />
             <img src="/day/1000-day.png" :width="143" alt="" />
@@ -155,3 +155,4 @@ const { getIcon } = useConditionIcons();
     }
 }
 </style>
+../composables/useConditionIcons
