@@ -3,10 +3,6 @@ import { useQuery } from "@tanstack/vue-query";
 import { getCurrentWeather } from "./api/requests";
 import { useBreakpoints } from "@vueuse/core";
 
-import { useConditionIcons } from "./composables/useConditionIcons";
-
-const { getIconUrl } = useConditionIcons();
-
 const breakPoints = useBreakpoints({
     desktop: 1400,
 });
@@ -30,10 +26,16 @@ const { data, isLoading, isError } = useQuery({
                 <div class="info-block">
                     <LocationInterface v-if="!isDesktop" v-model="location" />
                     <div class="flex-between">
-                        <BasicConditionIcon
+                        <!-- <BasicConditionIcon
                             v-if="data"
                             type="big"
                             :icon-src="getIconUrl(data.current.condition.code)"
+                        />
+                        <BasicLoader v-else :width="143" :height="100" /> -->
+                        <WeatherCondition
+                            :condition="
+                                data ? data.current.condition : undefined
+                            "
                         />
                         <MeasurementToggler />
                     </div>

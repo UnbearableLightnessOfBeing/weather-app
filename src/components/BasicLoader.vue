@@ -1,29 +1,29 @@
 <script setup lang="ts">
-// const props = defineProps<{
-//     width?: number;
-//     height?: number;
-//     borderRadius?: number;
-// }>();
+const props = defineProps<{
+    width?: number;
+    height?: number;
+    borderRadius?: number;
+}>();
 
-// const computedStyles = computed((): string => {
-//     let style = "";
+const computedStyles = computed((): string => {
+    let style = "";
 
-//     if (props.width) {
-//         style += "width: " + props.width + "px; ";
-//     }
-//     if (props.height) {
-//         style += "height: " + props.height + "px; ";
-//     }
-//     if (props.borderRadius) {
-//         style += "border-radius: " + props.borderRadius + "px; ";
-//     }
+    if (props.width) {
+        style += "width: " + props.width + "px; ";
+    }
+    if (props.height) {
+        style += "height: " + props.height + "px; ";
+    }
+    if (props.borderRadius) {
+        style += "border-radius: " + props.borderRadius + "px; ";
+    }
 
-//     return style;
-// });
+    return style;
+});
 </script>
 
 <template>
-    <div class="basic-loader"></div>
+    <div class="basic-loader" :style="computedStyles"></div>
 </template>
 
 <style scoped lang="scss">

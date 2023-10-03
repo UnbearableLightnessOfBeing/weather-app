@@ -13,6 +13,24 @@ defineEmits<{
 
 const isActive = ref(false);
 
+const isSearchActive = ref(false);
+
+watch(isActive, () => {
+    if (isActive.value) {
+        setTimeout(() => {
+            isSearchActive.value = true;
+        }, 300);
+    }
+});
+
+watch(isSearchActive, () => {
+    if (!isSearchActive.value) {
+        setTimeout(() => {
+            isActive.value = false;
+        }, 300);
+    }
+});
+
 const searchValue = ref("");
 
 const {
@@ -39,12 +57,13 @@ watch(searchValue, () => {
     <VDropdown
         :theme="'custom-dropdown'"
         :disabled="!isActive"
-        :shown="isActive && Boolean(searchValue.length)"
+        :shown="isSearchActive && Boolean(searchValue.length)"
         class="location-interface"
     >
         <template #default>
             <BasicSearch
                 v-model="searchValue"
+                v-model:is-search-active="isSearchActive"
                 :active="isActive"
                 @update:active="(value) => (isActive = value)"
             />
@@ -76,7 +95,8 @@ watch(searchValue, () => {
                     @update:location="
                         (value) => {
                             $emit('update:modelValue', value);
-                            isActive = false;
+                            // isActive = false;
+                            isSearchActive = false;
                         }
                     "
                 />

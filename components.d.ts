@@ -34,6 +34,6 @@ declare module 'vue' {
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']
     QualityCards: typeof import('./src/components/QualityCards.vue')['default']
     StatCards: typeof import('./src/components/StatCards.vue')['default']
-    SwiperButton: typeof import('./src/components/SwiperButton.vue')['default']
+    WeatherCondition: typeof import('./src/components/WeatherCondition.vue')['default']
   }
 }

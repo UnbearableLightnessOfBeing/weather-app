@@ -3,53 +3,39 @@ import SearchSvgUrl from "/interface/search.svg";
 import InlineSvg from "vue-inline-svg";
 import { createDebounce } from "../utils/debounce";
 
-const props = withDefaults(
-    defineProps<{
-        active?: boolean;
-        modelValue: string;
-    }>(),
-    {
-        active: false,
-    }
-);
+const props = defineProps<{
+    active: boolean;
+    isSearchActive: boolean;
+    modelValue: string;
+}>();
 
 const emits = defineEmits<{
     /* eslint-disable */
     (e: "update:active", value: boolean): void;
     (e: "update:modelValue", value: string): void;
+    (e: "update:isSearchActive", value: boolean): void;
     /* eslint-enable */
 }>();
-
-const isSearchActive = ref(false);
 
 const isInputShown = ref(false);
 
 watch(
-    computed(() => props.active),
+    computed(() => props.isSearchActive),
     () => {
-        setTimeout(() => {
-            isSearchActive.value = props.active;
-        }, 300);
-    }
+        if (props.isSearchActive) {
+            setTimeout(() => {
+                isInputShown.value = true;
+            }, 300);
+        } else {
+            isInputShown.value = false;
+        }
+    },
 );
-
-watch(isSearchActive, () => {
-    if (isSearchActive.value === false) {
-        isInputShown.value = false;
-        setTimeout(() => {
-            emits("update:active", false);
-        }, 300);
-    } else {
-        setTimeout(() => {
-            isInputShown.value = true;
-        }, 300);
-    }
-});
 
 const textInput = ref<HTMLInputElement | null>(null);
 
 const openSearch = () => {
-    if (!isSearchActive.value) {
+    if (!props.isSearchActive) {
         emits("update:active", true);
     }
     if (textInput.value) {
@@ -58,7 +44,7 @@ const openSearch = () => {
 };
 
 const bodyClickCallback = (): void => {
-    isSearchActive.value = false;
+    emits("update:isSearchActive", false);
 };
 
 onMounted(() => {
@@ -139,7 +125,9 @@ const debounceModelValue = createDebounce(updateModelValue, 400);
         var(--myColor3)
     );
 
-    transition: --myColor1 0.3s, --myColor3 0.3s,
+    transition:
+        --myColor1 0.3s,
+        --myColor3 0.3s,
         width 0.3s cubic-bezier(0.7, -0.01, 0.87, 0.21);
 
     &:hover {
