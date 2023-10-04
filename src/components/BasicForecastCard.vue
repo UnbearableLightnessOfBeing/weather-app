@@ -3,11 +3,16 @@ defineProps<{
     temperature: string;
     iconSrc: string;
     day: string;
+    active?: boolean;
 }>();
 </script>
 
 <template>
-    <BasicGlassWrapper class="basic-forecast-card">
+    <BasicGlassWrapper
+        class="basic-forecast-card"
+        :class="{ 'basic-forecast-card--active': active }"
+        :active="active"
+    >
         <div class="basic-forecast-card__temp">
             {{ temperature }}
         </div>
@@ -41,6 +46,12 @@ defineProps<{
 
     &__icon {
         margin-inline: auto;
+    }
+
+    &--active {
+        transform: scale(1.05) translateY(-5px);
+        // transform: ;
+        box-shadow: 0px 7px 15px var(--basic-dark-shadow);
     }
 }
 </style>

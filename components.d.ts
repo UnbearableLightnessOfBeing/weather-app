@@ -31,6 +31,7 @@ declare module 'vue' {
     CurrentDateInfo: typeof import('./src/components/CurrentDateInfo.vue')['default']
     CurrentWeatherInfo: typeof import('./src/components/CurrentWeatherInfo.vue')['default']
     CurrentWeatherStats: typeof import('./src/components/CurrentWeatherStats.vue')['default']
+    DailyForecastInfo: typeof import('./src/components/DailyForecastInfo.vue')['default']
     ForecastCardSwiper: typeof import('./src/components/ForecastCardSwiper.vue')['default']
     GeoLocationButton: typeof import('./src/components/GeoLocationButton.vue')['default']
     ItemListWrapper: typeof import('./src/components/ItemListWrapper.vue')['default']

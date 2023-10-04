@@ -26,6 +26,7 @@ withDefaults(
     border: 1px solid var(--basic-light-dull);
     border-radius: 11px;
     transition: all 0.2s ease;
+    box-shadow: -2px 2px 10px var(--basic-dark-dull);
 
     &:hover,
     &--active {

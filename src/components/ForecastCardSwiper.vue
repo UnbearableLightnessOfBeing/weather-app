@@ -11,6 +11,13 @@ import { useI18n } from "vue-i18n";
 
 defineProps<{
     forecastday?: DailyForecast[];
+    activeDay: number | null;
+}>();
+
+defineEmits<{
+    /* eslint-disable */
+    (e: "update:activeDay", value: number): void;
+    /* eslint-enable */
 }>();
 
 const { getIconUrl } = useConditionIcons();
@@ -61,6 +68,8 @@ const getTemperature = (temp: number): string => {
                 "
                 :day="getDayName(new Date(card.date).getDay())"
                 :icon-src="getIconUrl(card.day.condition.code)"
+                :active="activeDay === idx"
+                @click="$emit('update:activeDay', idx)"
             />
         </SwiperSlide>
     </Swiper>
@@ -68,7 +77,7 @@ const getTemperature = (temp: number): string => {
 
 <style scoped lang="scss">
 .swiper {
-    padding-inline: 16px;
+    padding: 16px;
 
     &__loader {
         width: 110px;

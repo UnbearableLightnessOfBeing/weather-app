@@ -2,15 +2,34 @@
 import InlineSvg from "vue-inline-svg";
 import ErrorSvgUrl from "/interface/error.svg";
 
-defineProps<{
-    text: string;
+const props = defineProps<{
+    text?: string;
+    iconWidth?: number;
+    iconHeight?: number;
+    iconSrc?: string;
 }>();
+
+const styles = computed(() => {
+    let style = "";
+    if (props.iconWidth) {
+        style += `width: ${props.iconWidth}; `;
+    }
+    if (props.iconHeight) {
+        style += `height: ${props.iconHeight}; `;
+    }
+
+    return style;
+});
 </script>
 
 <template>
     <div class="basic-error">
-        <InlineSvg :src="ErrorSvgUrl" class="basic-error__icon" />
-        <p class="basic-error__text">{{ text }}</p>
+        <InlineSvg
+            :src="iconSrc ?? ErrorSvgUrl"
+            class="basic-error__icon"
+            :style="styles"
+        />
+        <p v-if="text" class="basic-error__text">{{ text }}</p>
     </div>
 </template>
 

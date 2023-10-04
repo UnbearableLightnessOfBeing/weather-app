@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/vue-query";
 import { getCurrentWeather } from "./api/requests";
 import { useI18n } from "vue-i18n";
+import ShrugSvgUrl from "/interface/shrug.svg";
 
 const { t, locale } = useI18n();
 
@@ -15,18 +16,31 @@ const { data, isError } = useQuery({
     refetchOnWindowFocus: false,
     // refetchInterval: 30000,
 });
+
+const activeDay = ref<number | null>(null);
 </script>
 <template>
     <AppLayout class="app-layout">
         <BasicError v-if="isError" :text="t('errors.dataLoadingError')" />
         <AppPanelLayout v-else class="app-layout__left-panel">
+            <DailyForecastInfo v-if="activeDay" :active-day="activeDay" />
             <CurrentWeatherInfo
+                v-else
                 v-model:location="location"
                 :current="data?.current"
             />
-            <ForecastCardSwiper :forecastday="data?.forecast?.forecastday" />
+            <ForecastCardSwiper
+                :forecastday="data?.forecast?.forecastday"
+                v-model:active-day="activeDay"
+            />
         </AppPanelLayout>
-        <AppPanelLayout class="app-layout__right-panel">
+        <BasicError
+            v-if="isError"
+            :icon-src="ShrugSvgUrl"
+            :icon-width="150"
+            :icon-height="150"
+        />
+        <AppPanelLayout v-else class="app-layout__right-panel">
             <CurrentWeatherStats
                 v-model:location="location"
                 :current="data?.current"
