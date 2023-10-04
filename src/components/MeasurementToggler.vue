@@ -27,6 +27,7 @@ const isToggled = computed(() => measurement.value === "F");
 <style scoped lang="scss">
 .measurement-toggler {
     width: 58px;
+    min-width: 58px;
     height: calc(58px * 2);
     background-color: var(--basic-light-dull);
     border-radius: 12px;
@@ -71,6 +72,7 @@ const isToggled = computed(() => measurement.value === "F");
     .measurement-toggler {
         height: 40px;
         width: 102px;
+        min-width: 102px;
         display: flex;
         border-radius: 100px;
         padding: 6px 20px;

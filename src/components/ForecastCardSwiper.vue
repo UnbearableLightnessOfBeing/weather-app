@@ -30,7 +30,7 @@ const getDayName = (dayNum: number): string => {
 };
 
 const getTemperature = (temp: number): string => {
-    return temp + "°" + measurement.value;
+    return Math.round(temp) + "°" + measurement.value;
 };
 </script>
 
@@ -78,7 +78,7 @@ const getTemperature = (temp: number): string => {
 
 @media screen and (min-width: 1440px) {
     .swiper {
-        padding-inline: 66px;
+        padding-inline: 50px;
         max-width: calc(686px + 76px);
         margin-inline: 0;
     }

@@ -2,7 +2,7 @@
     "basic-light": "white",
     "basic-dark": "black",
     "accent": "#cdbbff",
-    "error": "#FBDAD7",
+    "error": "#ce5a5a",
 
     "basic-light-dull": "rgba(255, 255, 255, 0.3)",
     "basic-light-faded": "rgba(255, 255, 255, 0.7)",

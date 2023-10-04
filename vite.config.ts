@@ -13,7 +13,7 @@ export default defineConfig({
         vue(),
         Components({
             dts: true,
-            dirs: ["./src/components"],
+            dirs: ["./src/components", "./src/layouts"],
         }),
         AutoImport({
             dts: true,

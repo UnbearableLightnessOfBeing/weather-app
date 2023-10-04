@@ -34,6 +34,7 @@ const { getIconUrl } = useConditionIcons();
     &__text {
         font-size: var(--fs-large);
         font-weight: var(--fw-normal-thiner);
+        text-align: center;
     }
 
     &__icon-loader {
