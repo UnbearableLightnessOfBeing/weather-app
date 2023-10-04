@@ -6,7 +6,7 @@ import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
 
-locale.value = "ru";
+locale.value = "en";
 
 const breakPoints = useBreakpoints({
     desktop: 1400,
@@ -28,7 +28,7 @@ const { data, isError } = useQuery({
     <div class="app-layout">
         <div class="app-layout__wrapper">
             <div v-if="isError" class="app-layout__error">
-                {{ t("dataLoadingError") }}
+                {{ t("errors.dataLoadingError") }}
             </div>
             <div v-else class="app-layout__left">
                 <div class="info-block">
@@ -43,7 +43,9 @@ const { data, isError } = useQuery({
                     </div>
                     <MainInfo :current="data ? data.current : undefined" />
                 </div>
-                <ForecastCardSwiper />
+                <ForecastCardSwiper
+                    :forecastday="data ? data.forecast.forecastday : undefined"
+                />
             </div>
             <div class="info-block app-layout__right">
                 <LocationInterface v-if="isDesktop" v-model="location" />

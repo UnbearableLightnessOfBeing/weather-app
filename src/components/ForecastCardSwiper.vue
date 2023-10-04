@@ -5,10 +5,33 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
 import { useMeasurement } from "../composables/useMeasurement";
 import { useConditionIcons } from "../composables/useConditionIcons";
+import type { DailyForecast } from "../types/requestTypes";
+import dayNames from "../assets/date/dayNames.json";
+import { useI18n } from "vue-i18n";
+
+defineProps<{
+    forecastday?: DailyForecast[];
+}>();
 
 const { getIconUrl } = useConditionIcons();
 
 const { measurement } = useMeasurement();
+
+const { locale } = useI18n();
+
+const dayRange = computed(() => {
+    if (locale.value === "ru") {
+        return dayNames.ru.short;
+    } else return dayNames.en.short;
+});
+
+const getDayName = (dayNum: number): string => {
+    return dayRange.value[dayNum];
+};
+
+const getTemperature = (temp: number): string => {
+    return temp + "°" + measurement.value;
+};
 </script>
 
 <template>
@@ -29,11 +52,15 @@ const { measurement } = useMeasurement();
             },
         }"
     >
-        <SwiperSlide v-for="card in 7" :key="card">
+        <SwiperSlide v-for="(card, idx) in forecastday" :key="idx">
             <BasicForecastCard
-                :temperature="'24°' + measurement"
-                :day="'Mon'"
-                :icon-src="getIconUrl(1003)"
+                :temperature="
+                    measurement === 'C'
+                        ? getTemperature(card.day.avgtemp_c)
+                        : getTemperature(card.day.avgtemp_f)
+                "
+                :day="getDayName(new Date(card.date).getDay())"
+                :icon-src="getIconUrl(card.day.condition.code)"
             />
         </SwiperSlide>
     </Swiper>
@@ -42,6 +69,11 @@ const { measurement } = useMeasurement();
 <style scoped lang="scss">
 .swiper {
     padding-inline: 16px;
+
+    &__loader {
+        width: 110px;
+        height: 200px;
+    }
 }
 
 @media screen and (min-width: 1440px) {

@@ -35,6 +35,10 @@ defineProps<{
         text-align: center;
     }
 
+    &__temp {
+        font-weight: var(--fw-normal-thiner);
+    }
+
     &__icon {
         margin-inline: auto;
     }

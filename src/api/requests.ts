@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetCurrentWeatherResponse } from "../types/requestTypes";
+import { GetForecastResponse } from "../types/requestTypes";
 
 const base = "http://api.weatherapi.com/v1";
 const apiKey = "f9c31516a55b4bd7ae0112903232509";
@@ -7,6 +7,7 @@ const apiKey = "f9c31516a55b4bd7ae0112903232509";
 const endPoints = {
     current: "/current.json",
     search: "/search.json",
+    forecast: "/forecast.json",
 };
 
 const axiosInstance = axios.create({
@@ -18,10 +19,12 @@ const axiosInstance = axios.create({
 
 export const getCurrentWeather = async (location: string) => {
     const response = await axiosInstance
-        .get<GetCurrentWeatherResponse>(endPoints.current, {
+        .get<GetForecastResponse>(endPoints.forecast, {
             params: {
-                q: location + "asf",
+                q: location,
+                days: 7,
                 aqi: "yes",
+                alerts: "no",
             },
         })
         .catch(() => {

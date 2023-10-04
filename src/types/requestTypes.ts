@@ -50,7 +50,55 @@ export type CurrentWeather = {
     air_quality: AirQuality;
 };
 
-export type GetCurrentWeatherResponse = {
+export type DalyWeather = {
+    maxtemp_c: number;
+    maxtemp_f: number;
+    mintemp_c: number;
+    mintemp_f: number;
+    avgtemp_c: number;
+    avgtemp_f: number;
+    maxwind_mph: number;
+    maxwind_kph: number;
+    totalprecip_mm: number;
+    totalprecip_in: number;
+    totalsnow_cm: number;
+    avgvis_km: number;
+    avgvis_miles: number;
+    avghumidity: number;
+    daily_will_it_rain: number;
+    daily_chance_of_rain: number;
+    daily_will_it_snow: number;
+    daily_chance_of_snow: number;
+    condition: WeatherCondition;
+    uv: number;
+    air_quality: AirQuality;
+};
+
+export type AstronomyType = {
+    sunrise: string;
+    sunset: string;
+    moonrise: string;
+    moonset: string;
+    moon_phase: string;
+    moon_illumination: string;
+    is_moon_up: number;
+    is_sun_up: number;
+};
+
+export type DailyForecast = {
+    date: string;
+    date_epoch: number;
+    day: DalyWeather;
+    astro: AstronomyType;
+    hour: any[];
+};
+
+export type ForecastType = {
+    forecastday: DailyForecast[];
+};
+
+export type GetForecastResponse = {
     location: LocationType;
     current: CurrentWeather;
+    forecast: ForecastType;
 };

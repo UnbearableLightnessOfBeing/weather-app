@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { useMeasurement } from "../composables/useMeasurement";
+import { useI18n } from "vue-i18n";
 import type { CurrentWeather } from "../types/requestTypes";
 
 defineProps<{
     current?: CurrentWeather;
 }>();
+
+const i18n = useI18n();
+const locale = i18n.locale.value as "en" | "ru";
 
 const { measurement } = useMeasurement();
 
@@ -32,7 +36,7 @@ onUnmounted(() => {
                 :value="measurement === 'C' ? current.temp_c : current.temp_f"
                 :measurement="measurement"
             />
-            <CurrentDateInfo :language="'en'" :unix-date="unixCurrentDate" />
+            <CurrentDateInfo :language="locale" :unix-date="unixCurrentDate" />
             <BasicLoader v-if="!current" class="main-info__stats-loader" />
             <BasicWeatherStats
                 v-else

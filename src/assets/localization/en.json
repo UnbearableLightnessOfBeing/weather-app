@@ -1,3 +1,14 @@
 {
-    "dataLoadingError": "An error occured during data loading"
+    "errors" : {
+        "dataLoadingError": "An error occured during data loading"
+    },
+    "dayNames": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ]
 }
