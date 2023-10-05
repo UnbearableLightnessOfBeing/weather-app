@@ -56,7 +56,9 @@ const activeDay = ref<number | null>(null);
         />
         <AppPanelLayout v-else class="app-layout__right-panel">
             <Transition name="panel" mode="out-in">
-                <div v-if="typeof activeDay === 'number' && data">aoba</div>
+                <DailyForecastStats
+                    v-if="typeof activeDay === 'number' && data"
+                />
                 <CurrentWeatherStats
                     v-else
                     v-model:location="location"
