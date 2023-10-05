@@ -23,10 +23,11 @@ const activeDay = ref<number | null>(null);
     <AppLayout class="app-layout">
         <BasicError v-if="isError" :text="t('errors.dataLoadingError')" />
         <AppPanelLayout v-else class="app-layout__left-panel">
-            <Transition name="left-panel" mode="out-in">
+            <Transition name="panel" mode="out-in">
                 <DailyForecastInfo
                     v-if="typeof activeDay === 'number' && data"
                     :daily-forecast="data?.forecast?.forecastday[activeDay]"
+                    :location="location"
                     @unset-active-day="activeDay = null"
                 />
                 <CurrentWeatherInfo
@@ -35,6 +36,13 @@ const activeDay = ref<number | null>(null);
                     :current="data?.current"
                 />
             </Transition>
+            <MeasurementToggler
+                class="app-layout__measurement-toggler"
+                :class="{
+                    'app-layout__measurement-toggler--daily-view':
+                        typeof activeDay === 'number',
+                }"
+            />
             <ForecastCardSwiper
                 v-model:active-day="activeDay"
                 :forecastday="data?.forecast?.forecastday"
@@ -47,10 +55,14 @@ const activeDay = ref<number | null>(null);
             :icon-height="150"
         />
         <AppPanelLayout v-else class="app-layout__right-panel">
-            <CurrentWeatherStats
-                v-model:location="location"
-                :current="data?.current"
-            />
+            <Transition name="panel" mode="out-in">
+                <div v-if="typeof activeDay === 'number' && data">aoba</div>
+                <CurrentWeatherStats
+                    v-else
+                    v-model:location="location"
+                    :current="data?.current"
+                />
+            </Transition>
         </AppPanelLayout>
     </AppLayout>
 </template>
@@ -58,8 +70,23 @@ const activeDay = ref<number | null>(null);
 <style scoped lang="scss">
 .app-layout {
     &__left-panel {
+        position: relative;
+
         & > * + * {
             margin-top: 30px;
+        }
+    }
+
+    &__measurement-toggler {
+        position: absolute;
+        top: 106px;
+        right: 16px;
+        left: auto;
+        margin-top: 0;
+        transition: all 0.6s ease;
+
+        &--daily-view {
+            top: 16px;
         }
     }
 
@@ -98,18 +125,28 @@ const activeDay = ref<number | null>(null);
             border-left: 2px solid var(--basic-light-dull);
             backdrop-filter: blur(21px);
         }
+
+        &__measurement-toggler {
+            top: 40px;
+            right: 66px;
+        }
     }
 }
 
-.left-panel {
+.panel {
     &-enter-active,
     &-leave-active {
-        transition: opacity 0.2s ease;
+        transition: all 0.2s ease;
     }
 
-    &-enter-from,
+    &-enter-from {
+        opacity: 0;
+        transform: scale(0.975) translateY(5px);
+    }
+
     &-leave-to {
         opacity: 0;
+        transform: scale(1.025) translateY(-5px);
     }
 }
 </style>

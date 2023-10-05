@@ -27,10 +27,10 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
             :model-value="location"
             @update:model-value="(value) => $emit('update:location', value)"
         />
-        <div class="flex-between">
-            <WeatherCondition :condition="current?.condition" />
-            <MeasurementToggler />
-        </div>
+        <!-- <div class="flex-between"> -->
+        <WeatherCondition :condition="current?.condition" />
+        <!-- <MeasurementToggler /> -->
+        <!-- </div> -->
         <MainInfo :current="current" />
     </div>
 </template>
@@ -38,17 +38,18 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
 <style scoped lang="scss">
 .current-weather-info {
     padding: 16px;
+    // position: relative;
 
     & > * + * {
         margin-top: 20px;
     }
 }
-.flex-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 10px;
-}
+// .flex-between {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: flex-start;
+//     gap: 10px;
+// }
 
 @media screen and (min-width: 1440px) {
     .current-weather-info {
@@ -57,8 +58,8 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
         padding-block: 40px;
     }
 
-    .flex-between {
-        align-items: center;
-    }
+    // .flex-between {
+    //     align-items: center;
+    // }
 }
 </style>

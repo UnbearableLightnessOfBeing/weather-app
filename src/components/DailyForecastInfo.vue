@@ -7,6 +7,7 @@ import { useI18n } from "vue-i18n";
 
 defineProps<{
     dailyForecast: DailyForecast;
+    location: string;
 }>();
 
 defineEmits<{
@@ -33,11 +34,14 @@ const computedLocale = computed<"en" | "ru">(() => {
             class="daily-forecast-info__back-button"
             @click="$emit('unsetActiveDay')"
         />
-        <CurrentDateInfo
-            :language="computedLocale"
-            :unix-date="new Date(dailyForecast.date)"
-            :time-hidden="true"
-        />
+        <div class="daily-forecast-info__container">
+            <CurrentDateInfo
+                :language="computedLocale"
+                :unix-date="new Date(dailyForecast.date)"
+                :time-hidden="true"
+            />
+            <div class="daily-forecast-info__location-name">{{ location }}</div>
+        </div>
         <div class="daily-forecast-info__container">
             <WeatherCondition :condition="dailyForecast.day.condition" />
             <BasicDailyTemperature
@@ -90,6 +94,11 @@ const computedLocale = computed<"en" | "ru">(() => {
         flex-direction: column;
         gap: 20px;
     }
+
+    &__location-name {
+        font-size: var(--fs-normal);
+        font-weight: var(--fw-normal-thiner);
+    }
 }
 
 @media screen and (min-width: 1440px) {
@@ -108,6 +117,11 @@ const computedLocale = computed<"en" | "ru">(() => {
 
         &__temp {
             min-width: 285px;
+        }
+
+        &__location-name {
+            font-size: var(--fs-heading);
+            text-align: center;
         }
     }
 }
