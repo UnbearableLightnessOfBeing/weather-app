@@ -58,6 +58,7 @@ const activeDay = ref<number | null>(null);
             <Transition name="panel" mode="out-in">
                 <DailyForecastStats
                     v-if="typeof activeDay === 'number' && data"
+                    :daily-forecast="data?.forecast?.forecastday[activeDay]"
                 />
                 <CurrentWeatherStats
                     v-else

@@ -1,8 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { DailyForecast } from "../types/requestTypes";
+
+defineProps<{
+    dailyForecast: DailyForecast;
+}>();
+</script>
 
 <template>
     <div class="daily-forecast-stats">
-        <DailForecastAstrology />
+        <DailForecastAstrology :astro="dailyForecast.astro" />
     </div>
 </template>
 

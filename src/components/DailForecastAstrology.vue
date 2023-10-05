@@ -1,8 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { AstronomyType } from "../types/requestTypes";
+
+defineProps<{
+    astro: AstronomyType;
+}>();
+</script>
 
 <template>
     <div class="daily-forecast-astrology">
-        <BasicAstrologyClock />
+        <BasicAstrologyClock :title="'Sunrise'" :time="astro.sunrise" />
+        <BasicAstrologyClock :title="'Sunset'" :time="astro.sunset" />
     </div>
 </template>
 
