@@ -23,15 +23,21 @@ const activeDay = ref<number | null>(null);
     <AppLayout class="app-layout">
         <BasicError v-if="isError" :text="t('errors.dataLoadingError')" />
         <AppPanelLayout v-else class="app-layout__left-panel">
-            <DailyForecastInfo v-if="activeDay" :active-day="activeDay" />
-            <CurrentWeatherInfo
-                v-else
-                v-model:location="location"
-                :current="data?.current"
-            />
+            <Transition name="left-panel" mode="out-in">
+                <DailyForecastInfo
+                    v-if="typeof activeDay === 'number' && data"
+                    :daily-forecast="data?.forecast?.forecastday[activeDay]"
+                    @unset-active-day="activeDay = null"
+                />
+                <CurrentWeatherInfo
+                    v-else
+                    v-model:location="location"
+                    :current="data?.current"
+                />
+            </Transition>
             <ForecastCardSwiper
-                :forecastday="data?.forecast?.forecastday"
                 v-model:active-day="activeDay"
+                :forecastday="data?.forecast?.forecastday"
             />
         </AppPanelLayout>
         <BasicError
@@ -92,6 +98,18 @@ const activeDay = ref<number | null>(null);
             border-left: 2px solid var(--basic-light-dull);
             backdrop-filter: blur(21px);
         }
+    }
+}
+
+.left-panel {
+    &-enter-active,
+    &-leave-active {
+        transition: opacity 0.2s ease;
+    }
+
+    &-enter-from,
+    &-leave-to {
+        opacity: 0;
     }
 }
 </style>

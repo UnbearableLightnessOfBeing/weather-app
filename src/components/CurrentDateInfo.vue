@@ -6,6 +6,7 @@ type Language = "en" | "ru";
 const props = defineProps<{
     language: Language;
     unixDate: Date;
+    timeHidden?: boolean;
 }>();
 
 const monthNames = computed(() => {
@@ -51,8 +52,8 @@ const time = computed(() => {
             <div class="current-date-info__day">
                 {{ day }}
             </div>
-            <BasicVerticalDivider />
-            <div class="current-date-info__time">
+            <BasicVerticalDivider v-if="!timeHidden" />
+            <div v-if="!timeHidden" class="current-date-info__time">
                 {{ time }}
             </div>
         </div>

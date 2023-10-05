@@ -10,5 +10,19 @@
         "Thursday",
         "Friday",
         "Saturday"
-    ]
+    ],
+    "swiperTitle": "Daily forecast",
+    "weatherStats": {
+        "precipitation": "Precipitation",
+        "wind": "Wind",
+        "humidity": "Humidity",
+        "visibility": "Visibility",
+        "rain-chance": "Rain chance",
+        "snow-chance": "Snow chance"
+    },
+    "measurements": {
+        "mm": "mm",
+        "kmh": "km/h",
+        "km": "km"
+    }
 }

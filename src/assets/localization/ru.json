@@ -10,5 +10,19 @@
         "Четверг",
         "Пятница",
         "Суббота"
-    ]
+    ],
+    "swiperTitle": "Недельный прогноз",
+    "weatherStats": {
+        "precipitation": "Осадки",
+        "wind": "Ветер",
+        "humidity": "Влажность",
+        "visibility": "Видимость",
+        "rain-chance": "Вероятность дождя",
+        "snow-chance": "Верояность снега"
+    },
+    "measurements": {
+        "mm": "мм",
+        "kmh": "км/ч",
+        "km": "км"
+    }
 }

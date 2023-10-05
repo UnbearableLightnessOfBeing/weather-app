@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import FeelsLikeSvgUrl from "/interface/feels-like.svg";
 import CloudCoverSvgUrl from "/interface/cloud-cover.svg";
-import WindGustSvgUrl from "/interface/wind-gust.svg";
+import VisibilitySvgUrl from "/interface/visibility.svg";
 import PressureSvgUrl from "/interface/pressure.svg";
 import { useMeasurement } from "../composables/useMeasurement";
 import { CurrentWeather } from "../types/requestTypes";
@@ -39,10 +39,10 @@ const { measurement } = useMeasurement();
             <BasicLoader v-if="!current" class="stat-cards__loader" />
             <BasicStatCard
                 v-else
-                :icon-src="WindGustSvgUrl"
-                :title="'wind gust'"
-                :value="`${current.gust_kph}`"
-                :measurement="'km/h'"
+                :icon-src="VisibilitySvgUrl"
+                :title="'visibility'"
+                :value="`${current.vis_km}`"
+                :measurement="'km'"
             />
             <BasicLoader v-if="!current" class="stat-cards__loader" />
             <BasicStatCard

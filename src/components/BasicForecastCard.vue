@@ -50,8 +50,7 @@ defineProps<{
 
     &--active {
         transform: scale(1.05) translateY(-5px);
-        // transform: ;
-        box-shadow: 0px 7px 15px var(--basic-dark-shadow);
+        box-shadow: 0px 5px 12px var(--basic-dark-shadow);
     }
 }
 </style>

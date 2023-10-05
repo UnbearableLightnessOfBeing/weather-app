@@ -24,7 +24,7 @@ const { getIconUrl } = useConditionIcons();
 
 const { measurement } = useMeasurement();
 
-const { locale } = useI18n();
+const { t, locale } = useI18n();
 
 const dayRange = computed(() => {
     if (locale.value === "ru") {
@@ -59,6 +59,9 @@ const getTemperature = (temp: number): string => {
             },
         }"
     >
+        <template #container-start>
+            <span class="swiper__title"> {{ t("swiperTitle") }} </span>
+        </template>
         <SwiperSlide v-for="(card, idx) in forecastday" :key="idx">
             <BasicForecastCard
                 :temperature="
@@ -78,16 +81,27 @@ const getTemperature = (temp: number): string => {
 <style scoped lang="scss">
 .swiper {
     padding: 16px;
+    padding-top: 0;
 
     &__loader {
         width: 110px;
         height: 200px;
     }
+
+    &__title {
+        display: block;
+        padding-bottom: 12px;
+        font-size: var(--fs-normal);
+        font-weight: var(--fw-normal-thiner);
+        width: 100%;
+        text-align: center;
+    }
 }
 
 @media screen and (min-width: 1440px) {
     .swiper {
-        padding-inline: 50px;
+        padding-right: 35px;
+        padding-left: 66px;
         max-width: calc(686px + 76px);
         margin-inline: 0;
     }

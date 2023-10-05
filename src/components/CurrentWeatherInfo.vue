@@ -28,12 +28,10 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
             @update:model-value="(value) => $emit('update:location', value)"
         />
         <div class="flex-between">
-            <WeatherCondition
-                :condition="current ? current.condition : undefined"
-            />
+            <WeatherCondition :condition="current?.condition" />
             <MeasurementToggler />
         </div>
-        <MainInfo :current="current ? current : undefined" />
+        <MainInfo :current="current" />
     </div>
 </template>
 
@@ -54,6 +52,7 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
 
 @media screen and (min-width: 1440px) {
     .current-weather-info {
+        height: 545px;
         padding-inline: 66px;
         padding-block: 40px;
     }

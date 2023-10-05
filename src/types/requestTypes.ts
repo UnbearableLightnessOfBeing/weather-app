@@ -50,7 +50,7 @@ export type CurrentWeather = {
     air_quality: AirQuality;
 };
 
-export type DalyWeather = {
+export type DailyWeather = {
     maxtemp_c: number;
     maxtemp_f: number;
     mintemp_c: number;
@@ -88,7 +88,7 @@ export type AstronomyType = {
 export type DailyForecast = {
     date: string;
     date_epoch: number;
-    day: DalyWeather;
+    day: DailyWeather;
     astro: AstronomyType;
     hour: any[];
 };
