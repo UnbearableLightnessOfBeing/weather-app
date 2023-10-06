@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import { AirQuality } from "../types/requestTypes";
+import { getUvIndecies } from "../data/uvIndecies";
+import { getUsEpaIndecies } from "../data/usEpaIndecies";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps<{
     airQuality?: AirQuality;
     uvIndex?: number;
 }>();
 
-const usEpaIndecies: Record<number, string> = {
-    0: "TBD",
-    1: "Good",
-    2: "Moderate",
-    3: "Unhealthy",
-    4: "Unhealthy",
-    5: "Very Unhealthy",
-    6: "Hazardous",
-};
+const { t, locale } = useI18n();
 
 const epaIndex = computed(() => {
     if (props.airQuality && props.airQuality["us-epa-index"]) {
@@ -22,22 +17,14 @@ const epaIndex = computed(() => {
     } else return 0;
 });
 
-const evaluation = computed(() => {
-    return usEpaIndecies[epaIndex.value];
-});
+const uvIndecies = computed(() => getUvIndecies(locale.value as "en" | "ru"));
+const usEpaIndecies = computed(() =>
+    getUsEpaIndecies(locale.value as "en" | "ru"),
+);
 
-const uvIndecies: Record<number, string> = {
-    1: "Low",
-    2: "Low",
-    3: "Moderate",
-    4: "Moderate",
-    5: "Moderate",
-    6: "High",
-    7: "High",
-    8: "Very high",
-    9: "Very high",
-    10: "Very high",
-};
+const evaluation = computed(() => {
+    return usEpaIndecies.value[epaIndex.value];
+});
 </script>
 
 <template>
@@ -49,7 +36,7 @@ const uvIndecies: Record<number, string> = {
                 :value="epaIndex"
                 :max-value="6"
                 :evaluation="evaluation"
-                :title="'Air Quality'"
+                :title="t('qualityStats.airQuality')"
             />
             <BasicLoader v-if="!uvIndex" class="quality-cards__loader" />
             <BasicQualityCard
@@ -57,7 +44,7 @@ const uvIndecies: Record<number, string> = {
                 :value="uvIndex"
                 :max-value="10"
                 :evaluation="uvIndecies[Math.round(Number(uvIndex))]"
-                :title="'UV Index'"
+                :title="t('qualityStats.uvIndex')"
             />
         </div>
     </div>

@@ -29,6 +29,7 @@ defineProps<{
         font-size: var(--fs-heading);
         font-weight: var(--fw-normal-thiner);
         text-align: center;
+        max-height: 34px;
     }
 }
 

@@ -2,6 +2,7 @@
 import WindDirSvgUrl from "/stats/wind-direction.svg";
 import HumiditySvgUrl from "/stats/humidity.svg";
 import RainSvgUrl from "/stats/rain.svg";
+import { useI18n } from "vue-i18n";
 
 defineProps<{
     windSpeed: number;
@@ -9,6 +10,8 @@ defineProps<{
     humidity: number;
     percipitations: number;
 }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -19,20 +22,20 @@ defineProps<{
                 class="basic-weather-stats__wind"
                 :style="`transform: rotate(${windDegree - 90}deg)`"
             />
-            <div>Wind</div>
-            <div>{{ windSpeed }} km/h</div>
+            <div>{{ t("weatherStats.wind") }}</div>
+            <div>{{ windSpeed }} {{ t("measurements.kmh") }}</div>
         </div>
         <BasicVerticalDivider class="basic-weather-stats__divider" />
         <div class="basic-weather-stats__stat">
             <BasicStatIcon :icon-src="HumiditySvgUrl" />
-            <div>Hum</div>
+            <div>{{ t("weatherStats.humidity") }}</div>
             <div>{{ humidity }} %</div>
         </div>
         <BasicVerticalDivider class="basic-weather-stats__divider" />
         <div class="basic-weather-stats__stat">
             <BasicStatIcon :icon-src="RainSvgUrl" />
-            <div>Rain</div>
-            <div>{{ percipitations }} mm</div>
+            <div>{{ t("weatherStats.precipitation") }}</div>
+            <div>{{ percipitations }} {{ t("measurements.mm") }}</div>
         </div>
     </div>
 </template>

@@ -27,7 +27,7 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
             :model-value="location"
             @update:model-value="(value) => $emit('update:location', value)"
         />
-        <StatCards :current="current ?? undefined" />
+        <StatCards :current="current" />
         <BasicHorizontalDivider />
         <QualityCards
             :air-quality="current?.air_quality"

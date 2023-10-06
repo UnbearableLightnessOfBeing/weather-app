@@ -8,7 +8,9 @@ defineProps<{
 }>();
 
 const i18n = useI18n();
-const locale = i18n.locale.value as "en" | "ru";
+const locale = computed(() => {
+    return i18n.locale.value as "en" | "ru";
+});
 
 const { measurement } = useMeasurement();
 

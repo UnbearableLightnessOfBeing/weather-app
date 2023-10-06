@@ -5,12 +5,15 @@ import VisibilitySvgUrl from "/interface/visibility.svg";
 import PressureSvgUrl from "/interface/pressure.svg";
 import { useMeasurement } from "../composables/useMeasurement";
 import { CurrentWeather } from "../types/requestTypes";
+import { useI18n } from "vue-i18n";
 
 defineProps<{
     current?: CurrentWeather;
 }>();
 
 const { measurement } = useMeasurement();
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -20,7 +23,7 @@ const { measurement } = useMeasurement();
             <BasicStatCard
                 v-else
                 :icon-src="FeelsLikeSvgUrl"
-                :title="'feels like'"
+                :title="t('weatherStats.feelsLike')"
                 :value="
                     measurement === 'C'
                         ? current.feelslike_c
@@ -32,7 +35,7 @@ const { measurement } = useMeasurement();
             <BasicStatCard
                 v-else
                 :icon-src="CloudCoverSvgUrl"
-                :title="'cloud coverage'"
+                :title="t('weatherStats.cloudCoverage')"
                 :value="`${current.cloud}`"
                 :measurement="'%'"
             />
@@ -40,15 +43,15 @@ const { measurement } = useMeasurement();
             <BasicStatCard
                 v-else
                 :icon-src="VisibilitySvgUrl"
-                :title="'visibility'"
+                :title="t('weatherStats.visibility')"
                 :value="`${current.vis_km}`"
-                :measurement="'km'"
+                :measurement="t('measurements.km')"
             />
             <BasicLoader v-if="!current" class="stat-cards__loader" />
             <BasicStatCard
                 v-else
                 :icon-src="PressureSvgUrl"
-                :title="'pressure'"
+                :title="t('weatherStats.pressure')"
                 :value="`${current.pressure_mb}`"
                 :measurement="'hPa'"
             />

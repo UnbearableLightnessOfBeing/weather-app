@@ -17,6 +17,9 @@
         "wind": "Wind",
         "humidity": "Humidity",
         "visibility": "Visibility",
+        "feelsLike": "Feels like",
+        "pressure": "Pressure",
+        "cloudCoverage": "Cloud coverage",
         "rain-chance": "Rain chance",
         "snow-chance": "Snow chance"
     },
@@ -26,7 +29,9 @@
         "km": "km"
     },
     "qualityStats": {
-        "airQualityTooltip": "The air qulity information is only provided for the next 3 days"
+        "airQualityTooltip": "The air qulity information is only provided for the next 3 days",
+        "uvIndex": "UV Index",
+        "airQuality": "Air Quality"
     },
     "astro" : {
         "sunrise": "Sunrise",
