@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ApiTest: typeof import('./src/components/ApiTest.vue')['default']
     AppLayout: typeof import('./src/layouts/AppLayout.vue')['default']
     AppPanelLayout: typeof import('./src/layouts/AppPanelLayout.vue')['default']
     BasicAstroClock: typeof import('./src/components/BasicAstroClock.vue')['default']
