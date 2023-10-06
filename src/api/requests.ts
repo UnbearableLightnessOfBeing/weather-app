@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetForecastResponse } from "../types/requestTypes";
+import { GetForecastResponse, LocationType } from "../types/requestTypes";
 
 const base = "http://api.weatherapi.com/v1";
 const apiKey = "f9c31516a55b4bd7ae0112903232509";
@@ -8,6 +8,7 @@ const endPoints = {
     current: "/current.json",
     search: "/search.json",
     forecast: "/forecast.json",
+    timezone: "/timezone.json",
 };
 
 const axiosInstance = axios.create({
@@ -46,6 +47,25 @@ export const getSearchResults = async (location: string) => {
         .get(endPoints.search, {
             params: {
                 q: location,
+            },
+        })
+        .catch(() => {
+            throw new Error("error has occured");
+        });
+
+    return response.data;
+};
+
+export const getCurrentLocation = async (
+    latitude: number,
+    longitude: number,
+) => {
+    const response = await axiosInstance
+        .get<{
+            location: LocationType;
+        }>(endPoints.timezone, {
+            params: {
+                q: `${latitude},${longitude}`,
             },
         })
         .catch(() => {

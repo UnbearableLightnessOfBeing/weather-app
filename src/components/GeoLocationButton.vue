@@ -2,12 +2,37 @@
 import LocationSvgUrl from "/interface/geo-location.svg";
 import InlineSvg from "vue-inline-svg";
 import { useGeolocation } from "@vueuse/core";
+import { getCurrentLocation } from "../api/requests";
+import { useQuery } from "@tanstack/vue-query";
+
+const emits = defineEmits<{
+    //eslint-disable-next-line
+    (e: "update:location", value: string): void;
+}>();
 
 const { coords, error } = useGeolocation();
 
-const showCoords = () => {
-    console.log("coords: ", coords.value);
-    console.log("error: ", error.value);
+const latitude = computed(() => coords.value.latitude);
+const longitude = computed(() => coords.value.longitude);
+
+const { data, refetch, isError } = useQuery({
+    queryKey: ["currentLocation"],
+    queryFn: () => getCurrentLocation(latitude.value, longitude.value),
+    refetchOnWindowFocus: false,
+    enabled: false,
+});
+
+const setLocation = async () => {
+    if (!error.value) {
+        await refetch();
+
+        if (data.value && !isError.value) {
+            emits(
+                "update:location",
+                `${data.value.location.name}, ${data.value.location.country}`,
+            );
+        }
+    }
 };
 </script>
 
@@ -18,7 +43,7 @@ const showCoords = () => {
             content: 'Set current location',
         }"
         class="geo-location-button"
-        @click="showCoords"
+        @click="setLocation"
     >
         <InlineSvg :src="LocationSvgUrl" class="geo-location-button__icon" />
     </div>

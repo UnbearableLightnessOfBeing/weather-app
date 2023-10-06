@@ -6,7 +6,7 @@ import ShrugSvgUrl from "/interface/shrug.svg";
 
 const { t, locale } = useI18n();
 
-const location = ref("Bryansk");
+const location = ref("Moscow, Russia");
 
 const { data, isError } = useQuery({
     queryKey: ["currentWeather", location, locale],

@@ -69,7 +69,11 @@ watch(searchValue, () => {
             />
             <Transition appear name="location">
                 <div v-if="!isActive" class="location-interface__location">
-                    <GeoLocationButton />
+                    <GeoLocationButton
+                        @update:location="
+                            (value) => $emit('update:modelValue', value)
+                        "
+                    />
                     <div
                         v-tooltip="{
                             content: modelValue,
