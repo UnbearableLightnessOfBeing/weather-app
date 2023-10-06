@@ -64,6 +64,7 @@ const time = computed(() => {
 .current-date-info {
     width: fit-content;
     height: fit-content;
+    min-width: 175px;
 
     & > * + * {
         margin-top: 15px;

@@ -29,12 +29,12 @@ const { getIconUrl } = useConditionIcons();
     display: flex;
     flex-direction: column;
     gap: 10px;
-    align-items: center;
+    align-items: flex-start;
 
     &__text {
         font-size: var(--fs-large);
         font-weight: var(--fw-normal-thiner);
-        text-align: center;
+        padding-right: 90px;
     }
 
     &__icon-loader {
@@ -51,6 +51,11 @@ const { getIconUrl } = useConditionIcons();
 @media screen and (min-width: 600px) {
     .weather-condition {
         flex-direction: row;
+        align-items: center;
+
+        &__text {
+            padding-right: 0px;
+        }
     }
 }
 </style>

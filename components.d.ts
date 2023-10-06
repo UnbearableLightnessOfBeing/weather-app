@@ -43,6 +43,7 @@ declare module 'vue' {
     GeoLocationButton: typeof import('./src/components/GeoLocationButton.vue')['default']
     HourlyForecastSwiper: typeof import('./src/components/HourlyForecastSwiper.vue')['default']
     ItemListWrapper: typeof import('./src/components/ItemListWrapper.vue')['default']
+    LangueageSwitcher: typeof import('./src/components/LangueageSwitcher.vue')['default']
     LocationInterface: typeof import('./src/components/LocationInterface.vue')['default']
     MainInfo: typeof import('./src/components/MainInfo.vue')['default']
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']

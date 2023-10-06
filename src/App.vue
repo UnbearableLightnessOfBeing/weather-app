@@ -6,13 +6,12 @@ import ShrugSvgUrl from "/interface/shrug.svg";
 
 const { t, locale } = useI18n();
 
-locale.value = "en";
-
 const location = ref("Bryansk");
 
 const { data, isError } = useQuery({
-    queryKey: ["currentWeather", location],
-    queryFn: () => getCurrentWeather(location.value),
+    queryKey: ["currentWeather", location, locale],
+    queryFn: () =>
+        getCurrentWeather(location.value, locale.value as "en" | "ru"),
     refetchOnWindowFocus: false,
     // refetchInterval: 30000,
 });
@@ -40,6 +39,13 @@ const activeDay = ref<number | null>(null);
                 class="app-layout__measurement-toggler"
                 :class="{
                     'app-layout__measurement-toggler--daily-view':
+                        typeof activeDay === 'number',
+                }"
+            />
+            <LangueageSwitcher
+                class="app-layout__language-switcher"
+                :class="{
+                    'app-layout__language-switcher--daily-view':
                         typeof activeDay === 'number',
                 }"
             />
@@ -82,10 +88,23 @@ const activeDay = ref<number | null>(null);
 
     &__measurement-toggler {
         position: absolute;
-        top: 106px;
+        top: 166px;
         right: 16px;
         left: auto;
         margin-top: 0;
+        transition: all 0.6s ease;
+
+        &--daily-view {
+            top: 76px;
+        }
+    }
+
+    &__language-switcher {
+        position: absolute;
+        margin-top: 0;
+        top: 106px;
+        right: 16px;
+        left: auto;
         transition: all 0.6s ease;
 
         &--daily-view {
@@ -130,8 +149,21 @@ const activeDay = ref<number | null>(null);
         }
 
         &__measurement-toggler {
+            top: 100px;
+            right: 66px;
+
+            &--daily-view {
+                top: 40px;
+            }
+        }
+
+        &__language-switcher {
             top: 40px;
             right: 66px;
+
+            &--daily-view {
+                right: 196px;
+            }
         }
     }
 }

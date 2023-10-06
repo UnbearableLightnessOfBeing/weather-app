@@ -31,5 +31,9 @@
     "astro" : {
         "sunrise": "Sunrise",
         "sunset": "Sunset"
+    },
+    "language" : {
+        "caption": "Lang",
+        "tooltip": "Click to change the language"
     }
 }

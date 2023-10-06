@@ -17,7 +17,10 @@ const axiosInstance = axios.create({
     },
 });
 
-export const getCurrentWeather = async (location: string) => {
+export const getCurrentWeather = async (
+    location: string,
+    lang: "en" | "ru",
+) => {
     const response = await axiosInstance
         .get<GetForecastResponse>(endPoints.forecast, {
             params: {
@@ -25,6 +28,7 @@ export const getCurrentWeather = async (location: string) => {
                 days: 7,
                 aqi: "yes",
                 alerts: "no",
+                lang: lang !== "en" ? lang : "",
             },
         })
         .catch(() => {
