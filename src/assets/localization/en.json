@@ -24,5 +24,12 @@
         "mm": "mm",
         "kmh": "km/h",
         "km": "km"
+    },
+    "qualityStats": {
+        "airQualityTooltip": "The air qulity information is only provided for the next 3 days"
+    },
+    "astro" : {
+        "sunrise": "Sunrise",
+        "sunset": "Sunset"
     }
 }

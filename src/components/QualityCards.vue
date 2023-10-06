@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { CurrentWeather } from "../types/requestTypes";
+import { AirQuality } from "../types/requestTypes";
 
 const props = defineProps<{
-    current?: CurrentWeather;
+    airQuality?: AirQuality;
+    uvIndex?: number;
 }>();
 
 const usEpaIndecies: Record<number, string> = {
+    0: "TBD",
     1: "Good",
     2: "Moderate",
     3: "Unhealthy",
@@ -15,8 +17,8 @@ const usEpaIndecies: Record<number, string> = {
 };
 
 const epaIndex = computed(() => {
-    if (props.current) {
-        return props.current.air_quality["us-epa-index"] as number;
+    if (props.airQuality && props.airQuality["us-epa-index"]) {
+        return props.airQuality["us-epa-index"] as number;
     } else return 0;
 });
 
@@ -41,7 +43,7 @@ const uvIndecies: Record<number, string> = {
 <template>
     <div class="quality-cards">
         <div class="quality-cards__content">
-            <BasicLoader v-if="!current" class="quality-cards__loader" />
+            <BasicLoader v-if="!airQuality" class="quality-cards__loader" />
             <BasicQualityCard
                 v-else
                 :value="epaIndex"
@@ -49,12 +51,12 @@ const uvIndecies: Record<number, string> = {
                 :evaluation="evaluation"
                 :title="'Air Quality'"
             />
-            <BasicLoader v-if="!current" class="quality-cards__loader" />
+            <BasicLoader v-if="!uvIndex" class="quality-cards__loader" />
             <BasicQualityCard
                 v-else
-                :value="current.uv"
+                :value="uvIndex"
                 :max-value="10"
-                :evaluation="uvIndecies[Math.round(Number(current.uv))]"
+                :evaluation="uvIndecies[Math.round(Number(uvIndex))]"
                 :title="'UV Index'"
             />
         </div>

@@ -27,6 +27,7 @@ defineProps<{
 <style scoped lang="scss">
 .basic-daily-temperature {
     display: flex;
+    justify-content: center;
     gap: 15px;
 
     &__temp-item {
@@ -46,6 +47,12 @@ defineProps<{
 
     &__border {
         color: var(--basic-light-faded);
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .basic-daily-temperature {
+        justify-content: flex-start;
     }
 }
 </style>

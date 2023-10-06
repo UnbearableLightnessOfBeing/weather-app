@@ -116,7 +116,7 @@ const computedLocale = computed<"en" | "ru">(() => {
         }
 
         &__temp {
-            min-width: 285px;
+            min-width: 300px;
         }
 
         &__location-name {

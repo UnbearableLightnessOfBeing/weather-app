@@ -51,6 +51,7 @@ defineProps<{
     &__title,
     &__time {
         font-size: var(--fs-heading);
+        font-weight: var(--fw-normal-thiner);
         text-align: center;
     }
 

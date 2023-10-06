@@ -49,10 +49,12 @@ const onEnter = (el: any, done: any) => {
             </div>
         </Transition>
         <div class="basic-quality-monitor__content">
-            <div class="basic-quality-monitor__value">
+            <div v-if="value !== 0" class="basic-quality-monitor__value">
                 {{ value }}/{{ maxValue }}
             </div>
-            <div class="basic-quality-monitor__eval">{{ evaluation }}</div>
+            <div class="basic-quality-monitor__eval">
+                {{ evaluation }} <BasicInfoSign v-if="value === 0" />
+            </div>
         </div>
     </div>
 </template>
@@ -72,6 +74,7 @@ const onEnter = (el: any, done: any) => {
         top: 0;
         left: 0;
         width: 100%;
+        z-index: 0;
     }
 
     &__indicator {
@@ -91,6 +94,7 @@ const onEnter = (el: any, done: any) => {
 
     &__content {
         display: block;
+        z-index: 1;
 
         & > * + * {
             margin-top: 8px;
