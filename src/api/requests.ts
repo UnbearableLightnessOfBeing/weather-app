@@ -20,7 +20,7 @@ const axiosInstance = axios.create({
 
 export const getCurrentWeather = async (
     location: string,
-    lang: "en" | "ru"
+    lang: "en" | "ru",
 ) => {
     const response = await axiosInstance
         .get<GetForecastResponse>(endPoints.forecast, {
@@ -58,7 +58,7 @@ export const getSearchResults = async (location: string) => {
 
 export const getCurrentLocation = async (
     latitude: number,
-    longitude: number
+    longitude: number,
 ) => {
     const response = await axiosInstance
         .get<{
