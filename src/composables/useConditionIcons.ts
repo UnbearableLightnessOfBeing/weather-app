@@ -1,6 +1,8 @@
+const host = new URL("", import.meta.url).origin;
+const base = import.meta.env.BASE_URL;
+
 const getIconUrl = (code: number) => {
-    const base = new URL("", import.meta.url).origin;
-    return `${base}/day/${code}-light.svg`;
+    return `${host}${base}/day/${code}-light.svg`;
 };
 
 export const useConditionIcons = () => {
