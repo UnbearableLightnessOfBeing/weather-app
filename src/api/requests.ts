@@ -1,7 +1,7 @@
 import axios from "axios";
 import { GetForecastResponse, LocationType } from "../types/requestTypes";
 
-const base = "http://api.weatherapi.com/v1";
+const base = "https://api.weatherapi.com/v1";
 const apiKey = "f9c31516a55b4bd7ae0112903232509";
 
 const endPoints = {
@@ -20,7 +20,7 @@ const axiosInstance = axios.create({
 
 export const getCurrentWeather = async (
     location: string,
-    lang: "en" | "ru",
+    lang: "en" | "ru"
 ) => {
     const response = await axiosInstance
         .get<GetForecastResponse>(endPoints.forecast, {
@@ -58,7 +58,7 @@ export const getSearchResults = async (location: string) => {
 
 export const getCurrentLocation = async (
     latitude: number,
-    longitude: number,
+    longitude: number
 ) => {
     const response = await axiosInstance
         .get<{
