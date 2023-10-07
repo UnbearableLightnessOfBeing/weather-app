@@ -1,0 +1,36 @@
+:root {
+    --fs-huge: 164px;
+    --fs-huge-smaller: 96px;
+    --fs-large: 36px;
+    --fs-large-smaller: 32px;
+    --fs-heading: 28px;
+    --fs-normal: 24px;
+    --fs-stats: 22px;
+    --fs-stats-smaller: 19px;
+    --fs-small: 16px;
+    --fs-tooltip: 13px;
+
+    --fw-thin: 100;
+    --fw-normal-thiner: 300;
+    --fw-normal: 400;
+    --fw-bold: 600;
+
+    --bg-light: linear-gradient(250deg, #8c6bae 0%, #f0b5ce 100% );
+}
+
+* {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    text-shadow: -1.5px 2.6px 0.75px rgba(0, 0, 0, 0.1);
+}
+
+html {
+    color: white;
+
+    // &.dark {
+    //     background: linear-gradient(48deg, #082276 7.07%, #030f34 97.3%),
+    //         #082276;
+    // }
+}

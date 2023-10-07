@@ -1,0 +1,14 @@
+{
+    "basic-light": "white",
+    "basic-dark": "black",
+    "accent": "#cdbbff",
+    "error": "#ce5a5a",
+
+    "basic-light-dull": "rgba(255, 255, 255, 0.3)",
+    "basic-light-faded": "rgba(255, 255, 255, 0.7)",
+    "basic-dark-dull": "rgba(0, 0, 0, 0.3)",
+    "basic-dark-shadow": "rgba(0, 0, 0, 0.5)",
+
+    "tooltip-bg": "#0a0a0add",
+    "tooltip-text": "white"
+}

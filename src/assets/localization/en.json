@@ -1,0 +1,44 @@
+{
+    "errors" : {
+        "dataLoadingError": "An error occured during data loading"
+    },
+    "dayNames": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ],
+    "swiperTitle": "Daily forecast",
+    "weatherStats": {
+        "precipitation": "Precipitation",
+        "wind": "Wind",
+        "humidity": "Humidity",
+        "visibility": "Visibility",
+        "feelsLike": "Feels like",
+        "pressure": "Pressure",
+        "cloudCoverage": "Cloud coverage",
+        "rain-chance": "Rain chance",
+        "snow-chance": "Snow chance"
+    },
+    "measurements": {
+        "mm": "mm",
+        "kmh": "km/h",
+        "km": "km"
+    },
+    "qualityStats": {
+        "airQualityTooltip": "The air qulity information is only provided for the next 3 days",
+        "uvIndex": "UV Index",
+        "airQuality": "Air Quality"
+    },
+    "astro" : {
+        "sunrise": "Sunrise",
+        "sunset": "Sunset"
+    },
+    "language" : {
+        "caption": "Lang",
+        "tooltip": "Click to change the language"
+    }
+}
