@@ -8,7 +8,7 @@ withDefaults(
     }>(),
     {
         type: "small",
-    }
+    },
 );
 </script>
 
