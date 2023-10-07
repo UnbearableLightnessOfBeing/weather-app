@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # packages
-components.d.ts
+./components.d.ts

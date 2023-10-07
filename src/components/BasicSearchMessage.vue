@@ -7,7 +7,7 @@ withDefaults(
     {
         type: undefined,
         message: undefined,
-    }
+    },
 );
 </script>
 
