@@ -1,8 +1,70 @@
 <script setup lang="ts">
-defineProps<{
+import { useI18n } from "vue-i18n";
+
+const props = defineProps<{
     title: string;
     time: string;
 }>();
+
+const { locale } = useI18n();
+
+const getStrMatchOrNull = (str: string, regexp: RegExp): string | null => {
+    const match = str.match(regexp)?.[0];
+
+    return match ? match : null;
+};
+
+const getDigitTimeStr = (time: string): string | null => {
+    return getStrMatchOrNull(time, /\d\d:\d\d/);
+};
+
+const getTimeOfDayStr = (time: string): "AM" | "PM" | null => {
+    const match = getStrMatchOrNull(time, /AM|PM/);
+    return match ? (match as "AM" | "PM") : null;
+};
+
+const get24HourTimeFormat = (time: string): string | null => {
+    const digitTime = getDigitTimeStr(time);
+    const timeOfDay = getTimeOfDayStr(time);
+
+    if (digitTime && timeOfDay) {
+        if (timeOfDay === "AM") {
+            return digitTime;
+        } else {
+            const [hours, minutes] = digitTime.split(":");
+            return `${Number(hours) + 12}:${minutes}`;
+        }
+    } else return null;
+};
+
+const localizedTime = computed(() => {
+    if (locale.value !== "ru") {
+        return props.time;
+    }
+
+    const fullFormat = get24HourTimeFormat(props.time);
+    if (fullFormat) {
+        return fullFormat;
+    } else return props.time;
+});
+
+const hourHandCssTransform = computed<string>(() => {
+    const fullFormat = get24HourTimeFormat(props.time);
+    if (fullFormat) {
+        const [hours, minutes] = fullFormat.split(":");
+        const totalHours = Number(hours) + Number(minutes) / 60;
+        return `rotate(${Math.round((720 / 24) * totalHours - 90)}deg)`;
+    } else return "rotate(0deg)";
+});
+
+const minuteHandCssTransform = computed<string>(() => {
+    const fullFormat = get24HourTimeFormat(props.time);
+    if (fullFormat) {
+        const minutes = fullFormat.split(":")[1];
+
+        return `rotate(${Math.round((360 / 60) * Number(minutes) - 90)}deg)`;
+    } else return "rotate(0deg)";
+});
 </script>
 
 <template>
@@ -12,18 +74,18 @@ defineProps<{
             <div class="basic-astrology-clock__clock">
                 <div></div>
                 <div class="basic-astrology-clock__pointers">
-                    <Transition name="second-hand" appear>
-                        <div class="basic-astrology-clock__second-hand"></div>
+                    <Transition name="hour-hand" appear>
+                        <div class="basic-astrology-clock__hour-hand"></div>
                     </Transition>
                     <Transition name="minute-hand" appear>
                         <div class="basic-astrology-clock__minute-hand"></div>
                     </Transition>
-                    <Transition name="hour-hand" appear>
-                        <div class="basic-astrology-clock__hour-hand"></div>
+                    <Transition name="second-hand" appear>
+                        <div class="basic-astrology-clock__second-hand"></div>
                     </Transition>
                 </div>
             </div>
-            <div class="basic-astrology-clock__time">{{ time }}</div>
+            <div class="basic-astrology-clock__time">{{ localizedTime }}</div>
         </div>
     </div>
 </template>
@@ -72,7 +134,6 @@ defineProps<{
         z-index: 1;
         left: 0;
         border-radius: 100px;
-        // transition: all 3s ease-out;
         animation-name: clock-spin;
         animation-duration: 3s;
     }
@@ -91,7 +152,8 @@ defineProps<{
         height: 4px;
         background-color: #828282;
         transform-origin: 0% 2px;
-        transform: rotate(-180deg);
+        transform: v-bind(minuteHandCssTransform);
+        transition: all 0.3s ease;
         bottom: -2px;
     }
 
@@ -100,7 +162,8 @@ defineProps<{
         height: 4px;
         background-color: #e0e0e0;
         transform-origin: 0% 2px;
-        transform: rotate(-145deg);
+        transform: v-bind(hourHandCssTransform);
+        transition: all 0.3s ease;
         bottom: -2px;
     }
 }
