@@ -49,7 +49,9 @@ const activeDay = ref<number | null>(null);
                         typeof activeDay === 'number',
                 }"
             />
+            <SwiperLoader v-if="!data" />
             <ForecastCardSwiper
+                v-else
                 v-model:active-day="activeDay"
                 :forecastday="data?.forecast?.forecastday"
             />

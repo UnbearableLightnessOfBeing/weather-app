@@ -39,13 +39,25 @@ const get24HourTimeFormat = (time: string): string | null => {
 
 const localizedTime = computed(() => {
     if (locale.value !== "ru") {
-        return props.time;
+        const digitTime = getDigitTimeStr(props.time);
+        if (digitTime) {
+            return digitTime;
+        } else return props.time;
     }
 
     const fullFormat = get24HourTimeFormat(props.time);
     if (fullFormat) {
         return fullFormat;
     } else return props.time;
+});
+
+const localizedTimeOfDay = computed(() => {
+    if (locale.value === "ru") {
+        return "";
+    } else {
+        const timeOfDay = getTimeOfDayStr(props.time);
+        return timeOfDay ? timeOfDay : props.time;
+    }
 });
 
 const hourHandCssTransform = computed<string>(() => {
@@ -85,7 +97,12 @@ const minuteHandCssTransform = computed<string>(() => {
                     </Transition>
                 </div>
             </div>
-            <div class="basic-astrology-clock__time">{{ localizedTime }}</div>
+            <div class="basic-astrology-clock__time">
+                {{ localizedTime }}
+                <span class="basic-astrology-clock__time-of-day">{{
+                    localizedTimeOfDay
+                }}</span>
+            </div>
         </div>
     </div>
 </template>
@@ -103,18 +120,31 @@ const minuteHandCssTransform = computed<string>(() => {
         padding-block: 30px;
         background-color: var(--basic-light-dull);
         border-radius: 100px;
-        width: 105px;
+        width: 124px;
         height: fit-content;
         display: flex;
         flex-direction: column;
-        gap: 43px;
+        gap: 73px;
     }
 
     &__title,
     &__time {
-        font-size: var(--fs-heading);
         font-weight: var(--fw-normal-thiner);
         text-align: center;
+    }
+
+    &__title {
+        font-size: var(--fs-heading);
+    }
+
+    &__time {
+        font-size: var(--fs-stats);
+    }
+
+    &__time-of-day {
+        display: inline-block;
+        font-size: var(--fs-tooltip);
+        font-weight: var(--fw-normal-thiner);
     }
 
     &__clock {

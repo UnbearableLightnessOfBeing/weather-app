@@ -40,5 +40,8 @@
     "language" : {
         "caption": "Язык",
         "tooltip": "Нажимите, чтобы изменить язык"
+    },
+    "search" : {
+        "placeholder": "Поиск"
     }
 }

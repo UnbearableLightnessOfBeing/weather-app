@@ -2,6 +2,7 @@
 import SearchSvgUrl from "/interface/search.svg";
 import InlineSvg from "vue-inline-svg";
 import { createDebounce } from "../utils/debounce";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps<{
     active: boolean;
@@ -16,6 +17,8 @@ const emits = defineEmits<{
     (e: "update:isSearchActive", value: boolean): void;
     /* eslint-enable */
 }>();
+
+const { t } = useI18n();
 
 const isInputShown = ref(false);
 
@@ -80,7 +83,7 @@ const debounceModelValue = createDebounce(updateModelValue, 400);
                 v-if="isInputShown"
                 ref="textInput"
                 :model-value="modelValue"
-                placeholder="Search"
+                :placeholder="t('search.placeholder')"
                 @update:model-value="debounceModelValue"
             />
         </Transition>
