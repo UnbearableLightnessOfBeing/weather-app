@@ -13,9 +13,9 @@
     ],
     "swiperTitle": "Daily forecast",
     "weatherStats": {
-        "precipitation": "Precipitation",
+        "precipitation": "Precip",
         "wind": "Wind",
-        "humidity": "Humidity",
+        "humidity": "Hum",
         "visibility": "Visibility",
         "feelsLike": "Feels like",
         "pressure": "Pressure",
@@ -40,5 +40,8 @@
     "language" : {
         "caption": "Lang",
         "tooltip": "Click to change the language"
+    },
+    "search" : {
+        "placeholder": "Search"
     }
 }

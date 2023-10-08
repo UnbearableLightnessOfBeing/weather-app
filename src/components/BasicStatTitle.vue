@@ -29,7 +29,7 @@ defineProps<{
 
     &__title {
         text-transform: uppercase;
-        font-size: var(--fs-stats-smaller);
+        font-size: var(--fs-small);
         font-weight: var(--fw-bold);
         text-align: center;
     }
