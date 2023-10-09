@@ -85,12 +85,27 @@ export type AstronomyType = {
     is_sun_up: number;
 };
 
+export type HourlyWeather = Omit<CurrentWeather, "air_quality"> & {
+    time_epoch: number;
+    time: string;
+    windchill_c: number;
+    windchill_f: number;
+    heatindex_c: number;
+    heatindex_f: number;
+    dewpoint_c: number;
+    dewpoint_f: number;
+    will_it_rain: number;
+    chance_of_rain: number;
+    will_it_snow: number;
+    chance_of_snow: number;
+};
+
 export type DailyForecast = {
     date: string;
     date_epoch: number;
     day: DailyWeather;
     astro: AstronomyType;
-    hour: any[];
+    hour: HourlyWeather[];
 };
 
 export type ForecastType = {

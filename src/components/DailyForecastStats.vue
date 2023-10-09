@@ -9,9 +9,11 @@ defineProps<{
 <template>
     <div class="daily-forecast-stats">
         <DailForecastAstro :astro="dailyForecast?.astro" />
-        <BasicHorizontalDivider />
-        <HourlyForecastSwiper />
-        <BasicHorizontalDivider />
+        <div class="daily-forecast-stats__hourly-forecast">
+            <BasicHorizontalDivider />
+            <HourlyForecastSwiper :hourly-forecast="dailyForecast.hour" />
+            <BasicHorizontalDivider />
+        </div>
         <QualityCards
             :air-quality="dailyForecast?.day?.air_quality"
             :uv-index="dailyForecast?.day?.uv"
@@ -24,6 +26,12 @@ defineProps<{
     padding: 16px;
     & > * + * {
         margin-top: 20px;
+    }
+
+    &__hourly-forecast {
+        & > * + * {
+            margin-top: 10px;
+        }
     }
 }
 

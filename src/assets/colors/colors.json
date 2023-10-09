@@ -1,7 +1,9 @@
 {
     "basic-light": "white",
     "basic-dark": "black",
-    "accent": "#cdbbff",
+    "accent-200": "#cdbbff",
+    "accent-300": "#AC8EFF",
+    "accent-500": "#865CFD",
     "error": "#ce5a5a",
 
     "basic-light-dull": "rgba(255, 255, 255, 0.3)",
