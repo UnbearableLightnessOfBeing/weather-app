@@ -43,5 +43,9 @@
     },
     "search" : {
         "placeholder": "Поиск"
+    },
+    "chart": {
+        "hourly": "По часам",
+        "details": "подробнее..."
     }
 }

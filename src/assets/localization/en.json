@@ -43,5 +43,9 @@
     },
     "search" : {
         "placeholder": "Search"
+    },
+    "chart": {
+        "hourly": "Hourly",
+        "details": "details..."
     }
 }

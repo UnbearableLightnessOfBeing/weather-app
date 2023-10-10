@@ -11,7 +11,7 @@ defineProps<{
         <DailForecastAstro :astro="dailyForecast?.astro" />
         <div class="daily-forecast-stats__hourly-forecast">
             <BasicHorizontalDivider />
-            <HourlyForecastSwiper :hourly-forecast="dailyForecast.hour" />
+            <HourlyForecastData :hourly-forecast="dailyForecast.hour" />
             <BasicHorizontalDivider />
         </div>
         <QualityCards
