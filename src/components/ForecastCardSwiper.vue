@@ -9,7 +9,7 @@ import type { DailyForecast } from "../types/requestTypes";
 import dayNames from "../assets/date/dayNames.json";
 import { useI18n } from "vue-i18n";
 
-defineProps<{
+const props = defineProps<{
     forecastday?: DailyForecast[];
     activeDay: number | null;
 }>();
@@ -39,6 +39,13 @@ const getDayName = (dayNum: number): string => {
 const getTemperature = (temp: number): string => {
     return Math.round(temp) + "°" + measurement.value;
 };
+
+const missingAmount = computed(() => {
+    if (props.forecastday) {
+        const cardAmount = props.forecastday.length;
+        return 7 - cardAmount;
+    } else return 7;
+});
 </script>
 
 <template>
@@ -75,6 +82,12 @@ const getTemperature = (temp: number): string => {
                 @click="$emit('update:activeDay', idx)"
             />
         </SwiperSlide>
+        <SwiperSlide v-for="card in missingAmount" :key="card">
+            <div class="swiper__missing-card">
+                <div>unavailable</div>
+                <BasicInfoSign tooltip-text="unavaliable" />
+            </div>
+        </SwiperSlide>
     </Swiper>
 </template>
 
@@ -95,6 +108,18 @@ const getTemperature = (temp: number): string => {
         font-weight: var(--fw-normal-thiner);
         width: 100%;
         text-align: center;
+    }
+
+    &__missing-card {
+        width: 110px;
+        height: 200px;
+        background-color: var(--basic-dark-dull);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
     }
 }
 

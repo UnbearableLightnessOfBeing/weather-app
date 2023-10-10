@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-
-const { t } = useI18n();
+defineProps<{
+    tooltipText: string;
+}>();
 </script>
 
 <template>
     <div
         v-tooltip="{
             theme: 'custom-tooltip',
-            content: t('qualityStats.airQualityTooltip'),
+            // content: t('qualityStats.airQualityTooltip'),
+            content: tooltipText,
         }"
         class="basic-info-sign"
     >

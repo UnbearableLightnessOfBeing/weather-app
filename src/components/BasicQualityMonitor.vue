@@ -2,6 +2,7 @@
 import InlineSvg from "vue-inline-svg";
 import MeterSvgUrl from "/interface/meter.svg";
 import PointerSvgUrl from "/interface/pointer.svg";
+import { useI18n } from "vue-i18n";
 
 import { gsap } from "gsap";
 
@@ -35,6 +36,8 @@ const onEnter = (el: any, done: any) => {
     animateIndicator(el);
     done();
 };
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -53,7 +56,11 @@ const onEnter = (el: any, done: any) => {
                 {{ value }}/{{ maxValue }}
             </div>
             <div class="basic-quality-monitor__eval">
-                {{ evaluation }} <BasicInfoSign v-if="value === 0" />
+                {{ evaluation }}
+                <BasicInfoSign
+                    v-if="value === 0"
+                    :tooltip-text="t('qualityStats.airQualityTooltip')"
+                />
             </div>
         </div>
     </div>
