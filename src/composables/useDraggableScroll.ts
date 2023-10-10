@@ -1,12 +1,5 @@
-export interface UseDraggableScrollReturnType {
-    /* eslint-disable */
-    mouseDownHandler: (e: MouseEvent) => void;
-    /* eslint-enable */
-}
-
-export const useDraggableScroll = (
-    element: Ref<HTMLElement | null>,
-): UseDraggableScrollReturnType => {
+// takes an HTML element and makes it scrollable by dragging
+export const useDraggableScroll = (element: Ref<HTMLElement | null>): void => {
     const pos = reactive({ left: 0, x: 0 });
 
     const mouseMoveHandler = (e: MouseEvent) => {
@@ -35,7 +28,15 @@ export const useDraggableScroll = (
         document.addEventListener("mouseup", mouseUpHandler);
     };
 
-    return {
-        mouseDownHandler,
-    };
+    onMounted(() => {
+        if (element.value) {
+            element.value.addEventListener("mousedown", mouseDownHandler);
+        }
+    });
+
+    onUnmounted(() => {
+        if (element.value) {
+            element.value.removeEventListener("mousedown", mouseDownHandler);
+        }
+    });
 };

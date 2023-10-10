@@ -5,10 +5,17 @@ import { HourlyWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
 import { useMeasurement } from "../composables/useMeasurement";
 import { useDraggableScroll } from "../composables/useDraggableScroll";
-import { useConditionIcons } from "../composables/useConditionIcons";
+
+type ChartOptionName = "temp." | "precip." | "wind" | "pressure";
+
+export type ChartOption = {
+    name: ChartOptionName;
+    measurement: string;
+};
 
 const props = defineProps<{
     hourlyForecast: HourlyWeather[];
+    activeOption: ChartOption;
 }>();
 
 const { locale } = useI18n();
@@ -19,7 +26,7 @@ const dateFormat = computed(() => {
     return locale.value === "ru" ? "HH:mm" : "h A";
 });
 
-const labelHours = computed(() => {
+const tickLabels = computed(() => {
     return props.hourlyForecast.map((item) => {
         const date = new Date(item.time);
         const formatted = useDateFormat(date, dateFormat.value, {
@@ -29,20 +36,37 @@ const labelHours = computed(() => {
     });
 });
 
-const tempData = computed(() => {
-    return props.hourlyForecast.map((item) => {
-        return measurement.value === "C" ? item.temp_c : item.temp_f;
-    });
+const chartData = computed(() => {
+    if (props.activeOption.name === "precip.") {
+        return props.hourlyForecast.map((item) => item.precip_mm);
+    } else if (props.activeOption.name === "wind") {
+        return props.hourlyForecast.map((item) => item.wind_kph);
+    } else if (props.activeOption.name === "pressure") {
+        return props.hourlyForecast.map((item) => item.pressure_mb);
+    } else {
+        return props.hourlyForecast.map((item) => {
+            return measurement.value === "C" ? item.temp_c : item.temp_f;
+        });
+    }
+});
+
+const pointFormatter = computed(() => {
+    if (props.activeOption.name === "temp.") {
+        return (value: string) => value + "°";
+    } else return (value: string) => value;
+});
+
+const conditionRange = computed(() => {
+    return props.hourlyForecast.map((item) => item.condition);
 });
 
 const data = computed(() => {
     return {
-        labels: labelHours.value,
+        labels: tickLabels.value,
         datasets: [
             {
-                label: "ab",
                 backgroundColor: colors["accent-300"],
-                data: tempData.value,
+                data: chartData.value,
             },
         ],
     };
@@ -50,15 +74,14 @@ const data = computed(() => {
 
 const container = ref<HTMLElement | null>(null);
 
-const { mouseDownHandler } = useDraggableScroll(container);
+// makes container scrollable by dragging
+useDraggableScroll(container);
 
 const scrollOnWheel = function (e: WheelEvent) {
     if (container.value) {
         container.value.scrollLeft += e.deltaY / 4;
     }
 };
-
-const { getIconUrl } = useConditionIcons();
 </script>
 
 <template>
@@ -67,31 +90,10 @@ const { getIconUrl } = useConditionIcons();
         class="hourly-forecast-chart"
         @wheel.prevent="scrollOnWheel"
     >
-        <div
-            class="hourly-forecast-chart__chart-container"
-            @mousedown="mouseDownHandler"
-        >
-            <BasicHourlyChart
-                :data="data"
-                :point-formatter="
-                    (value) => {
-                        return value + '°';
-                    }
-                "
-            />
+        <div class="hourly-forecast-chart__chart-container">
+            <BasicHourlyChart :data="data" :point-formatter="pointFormatter" />
         </div>
-        <div class="hourly-forecast-chart__condition-icons">
-            <BasicConditionIcon
-                v-for="hour in hourlyForecast"
-                :key="hour.time"
-                v-tooltip="{
-                    theme: 'custom-tooltip',
-                    content: hour.condition.text,
-                }"
-                :icon-src="getIconUrl(hour.condition.code)"
-                :type="'tiny'"
-            />
-        </div>
+        <ConditionIconRange :conditions="conditionRange" />
     </div>
 </template>
 
@@ -104,6 +106,8 @@ const { getIconUrl } = useConditionIcons();
     padding-bottom: 5px;
     gap: 5px;
     overflow-x: scroll;
+    margin-left: -16px;
+    width: 100vw;
 
     &::-webkit-scrollbar {
         width: 2px;
@@ -120,8 +124,6 @@ const { getIconUrl } = useConditionIcons();
     }
 
     &__chart-container {
-        // border: 1px solid blue;
-        // height: 100%;
         width: 1000px;
         min-width: 1000px;
         cursor: grab;
@@ -130,12 +132,12 @@ const { getIconUrl } = useConditionIcons();
             cursor: grabbing;
         }
     }
+}
 
-    &__condition-icons {
-        width: 1000px;
-        min-width: 1000px;
-        display: flex;
-        justify-content: space-between;
+@media screen and (min-width: 600px) {
+    .hourly-forecast-chart {
+        margin-left: 0;
+        width: 100%;
     }
 }
 </style>

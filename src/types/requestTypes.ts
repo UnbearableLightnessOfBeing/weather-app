@@ -10,6 +10,7 @@ export type LocationType = {
 };
 
 export type WeatherCondition = {
+    id: number;
     text: string;
     code: number;
 };
