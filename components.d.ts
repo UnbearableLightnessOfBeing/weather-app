@@ -44,6 +44,8 @@ declare module 'vue' {
     DailyForecastStats: typeof import('./src/components/DailyForecastStats.vue')['default']
     DailyWeatherStats: typeof import('./src/components/DailyWeatherStats.vue')['default']
     ForecastCardSwiper: typeof import('./src/components/ForecastCardSwiper.vue')['default']
+    ForecastHeading: typeof import('./src/components/ForecastHeading.vue')['default']
+    ForecastOptions: typeof import('./src/components/ForecastOptions.vue')['default']
     GeoLocationButton: typeof import('./src/components/GeoLocationButton.vue')['default']
     HourlyForecastChart: typeof import('./src/components/HourlyForecastChart.vue')['default']
     HourlyForecastData: typeof import('./src/components/HourlyForecastData.vue')['default']

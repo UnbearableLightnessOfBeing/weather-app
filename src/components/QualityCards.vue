@@ -52,6 +52,7 @@ const evaluation = computed(() => {
 <style scoped lang="scss">
 .quality-cards {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 50px;
@@ -65,6 +66,7 @@ const evaluation = computed(() => {
 @media screen and (min-width: 600px) {
     .quality-cards {
         gap: 90px;
+        flex-direction: row;
     }
 }
 </style>
