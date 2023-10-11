@@ -12,7 +12,7 @@ const props = defineProps<{
     evaluation: string;
 }>();
 
-const indicatorAngle = computed(() => {
+const angleIndicator = computed(() => {
     return (360 / 2 / props.maxValue) * props.value;
 });
 
@@ -20,13 +20,13 @@ const indicator = ref<HTMLElement | null>(null);
 
 const animateIndicator = (element: HTMLElement): void => {
     gsap.to(element, {
-        rotate: indicatorAngle.value,
+        rotate: angleIndicator.value,
         ease: "elastic.out(0.8, 0.22)",
         duration: 2,
     });
 };
 
-watch(indicatorAngle, () => {
+watch(angleIndicator, () => {
     if (indicator.value) {
         animateIndicator(indicator.value);
     }
@@ -59,7 +59,7 @@ const { t } = useI18n();
                 {{ evaluation }}
                 <BasicInfoSign
                     v-if="value === 0"
-                    :tooltip-text="t('qualityStats.airQualityTooltip')"
+                    :tooltip-text="t('api.signTooltip')"
                 />
             </div>
         </div>

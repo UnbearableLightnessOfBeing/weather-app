@@ -3,36 +3,47 @@ import { HourlyWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
 import type { ChartOption } from "./HourlyForecastChart.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
+import { useMeasurement } from "../composables/useMeasurement";
+import InlineSvg from "vue-inline-svg";
+import IconSvgUrl from "/interface/details.svg";
 
 defineProps<{
     hourlyForecast: HourlyWeather[];
 }>();
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
-const options = ref<ChartOption[]>([
-    {
-        name: "temp.",
-        measurement: "°C",
-    },
-    {
-        name: "precip.",
-        measurement: "mm",
-    },
-    {
-        name: "wind",
-        measurement: "km/h",
-    },
-    {
-        name: "pressure",
-        measurement: "hPa",
-    },
-]);
+const { measurement } = useMeasurement();
+
+const options = computed<ChartOption[]>(() => {
+    return [
+        {
+            id: 1,
+            name: locale.value === "ru" ? "температура" : "temp.",
+            measurement: measurement.value === "C" ? "°C" : "°F",
+        },
+        {
+            id: 2,
+            name: locale.value === "ru" ? "осадки" : "precip.",
+            measurement: t("measurements.mm"),
+        },
+        {
+            id: 3,
+            name: locale.value === "ru" ? "ветер" : "wind",
+            measurement: t("measurements.kmh"),
+        },
+        {
+            id: 4,
+            name: locale.value === "ru" ? "давление" : "pressure",
+            measurement: "hPa",
+        },
+    ];
+});
 
 const activeOption = ref(options.value[0]);
 
-const setActiveOption = (value: string) => {
-    const foundItem = options.value.find((item) => item.name == value);
+const setActiveOption = (value: number) => {
+    const foundItem = options.value.find((item) => item.id == value);
 
     if (foundItem) {
         activeOption.value = foundItem;
@@ -47,7 +58,10 @@ const setActiveOption = (value: string) => {
                 {{ t("chart.hourly") }}
             </div>
             <div class="hourly-forecast-data__details">
-                {{ t("chart.details") }}
+                <InlineSvg :src="IconSvgUrl" width="20" height="20" />
+                <div>
+                    {{ t("chart.details") }}
+                </div>
             </div>
         </div>
         <HourlyForecastChart
@@ -62,13 +76,13 @@ const setActiveOption = (value: string) => {
             <SwiperSlide
                 v-for="(option, idx) in options"
                 :key="idx"
-                style="width: fit-content"
+                class="hourly-forecast-data__option"
             >
                 <BasicChartOption
                     :name="option.name"
                     :measurement="option.measurement"
                     :active="option.name === activeOption.name"
-                    @click="setActiveOption(option.name)"
+                    @click="setActiveOption(option.id)"
                 />
             </SwiperSlide>
         </Swiper>
@@ -92,6 +106,9 @@ const setActiveOption = (value: string) => {
     }
 
     &__details {
+        display: flex;
+        gap: 2px;
+        align-items: center;
         font-size: var(--fs-small);
         cursor: pointer;
         color: var(--basic-light-faded);
@@ -106,6 +123,10 @@ const setActiveOption = (value: string) => {
         margin-left: -16px;
         width: 100vw;
         padding-inline: 16px;
+    }
+
+    &__option {
+        width: fit-content;
     }
 }
 

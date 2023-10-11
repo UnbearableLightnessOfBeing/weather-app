@@ -46,6 +46,18 @@
     },
     "chart": {
         "hourly": "Hourly",
-        "details": "details..."
+        "details": "details"
+    },
+    "swiper": {
+        "unavailable": "Unavailable"
+    },
+    "api": {
+        "signTooltip": "This information is unavailable due to the api plan the author of the app is utilizing"
+    },
+    "measurementToggler": {
+        "tooltipMessage": "Click to change the measurement type"
+    },
+    "geoLocation": {
+        "tooltipMessage": "Set current location"
     }
 }

@@ -12,7 +12,7 @@ defineEmits<{
 </script>
 
 <template>
-    <div
+    <BasicListItem
         class="basic-location-item"
         @click="$emit('update:location', `${city}, ${country}`)"
     >
@@ -20,26 +20,17 @@ defineEmits<{
             {{ city }}
         </span>
         {{ country }}
-    </div>
+    </BasicListItem>
 </template>
 
 <style scoped lang="scss">
 .basic-location-item {
-    width: 100%;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: transparent;
     font-size: var(--fs-tooltip);
     color: var(--basic-light-faded);
-    cursor: pointer;
 
     &__city {
         font-size: var(--fs-small);
         color: var(--basic-light);
-    }
-
-    &:hover {
-        background-color: var(--basic-light-dull);
     }
 }
 </style>

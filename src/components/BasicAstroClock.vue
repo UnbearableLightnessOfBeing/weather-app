@@ -112,7 +112,7 @@ const minuteHandCssTransform = computed<string>(() => {
     width: fit-content;
 
     & > * + * {
-        margin-top: 28px;
+        margin-top: 20px;
     }
 
     &__clock-site {
@@ -124,7 +124,7 @@ const minuteHandCssTransform = computed<string>(() => {
         height: fit-content;
         display: flex;
         flex-direction: column;
-        gap: 73px;
+        gap: 55px;
     }
 
     &__title,

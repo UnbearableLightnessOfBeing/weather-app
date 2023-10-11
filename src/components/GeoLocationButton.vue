@@ -4,6 +4,7 @@ import InlineSvg from "vue-inline-svg";
 import { useGeolocation } from "@vueuse/core";
 import { getCurrentLocation } from "../api/requests";
 import { useQuery } from "@tanstack/vue-query";
+import { useI18n } from "vue-i18n";
 
 const emits = defineEmits<{
     //eslint-disable-next-line
@@ -34,13 +35,15 @@ const setLocation = async () => {
         }
     }
 };
+
+const { t } = useI18n();
 </script>
 
 <template>
     <div
         v-tooltip="{
             theme: 'custom-tooltip',
-            content: 'Set current location',
+            content: t('geoLocation.tooltipMessage'),
         }"
         class="geo-location-button"
         @click="setLocation"

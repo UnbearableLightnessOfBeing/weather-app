@@ -84,8 +84,8 @@ const missingAmount = computed(() => {
         </SwiperSlide>
         <SwiperSlide v-for="card in missingAmount" :key="card">
             <div class="swiper__missing-card">
-                <div>unavailable</div>
-                <BasicInfoSign tooltip-text="unavaliable" />
+                <div>{{ t("swiper.unavailable") }}</div>
+                <BasicInfoSign :tooltip-text="t('api.signTooltip')" />
             </div>
         </SwiperSlide>
     </Swiper>

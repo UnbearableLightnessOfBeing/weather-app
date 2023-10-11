@@ -7,6 +7,7 @@ import { useI18n } from "vue-i18n";
 const props = defineProps<{
     airQuality?: AirQuality;
     uvIndex?: number;
+    isLoading: boolean;
 }>();
 
 const { t, locale } = useI18n();
@@ -29,24 +30,22 @@ const evaluation = computed(() => {
 
 <template>
     <div class="quality-cards">
-        <div class="quality-cards__content">
-            <BasicLoader v-if="!airQuality" class="quality-cards__loader" />
-            <BasicQualityCard
-                v-else
-                :value="epaIndex"
-                :max-value="6"
-                :evaluation="evaluation"
-                :title="t('qualityStats.airQuality')"
-            />
-            <BasicLoader v-if="!uvIndex" class="quality-cards__loader" />
-            <BasicQualityCard
-                v-else
-                :value="uvIndex"
-                :max-value="10"
-                :evaluation="uvIndecies[Math.round(Number(uvIndex))]"
-                :title="t('qualityStats.uvIndex')"
-            />
-        </div>
+        <BasicLoader v-if="isLoading" class="quality-cards__loader" />
+        <BasicQualityCard
+            v-else
+            :value="epaIndex"
+            :max-value="6"
+            :evaluation="evaluation"
+            :title="t('qualityStats.airQuality')"
+        />
+        <BasicLoader v-if="!uvIndex" class="quality-cards__loader" />
+        <BasicQualityCard
+            v-else
+            :value="uvIndex"
+            :max-value="10"
+            :evaluation="uvIndecies[Math.round(Number(uvIndex))]"
+            :title="t('qualityStats.uvIndex')"
+        />
     </div>
 </template>
 
@@ -54,24 +53,18 @@ const evaluation = computed(() => {
 .quality-cards {
     display: flex;
     justify-content: center;
-
-    &__content {
-        display: grid;
-        gap: 50px;
-    }
+    align-items: center;
+    gap: 50px;
 
     &__loader {
-        width: 167px;
-        height: 180px;
+        width: 180px;
+        height: 167px;
     }
 }
 
 @media screen and (min-width: 600px) {
     .quality-cards {
-        &__content {
-            grid-template-columns: 1fr 1fr;
-            gap: 90px;
-        }
+        gap: 90px;
     }
 }
 </style>

@@ -5,6 +5,7 @@ import { CurrentWeather } from "../types/requestTypes";
 defineProps<{
     current?: CurrentWeather;
     location: string;
+    isLoading: boolean;
 }>();
 
 defineEmits<{
@@ -32,6 +33,7 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
         <QualityCards
             :air-quality="current?.air_quality"
             :uv-index="current?.uv"
+            :is-loading="isLoading"
         />
     </div>
 </template>

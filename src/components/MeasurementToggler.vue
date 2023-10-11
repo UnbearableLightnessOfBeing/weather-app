@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { useMeasurement } from "../composables/useMeasurement";
-const { measurement, toggleMeasurement } = useMeasurement();
+import { useI18n } from "vue-i18n";
 
+const { measurement, toggleMeasurement } = useMeasurement();
 const isToggled = computed(() => measurement.value === "F");
+
+const { t } = useI18n();
 </script>
 
 <template>
     <div
         v-tooltip="{
-            content: 'Click to change the measurement type',
+            content: t('measurementToggler.tooltipMessage'),
             theme: 'custom-tooltip',
         }"
         class="measurement-toggler"

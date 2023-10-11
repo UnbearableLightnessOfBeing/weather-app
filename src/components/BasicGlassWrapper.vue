@@ -20,8 +20,8 @@ withDefaults(
 
 <style scoped lang="scss">
 .basic-glass-wrapper {
-    width: fit-content;
-    height: fit-content;
+    width: 100%;
+    height: 100%;
     background-color: rgba(255, 255, 255, 0.2);
     border: 1px solid var(--basic-light-dull);
     border-radius: 11px;

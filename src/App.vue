@@ -8,7 +8,7 @@ const { t, locale } = useI18n();
 
 const location = ref("Moscow, Russia");
 
-const { data, isError } = useQuery({
+const { data, isError, isLoading } = useQuery({
     queryKey: ["currentWeather", location, locale],
     queryFn: () =>
         getCurrentWeather(location.value, locale.value as "en" | "ru"),
@@ -67,11 +67,13 @@ const activeDay = ref<number | null>(null);
                 <DailyForecastStats
                     v-if="typeof activeDay === 'number' && data"
                     :daily-forecast="data?.forecast?.forecastday[activeDay]"
+                    :is-loading="isLoading"
                 />
                 <CurrentWeatherStats
                     v-else
                     v-model:location="location"
                     :current="data?.current"
+                    :is-loading="isLoading"
                 />
             </Transition>
         </AppPanelLayout>

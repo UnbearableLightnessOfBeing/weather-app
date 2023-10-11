@@ -14,6 +14,7 @@ defineProps<{
             :value="value"
             :max-value="maxValue"
             :evaluation="evaluation"
+            class="basic-quality-card__monitor"
         />
     </div>
 </template>
@@ -30,6 +31,10 @@ defineProps<{
         font-weight: var(--fw-normal-thiner);
         text-align: center;
         max-height: 34px;
+    }
+
+    &__monitor {
+        margin-inline: auto;
     }
 }
 

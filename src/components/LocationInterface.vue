@@ -87,10 +87,10 @@ watch(searchValue, () => {
             </Transition>
         </template>
         <template #popper>
-            <ItemListWrapper v-if="isFetching">
+            <BasicList v-if="isFetching">
                 <BasicSearchMessage message="Loading..." />
-            </ItemListWrapper>
-            <ItemListWrapper v-else-if="searchData && searchData.length">
+            </BasicList>
+            <BasicList v-else-if="searchData && searchData.length">
                 <BasicLocationItem
                     v-for="item in searchData"
                     :key="item.id"
@@ -99,21 +99,20 @@ watch(searchValue, () => {
                     @update:location="
                         (value) => {
                             $emit('update:modelValue', value);
-                            // isActive = false;
                             isSearchActive = false;
                         }
                     "
                 />
-            </ItemListWrapper>
-            <ItemListWrapper v-else-if="!isError">
+            </BasicList>
+            <BasicList v-else-if="!isError">
                 <BasicSearchMessage message="Nothing was found" />
-            </ItemListWrapper>
-            <ItemListWrapper v-else>
+            </BasicList>
+            <BasicList v-else>
                 <BasicSearchMessage
                     type="error"
                     :message="(<Error>error).message"
                 />
-            </ItemListWrapper>
+            </BasicList>
         </template>
     </VDropdown>
 </template>

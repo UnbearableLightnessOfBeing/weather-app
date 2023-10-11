@@ -6,9 +6,18 @@ import { useI18n } from "vue-i18n";
 import { useMeasurement } from "../composables/useMeasurement";
 import { useDraggableScroll } from "../composables/useDraggableScroll";
 
-type ChartOptionName = "temp." | "precip." | "wind" | "pressure";
+type ChartOptionName =
+    | "temp."
+    | "precip."
+    | "wind"
+    | "pressure"
+    | "температура"
+    | "осадки"
+    | "ветер"
+    | "давление";
 
 export type ChartOption = {
+    id: number;
     name: ChartOptionName;
     measurement: string;
 };
@@ -37,11 +46,11 @@ const tickLabels = computed(() => {
 });
 
 const chartData = computed(() => {
-    if (props.activeOption.name === "precip.") {
+    if (props.activeOption.id === 2) {
         return props.hourlyForecast.map((item) => item.precip_mm);
-    } else if (props.activeOption.name === "wind") {
+    } else if (props.activeOption.id === 3) {
         return props.hourlyForecast.map((item) => item.wind_kph);
-    } else if (props.activeOption.name === "pressure") {
+    } else if (props.activeOption.id === 4) {
         return props.hourlyForecast.map((item) => item.pressure_mb);
     } else {
         return props.hourlyForecast.map((item) => {

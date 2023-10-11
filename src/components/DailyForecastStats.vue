@@ -3,6 +3,7 @@ import type { DailyForecast } from "../types/requestTypes";
 
 defineProps<{
     dailyForecast: DailyForecast;
+    isLoading: boolean;
 }>();
 </script>
 
@@ -17,6 +18,7 @@ defineProps<{
         <QualityCards
             :air-quality="dailyForecast?.day?.air_quality"
             :uv-index="dailyForecast?.day?.uv"
+            :is-loading="isLoading"
         />
     </div>
 </template>

@@ -46,6 +46,18 @@
     },
     "chart": {
         "hourly": "По часам",
-        "details": "подробнее..."
+        "details": "подробнее"
+    },
+    "swiper": {
+        "unavailable": "Недоступно"
+    },
+    "api": {
+        "signTooltip": "Информация недоступна, поскольку автор использует менее расширенную версию API"
+    },
+    "measurementToggler": {
+        "tooltipMessage": "Изменить формат измерения температуры"
+    },
+    "geoLocation": {
+        "tooltipMessage": "Определить текущее место положения"
     }
 }

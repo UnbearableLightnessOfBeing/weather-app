@@ -30,12 +30,18 @@ const { t, locale } = useI18n();
         </template>
         <template #popper>
             <div class="language-switcher__popper">
-                <div class="language-switcher__option" @click="locale = 'en'">
+                <BasicListItem
+                    class="language-switcher__option"
+                    @click="locale = 'en'"
+                >
                     English
-                </div>
-                <div class="language-switcher__option" @click="locale = 'ru'">
+                </BasicListItem>
+                <BasicListItem
+                    class="language-switcher__option"
+                    @click="locale = 'ru'"
+                >
                     Русский
-                </div>
+                </BasicListItem>
             </div>
         </template>
     </VDropdown>
@@ -66,13 +72,10 @@ const { t, locale } = useI18n();
     }
 
     &__option {
-        padding-inline: 15px;
-        padding-block: 10px;
-        cursor: pointer;
+        color: var(--basic-light-faded);
 
         &:hover {
-            background-color: var(--basic-light-dull);
-            transition: all 0.125s ease-in-out;
+            color: var(--basic-light);
         }
     }
 }
