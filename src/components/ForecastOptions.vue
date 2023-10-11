@@ -27,7 +27,7 @@ defineEmits<{
             <BasicChartOption
                 :name="option.name"
                 :measurement="option.measurement"
-                :active="option.name === activeOption.name"
+                :active="option.id === activeOption.id"
                 @click="$emit('update:activeOption', option)"
             />
         </SwiperSlide>

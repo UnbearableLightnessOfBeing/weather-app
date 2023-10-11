@@ -60,7 +60,7 @@ const chartData = computed(() => {
 });
 
 const pointFormatter = computed(() => {
-    if (props.activeOption.name === "temp.") {
+    if (props.activeOption.id === 1) {
         return (value: string) => value + "°";
     } else return;
 });
