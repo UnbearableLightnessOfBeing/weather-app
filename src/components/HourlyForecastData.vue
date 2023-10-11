@@ -4,9 +4,11 @@ import { useI18n } from "vue-i18n";
 import type { ChartOption } from "./HourlyForecastChart.vue";
 import { useMeasurement } from "../composables/useMeasurement";
 
-defineProps<{
+const props = defineProps<{
     hourlyForecast: HourlyWeather[];
 }>();
+
+console.log(props.hourlyForecast);
 
 const { t, locale } = useI18n();
 
@@ -38,11 +40,16 @@ const options = computed<ChartOption[]>(() => {
 });
 
 const activeOption = ref(options.value[0]);
+
+const isModalOpen = ref(false);
 </script>
 
 <template>
     <div class="hourly-forecast-data">
-        <ForecastHeading :title="t('chart.hourly')" />
+        <ForecastHeading
+            :title="t('chart.hourly')"
+            @open-modal="isModalOpen = true"
+        />
         <HourlyForecastChart
             :hourly-forecast="hourlyForecast"
             :active-option="activeOption"
@@ -51,6 +58,9 @@ const activeOption = ref(options.value[0]);
             v-model:active-option="activeOption"
             :options="options"
         />
+        <BasicModal v-model:is-open="isModalOpen">
+            <div>charts</div>
+        </BasicModal>
     </div>
 </template>
 

@@ -24,6 +24,7 @@ declare module 'vue' {
     BasicListItem: typeof import('./src/components/BasicListItem.vue')['default']
     BasicLoader: typeof import('./src/components/BasicLoader.vue')['default']
     BasicLocationItem: typeof import('./src/components/BasicLocationItem.vue')['default']
+    BasicModal: typeof import('./src/components/BasicModal.vue')['default']
     BasicQualityCard: typeof import('./src/components/BasicQualityCard.vue')['default']
     BasicQualityMonitor: typeof import('./src/components/BasicQualityMonitor.vue')['default']
     BasicSearch: typeof import('./src/components/BasicSearch.vue')['default']
