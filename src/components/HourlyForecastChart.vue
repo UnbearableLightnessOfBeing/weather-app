@@ -62,7 +62,7 @@ const chartData = computed(() => {
 const pointFormatter = computed(() => {
     if (props.activeOption.name === "temp.") {
         return (value: string) => value + "°";
-    } else return (value: string) => value;
+    } else return;
 });
 
 const conditionRange = computed(() => {
@@ -100,7 +100,7 @@ const scrollOnWheel = function (e: WheelEvent) {
         @wheel.prevent="scrollOnWheel"
     >
         <div class="hourly-forecast-chart__chart-container">
-            <BasicHourlyChart :data="data" :point-formatter="pointFormatter" />
+            <BasicChart :data="data" :point-formatter="pointFormatter" />
         </div>
         <ConditionIconRange :conditions="conditionRange" />
     </div>

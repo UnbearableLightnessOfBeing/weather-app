@@ -1,18 +1,22 @@
 import colors from "../assets/colors/colors.json";
 
-export const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-        {
-            label: "Data One",
-            // backgroundColor: "#f87979",
-            backgroundColor: colors["accent-500"],
-            data: [40, 39, 10, 40, 39, 80, 40],
+export const scalesConfiguration = {
+    y: {
+        display: false,
+    },
+    x: {
+        grid: {
+            display: false,
         },
-    ],
-};
-
-export const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+        border: {
+            color: colors["basic-light-dull"],
+        },
+        ticks: {
+            color: colors["basic-light-faded"],
+            font: {
+                size: 12,
+                weight: "500",
+            },
+        },
+    },
 };
