@@ -9,11 +9,13 @@ export default defineConfig({
         port: 3000,
     },
 
+    base: "/weather-app",
+
     plugins: [
         vue(),
         Components({
             dts: true,
-            dirs: ["./src/components"],
+            dirs: ["./src/components", "./src/layouts"],
         }),
         AutoImport({
             dts: true,

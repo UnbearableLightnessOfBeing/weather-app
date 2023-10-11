@@ -1,0 +1,63 @@
+{
+    "errors" : {
+        "dataLoadingError": "Произошла ошибка при загрузке данных"
+    },
+    "dayNames": [
+        "Воскресенье",
+        "Понедельник",
+        "Вторник",
+        "Среда",
+        "Четверг",
+        "Пятница",
+        "Суббота"
+    ],
+    "swiperTitle": "Недельный прогноз",
+    "weatherStats": {
+        "precipitation": "Осадки",
+        "wind": "Ветер",
+        "humidity": "Влажность",
+        "visibility": "Видимость",
+        "feelsLike": "Ощущается",
+        "pressure": "Давление",
+        "cloudCoverage": "Облачность",
+        "rain-chance": "Вероятность дождя",
+        "snow-chance": "Верояность снега"
+    },
+    "measurements": {
+        "mm": "мм",
+        "kmh": "км/ч",
+        "km": "км"
+    },
+    "qualityStats": {
+        "airQualityTooltip": "Информация о качестве воздуха предоставляется только для 3-х дневного периода времени",
+        "uvIndex": "UV Индекс",
+        "airQuality": "Качество воздуха"
+    },
+    "astro" : {
+        "sunrise": "Рассвет",
+        "sunset": "Закат"
+    },
+    "language" : {
+        "caption": "Язык",
+        "tooltip": "Нажимите, чтобы изменить язык"
+    },
+    "search" : {
+        "placeholder": "Поиск"
+    },
+    "chart": {
+        "hourly": "По часам",
+        "details": "подробнее"
+    },
+    "swiper": {
+        "unavailable": "Недоступно"
+    },
+    "api": {
+        "signTooltip": "Информация недоступна, поскольку автор использует менее расширенную версию API"
+    },
+    "measurementToggler": {
+        "tooltipMessage": "Изменить формат измерения температуры"
+    },
+    "geoLocation": {
+        "tooltipMessage": "Определить текущее место положения"
+    }
+}

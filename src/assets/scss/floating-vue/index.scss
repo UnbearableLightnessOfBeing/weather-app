@@ -1,0 +1,32 @@
+.v-popper--theme-custom-tooltip {
+    .v-popper {
+        &__inner {
+            background: var(--tooltip-bg);
+            color: var(--tooltip-text);
+            padding-block: 5px;
+            padding-inline: 8px;
+            border-radius: 5px;
+            font-size: var(--fs-tooltip);
+            max-width: 200px;
+            width: fit-content;
+            text-align: center;
+        }
+
+        &__arrow-container {
+            display: none;
+        }
+    }
+}
+
+.v-popper--theme-custom-dropdown {
+    .v-popper {
+        &__inner {
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        &__arrow-container {
+            display: none;
+        }
+    }
+}

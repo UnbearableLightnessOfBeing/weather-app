@@ -1,0 +1,63 @@
+{
+    "errors" : {
+        "dataLoadingError": "An error occured during data loading"
+    },
+    "dayNames": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ],
+    "swiperTitle": "Daily forecast",
+    "weatherStats": {
+        "precipitation": "Precip",
+        "wind": "Wind",
+        "humidity": "Hum",
+        "visibility": "Visibility",
+        "feelsLike": "Feels like",
+        "pressure": "Pressure",
+        "cloudCoverage": "Cloud coverage",
+        "rain-chance": "Rain chance",
+        "snow-chance": "Snow chance"
+    },
+    "measurements": {
+        "mm": "mm",
+        "kmh": "km/h",
+        "km": "km"
+    },
+    "qualityStats": {
+        "airQualityTooltip": "The air qulity information is only provided for the next 3 days",
+        "uvIndex": "UV Index",
+        "airQuality": "Air Quality"
+    },
+    "astro" : {
+        "sunrise": "Sunrise",
+        "sunset": "Sunset"
+    },
+    "language" : {
+        "caption": "Lang",
+        "tooltip": "Click to change the language"
+    },
+    "search" : {
+        "placeholder": "Search"
+    },
+    "chart": {
+        "hourly": "Hourly",
+        "details": "details"
+    },
+    "swiper": {
+        "unavailable": "Unavailable"
+    },
+    "api": {
+        "signTooltip": "This information is unavailable due to the api plan the author of the app is utilizing"
+    },
+    "measurementToggler": {
+        "tooltipMessage": "Click to change the measurement type"
+    },
+    "geoLocation": {
+        "tooltipMessage": "Set current location"
+    }
+}
