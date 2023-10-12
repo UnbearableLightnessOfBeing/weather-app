@@ -25,11 +25,6 @@ ChartJS.register(
 ChartJS.defaults.responsive = true;
 ChartJS.defaults.maintainAspectRatio = false;
 ChartJS.defaults.borderColor = colors["basic-light-dull"];
-ChartJS.defaults.layout = {
-    padding: {
-        top: 20,
-    },
-};
 ChartJS.defaults.plugins.legend.display = false;
 ChartJS.defaults.plugins.tooltip.enabled = false;
 if (ChartJS.defaults.plugins.datalabels) {

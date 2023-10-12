@@ -51,10 +51,12 @@ watch(computedIsOpen, () => {
     width: 100vw;
     height: 100vh;
     background-color: var(--basic-dark-dull);
+    cursor: pointer;
 
     &__content {
         width: fit-content;
         height: fit-content;
+        cursor: default;
     }
 }
 

@@ -41,7 +41,7 @@ const options = computed<ChartOption[]>(() => {
 
 const activeOption = ref(options.value[0]);
 
-const isModalOpen = ref(false);
+const isModalOpen = ref(true);
 </script>
 
 <template>
@@ -59,7 +59,7 @@ const isModalOpen = ref(false);
             :options="options"
         />
         <BasicModal v-model:is-open="isModalOpen">
-            <div>charts</div>
+            <HourlyForecastCharts :hourly-forecast="hourlyForecast" />
         </BasicModal>
     </div>
 </template>

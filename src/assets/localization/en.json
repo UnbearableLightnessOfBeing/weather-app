@@ -59,5 +59,19 @@
     },
     "geoLocation": {
         "tooltipMessage": "Set current location"
+    },
+    "chartOptions": {
+        "temp": "Temperature",
+        "feelslike": "Feels like",
+        "precip": "Precipitation",
+        "rainChance": "Chance of rain",
+        "snowChance": "Chance of snow",
+        "wind": "Wind",
+        "gust": "Gust",
+        "pressure": "Pressure",
+        "humidity": "Humidity",
+        "dewPoint": "Dew point",
+        "uv": "UV Index",
+        "visibility": "Visibility"
     }
 }

@@ -5,6 +5,7 @@ import { HourlyWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
 import { useMeasurement } from "../composables/useMeasurement";
 import { useDraggableScroll } from "../composables/useDraggableScroll";
+import { scalesConfiguration } from "../configs/chartjsConfig";
 
 type ChartOptionName =
     | "temp."
@@ -81,26 +82,42 @@ const data = computed(() => {
     };
 });
 
-const container = ref<HTMLElement | null>(null);
+const hourlyForecastContainer = ref<HTMLElement | null>(null);
 
 // makes container scrollable by dragging
-useDraggableScroll(container);
+useDraggableScroll(hourlyForecastContainer);
 
 const scrollOnWheel = function (e: WheelEvent) {
-    if (container.value) {
-        container.value.scrollLeft += e.deltaY / 4;
+    if (hourlyForecastContainer.value) {
+        hourlyForecastContainer.value.scrollLeft += e.deltaY / 4;
     }
 };
+
+const chartOptions = computed(() => {
+    return {
+        layout: {
+            padding: {
+                top: 20,
+            },
+        },
+        scales: scalesConfiguration,
+        plugins: {
+            datalabels: {
+                formatter: pointFormatter.value,
+            },
+        },
+    };
+});
 </script>
 
 <template>
     <div
-        ref="container"
+        ref="hourlyForecastContainer"
         class="hourly-forecast-chart"
         @wheel.prevent="scrollOnWheel"
     >
         <div class="hourly-forecast-chart__chart-container">
-            <BasicChart :data="data" :point-formatter="pointFormatter" />
+            <BasicChart :data="data" :options="chartOptions" />
         </div>
         <ConditionIconRange :conditions="conditionRange" />
     </div>
@@ -117,20 +134,6 @@ const scrollOnWheel = function (e: WheelEvent) {
     overflow-x: scroll;
     margin-left: -16px;
     width: 100vw;
-
-    &::-webkit-scrollbar {
-        width: 2px;
-        height: 2px;
-
-        &-track {
-            background-color: transparent;
-        }
-
-        &-thumb {
-            border-radius: 20px;
-            background-color: var(--basic-light-dull);
-        }
-    }
 
     &__chart-container {
         width: 1000px;

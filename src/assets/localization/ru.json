@@ -59,5 +59,19 @@
     },
     "geoLocation": {
         "tooltipMessage": "Определить текущее место положения"
+    },
+    "chartOptions": {
+        "temp": "Температура",
+        "feelslike": "Ощущается",
+        "precip": "Осадки",
+        "rainChance": "Верояность дождя",
+        "snowChance": "Верояность снега",
+        "wind": "Ветер",
+        "gust": "Порывы ветра",
+        "pressure": "Давление",
+        "humidity": "Влажность",
+        "dewPoint": "Порог конденсации",
+        "uv": "UV Индекс",
+        "visibility": "Видимость"
     }
 }
