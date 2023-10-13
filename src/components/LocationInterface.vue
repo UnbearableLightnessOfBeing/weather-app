@@ -38,7 +38,6 @@ const {
     isFetching,
     refetch,
     isError,
-    error,
 } = useQuery({
     queryKey: ["search", searchValue],
     queryFn: () => getSearchResults(searchValue.value),
@@ -110,7 +109,7 @@ watch(searchValue, () => {
             <BasicList v-else>
                 <BasicSearchMessage
                     type="error"
-                    :message="(<Error>error).message"
+                    message="Error has occured during search"
                 />
             </BasicList>
         </template>

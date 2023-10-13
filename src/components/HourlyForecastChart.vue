@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { useDateFormat } from "@vueuse/core";
 import colors from "../assets/colors/colors.json";
-import { HourlyWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
-import { useMeasurement } from "../composables/useMeasurement";
 import { useDraggableScroll } from "../composables/useDraggableScroll";
+import { scalesConfiguration } from "../configs/chartjsConfig";
+import { Line as LineChart } from "vue-chartjs";
+import type {
+    HourlyWeather,
+    HourlyWeatherNumberKey,
+} from "../types/requestTypes";
 
 type ChartOptionName =
     | "temp."
@@ -17,7 +21,7 @@ type ChartOptionName =
     | "давление";
 
 export type ChartOption = {
-    id: number;
+    propName: HourlyWeatherNumberKey;
     name: ChartOptionName;
     measurement: string;
 };
@@ -29,38 +33,24 @@ const props = defineProps<{
 
 const { locale } = useI18n();
 
-const { measurement } = useMeasurement();
-
 const dateFormat = computed(() => {
     return locale.value === "ru" ? "HH:mm" : "h A";
 });
 
 const tickLabels = computed(() => {
-    return props.hourlyForecast.map((item) => {
-        const date = new Date(item.time);
-        const formatted = useDateFormat(date, dateFormat.value, {
-            locales: "en-US",
-        });
-        return formatted.value;
-    });
+    return props.hourlyForecast.map(
+        (item) => useDateFormat(new Date(item.time), dateFormat.value).value,
+    );
 });
 
 const chartData = computed(() => {
-    if (props.activeOption.id === 2) {
-        return props.hourlyForecast.map((item) => item.precip_mm);
-    } else if (props.activeOption.id === 3) {
-        return props.hourlyForecast.map((item) => item.wind_kph);
-    } else if (props.activeOption.id === 4) {
-        return props.hourlyForecast.map((item) => item.pressure_mb);
-    } else {
-        return props.hourlyForecast.map((item) => {
-            return measurement.value === "C" ? item.temp_c : item.temp_f;
-        });
-    }
+    return props.hourlyForecast.map(
+        (item) => item[props.activeOption.propName],
+    );
 });
 
 const pointFormatter = computed(() => {
-    if (props.activeOption.id === 1) {
+    if (props.activeOption.propName.includes("temp_")) {
         return (value: string) => value + "°";
     } else return;
 });
@@ -81,26 +71,42 @@ const data = computed(() => {
     };
 });
 
-const container = ref<HTMLElement | null>(null);
+const hourlyForecastContainer = ref<HTMLElement | null>(null);
 
 // makes container scrollable by dragging
-useDraggableScroll(container);
+useDraggableScroll(hourlyForecastContainer);
 
 const scrollOnWheel = function (e: WheelEvent) {
-    if (container.value) {
-        container.value.scrollLeft += e.deltaY / 4;
+    if (hourlyForecastContainer.value) {
+        hourlyForecastContainer.value.scrollLeft += e.deltaY / 4;
     }
 };
+
+const chartOptions = computed(() => {
+    return {
+        layout: {
+            padding: {
+                top: 20,
+            },
+        },
+        scales: scalesConfiguration,
+        plugins: {
+            datalabels: {
+                formatter: pointFormatter.value,
+            },
+        },
+    };
+});
 </script>
 
 <template>
     <div
-        ref="container"
+        ref="hourlyForecastContainer"
         class="hourly-forecast-chart"
         @wheel.prevent="scrollOnWheel"
     >
         <div class="hourly-forecast-chart__chart-container">
-            <BasicChart :data="data" :point-formatter="pointFormatter" />
+            <LineChart :data="data" :options="chartOptions" />
         </div>
         <ConditionIconRange :conditions="conditionRange" />
     </div>
@@ -117,20 +123,6 @@ const scrollOnWheel = function (e: WheelEvent) {
     overflow-x: scroll;
     margin-left: -16px;
     width: 100vw;
-
-    &::-webkit-scrollbar {
-        width: 2px;
-        height: 2px;
-
-        &-track {
-            background-color: transparent;
-        }
-
-        &-thumb {
-            border-radius: 20px;
-            background-color: var(--basic-light-dull);
-        }
-    }
 
     &__chart-container {
         width: 1000px;

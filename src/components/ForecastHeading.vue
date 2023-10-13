@@ -7,6 +7,11 @@ defineProps<{
     title: string;
 }>();
 
+defineEmits<{
+    //eslint-disable-next-line
+    (e: "openModal"): void;
+}>();
+
 const { t } = useI18n();
 </script>
 
@@ -17,7 +22,10 @@ const { t } = useI18n();
         </div>
         <div class="forecast-heading__details">
             <InlineSvg :src="IconSvgUrl" width="20" height="20" />
-            <div>
+            <div
+                class="forecast-heading__details-text"
+                @click="$emit('openModal')"
+            >
                 {{ t("chart.details") }}
             </div>
         </div>
@@ -38,9 +46,12 @@ const { t } = useI18n();
         display: flex;
         gap: 2px;
         align-items: center;
-        font-size: var(--fs-small);
         cursor: pointer;
         color: var(--basic-light-faded);
+
+        &-text {
+            font-size: var(--fs-small);
+        }
 
         &:hover {
             color: var(--basic-light);

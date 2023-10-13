@@ -24,6 +24,20 @@
     font-weight: 400;
     line-height: 120%;
     text-shadow: -1.5px 2.6px 0.75px rgba(0, 0, 0, 0.1);
+
+    &::-webkit-scrollbar {
+        width: 4px;
+        height: 2px;
+
+        &-track {
+            background-color: transparent;
+        }
+
+        &-thumb {
+            border-radius: 20px;
+            background-color: var(--basic-light-dull);
+        }
+    }
 }
 
 html {
