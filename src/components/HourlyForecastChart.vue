@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { useDateFormat } from "@vueuse/core";
 import colors from "../assets/colors/colors.json";
-import { HourlyWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
-import { useMeasurement } from "../composables/useMeasurement";
 import { useDraggableScroll } from "../composables/useDraggableScroll";
 import { scalesConfiguration } from "../configs/chartjsConfig";
+import { Line as LineChart } from "vue-chartjs";
+import type {
+    HourlyWeather,
+    HourlyWeatherNumberKey,
+} from "../types/requestTypes";
 
 type ChartOptionName =
     | "temp."
@@ -18,7 +21,7 @@ type ChartOptionName =
     | "давление";
 
 export type ChartOption = {
-    id: number;
+    propName: HourlyWeatherNumberKey;
     name: ChartOptionName;
     measurement: string;
 };
@@ -30,38 +33,24 @@ const props = defineProps<{
 
 const { locale } = useI18n();
 
-const { measurement } = useMeasurement();
-
 const dateFormat = computed(() => {
     return locale.value === "ru" ? "HH:mm" : "h A";
 });
 
 const tickLabels = computed(() => {
-    return props.hourlyForecast.map((item) => {
-        const date = new Date(item.time);
-        const formatted = useDateFormat(date, dateFormat.value, {
-            locales: "en-US",
-        });
-        return formatted.value;
-    });
+    return props.hourlyForecast.map(
+        (item) => useDateFormat(new Date(item.time), dateFormat.value).value,
+    );
 });
 
 const chartData = computed(() => {
-    if (props.activeOption.id === 2) {
-        return props.hourlyForecast.map((item) => item.precip_mm);
-    } else if (props.activeOption.id === 3) {
-        return props.hourlyForecast.map((item) => item.wind_kph);
-    } else if (props.activeOption.id === 4) {
-        return props.hourlyForecast.map((item) => item.pressure_mb);
-    } else {
-        return props.hourlyForecast.map((item) => {
-            return measurement.value === "C" ? item.temp_c : item.temp_f;
-        });
-    }
+    return props.hourlyForecast.map(
+        (item) => item[props.activeOption.propName],
+    );
 });
 
 const pointFormatter = computed(() => {
-    if (props.activeOption.id === 1) {
+    if (props.activeOption.propName.includes("temp_")) {
         return (value: string) => value + "°";
     } else return;
 });
@@ -117,7 +106,7 @@ const chartOptions = computed(() => {
         @wheel.prevent="scrollOnWheel"
     >
         <div class="hourly-forecast-chart__chart-container">
-            <BasicChart :data="data" :options="chartOptions" />
+            <LineChart :data="data" :options="chartOptions" />
         </div>
         <ConditionIconRange :conditions="conditionRange" />
     </div>

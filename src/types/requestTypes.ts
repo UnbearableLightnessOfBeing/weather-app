@@ -118,3 +118,15 @@ export type GetForecastResponse = {
     current: CurrentWeather;
     forecast: ForecastType;
 };
+
+//general type
+// type ExtractPropKeys<T, PropType extends T[keyof T]> = {
+//     [P in keyof T]: T[P] extends PropType ? P : never;
+// }[keyof T];
+
+//more specific
+type ExtractNumberPropKeys<T> = {
+    [P in keyof T]: T[P] extends number ? P : never;
+}[keyof T];
+
+export type HourlyWeatherNumberKey = ExtractNumberPropKeys<HourlyWeather>;

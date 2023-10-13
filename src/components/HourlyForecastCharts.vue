@@ -7,20 +7,20 @@ import { scalesConfigurationSecond } from "../configs/chartjsConfig";
 import { useDraggableScroll } from "../composables/useDraggableScroll";
 import { useMeasurement } from "../composables/useMeasurement";
 import { ChartData } from "chart.js";
+import type { HourlyWeatherNumberKey } from "../types/requestTypes";
 
-const icons = import.meta.glob("../../public/interface/charts/*.svg");
-
-const getChartIcon = (name: string): string | undefined => {
-    for (const icon in icons) {
-        if (icon.includes(name)) {
-            return icon;
-        }
-    }
-};
+import { Line as LineChart } from "vue-chartjs";
 
 const props = defineProps<{
     hourlyForecast: HourlyWeather[];
 }>();
+
+const getChartIcon = (name: string): string => {
+    const host = new URL("", import.meta.url).origin;
+    const base = import.meta.env.BASE_URL;
+    const iconPath = host + base + "/interface/charts" + `/${name}.svg`;
+    return iconPath;
+};
 
 const { t, locale } = useI18n();
 
@@ -31,27 +31,13 @@ const dateFormat = computed(() => {
 });
 
 const tickLabels = computed(() => {
-    return props.hourlyForecast.map((item) => {
-        const date = new Date(item.time);
-        const formatted = useDateFormat(date, dateFormat.value, {
-            locales: "en-US",
-        });
-        return formatted.value;
-    });
+    return props.hourlyForecast.map(
+        (item) => useDateFormat(new Date(item.time), dateFormat.value).value,
+    );
 });
 
-//general type
-// type ExtractPropKeys<T, PropType extends T[keyof T]> = {
-//     [P in keyof T]: T[P] extends PropType ? P : never;
-// }[keyof T];
-
-//more specific
-type ExtractNumberPropKeys<T> = {
-    [P in keyof T]: T[P] extends number ? P : never;
-}[keyof T];
-
 type ChartInfoItem = {
-    propName: ExtractNumberPropKeys<HourlyWeather>;
+    propName: HourlyWeatherNumberKey;
     optionName: string;
     measurement: string;
     icon: string | undefined;
@@ -167,7 +153,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
     ];
 });
 
-const getChartData = (propName: ExtractNumberPropKeys<HourlyWeather>) => {
+const getChartData = (propName: HourlyWeatherNumberKey) => {
     return {
         labels: tickLabels.value,
         datasets: [
@@ -240,7 +226,7 @@ const setOptionOffset = () => {
                         :measurement="chart.measurement"
                         class="hourly-forecast-charts__option-title"
                     />
-                    <BasicChart
+                    <LineChart
                         :data="chart.dataset"
                         :options="chartOptions[idx]"
                         class="hourly-forecast-charts__option-chart"

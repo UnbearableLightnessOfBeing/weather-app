@@ -19,21 +19,25 @@ const options = computed<ChartOption[]>(() => {
     return [
         {
             id: 1,
+            propName: measurement.value === "C" ? "temp_c" : "temp_f",
             name: locale.value === "ru" ? "температура" : "temp.",
             measurement: measurement.value === "C" ? "°C" : "°F",
         },
         {
             id: 2,
+            propName: "precip_mm",
             name: locale.value === "ru" ? "осадки" : "precip.",
             measurement: t("measurements.mm"),
         },
         {
             id: 3,
+            propName: "wind_kph",
             name: locale.value === "ru" ? "ветер" : "wind",
             measurement: t("measurements.kmh"),
         },
         {
             id: 4,
+            propName: "pressure_mb",
             name: locale.value === "ru" ? "давление" : "pressure",
             measurement: "hPa",
         },

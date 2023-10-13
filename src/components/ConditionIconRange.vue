@@ -11,7 +11,7 @@ const { getIconUrl } = useConditionIcons();
 </script>
 
 <template>
-    <ItemRange :width="1200">
+    <ItemRange :width="width">
         <BasicConditionIcon
             v-for="condition in conditions"
             :key="condition.id"

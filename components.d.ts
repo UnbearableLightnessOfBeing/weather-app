@@ -57,7 +57,6 @@ declare module 'vue' {
     LocationInterface: typeof import('./src/components/LocationInterface.vue')['default']
     MainInfo: typeof import('./src/components/MainInfo.vue')['default']
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']
-    ModalForecastCharts: typeof import('./src/components/ModalForecastCharts.vue')['default']
     QualityCards: typeof import('./src/components/QualityCards.vue')['default']
     StatCards: typeof import('./src/components/StatCards.vue')['default']
     SwiperLoader: typeof import('./src/components/SwiperLoader.vue')['default']
