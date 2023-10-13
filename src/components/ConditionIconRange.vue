@@ -11,7 +11,7 @@ const { getIconUrl } = useConditionIcons();
 </script>
 
 <template>
-    <div class="condition-icon-range" :style="`width: ${width}px`">
+    <ItemRange :width="1200">
         <BasicConditionIcon
             v-for="condition in conditions"
             :key="condition.id"
@@ -22,15 +22,7 @@ const { getIconUrl } = useConditionIcons();
             :icon-src="getIconUrl(condition.code)"
             :type="'tiny'"
         />
-    </div>
+    </ItemRange>
 </template>
 
-<style scoped lang="scss">
-.condition-icon-range {
-    width: 1000px;
-    min-width: 1000px;
-    padding-inline: 5px;
-    display: flex;
-    justify-content: space-between;
-}
-</style>
+<style scoped lang="scss"></style>

@@ -36,6 +36,7 @@ declare module 'vue' {
     BasicTextInput: typeof import('./src/components/BasicTextInput.vue')['default']
     BasicVerticalDivider: typeof import('./src/components/BasicVerticalDivider.vue')['default']
     BasicWeatherStats: typeof import('./src/components/BasicWeatherStats.vue')['default']
+    ChartTitle: typeof import('./src/components/ChartTitle.vue')['default']
     ConditionIconRange: typeof import('./src/components/ConditionIconRange.vue')['default']
     CurrentDateInfo: typeof import('./src/components/CurrentDateInfo.vue')['default']
     CurrentWeatherInfo: typeof import('./src/components/CurrentWeatherInfo.vue')['default']
@@ -51,6 +52,7 @@ declare module 'vue' {
     HourlyForecastChart: typeof import('./src/components/HourlyForecastChart.vue')['default']
     HourlyForecastCharts: typeof import('./src/components/HourlyForecastCharts.vue')['default']
     HourlyForecastData: typeof import('./src/components/HourlyForecastData.vue')['default']
+    ItemRange: typeof import('./src/components/ItemRange.vue')['default']
     LangueageSwitcher: typeof import('./src/components/LangueageSwitcher.vue')['default']
     LocationInterface: typeof import('./src/components/LocationInterface.vue')['default']
     MainInfo: typeof import('./src/components/MainInfo.vue')['default']
@@ -59,6 +61,7 @@ declare module 'vue' {
     QualityCards: typeof import('./src/components/QualityCards.vue')['default']
     StatCards: typeof import('./src/components/StatCards.vue')['default']
     SwiperLoader: typeof import('./src/components/SwiperLoader.vue')['default']
+    TimeLabelRange: typeof import('./src/components/TimeLabelRange.vue')['default']
     WeatherCondition: typeof import('./src/components/WeatherCondition.vue')['default']
   }
 }

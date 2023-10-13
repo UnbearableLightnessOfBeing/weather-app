@@ -8,6 +8,16 @@ import { useDraggableScroll } from "../composables/useDraggableScroll";
 import { useMeasurement } from "../composables/useMeasurement";
 import { ChartData } from "chart.js";
 
+const icons = import.meta.glob("../../public/interface/charts/*.svg");
+
+const getChartIcon = (name: string): string | undefined => {
+    for (const icon in icons) {
+        if (icon.includes(name)) {
+            return icon;
+        }
+    }
+};
+
 const props = defineProps<{
     hourlyForecast: HourlyWeather[];
 }>();
@@ -43,6 +53,8 @@ type ExtractNumberPropKeys<T> = {
 type ChartInfoItem = {
     propName: ExtractNumberPropKeys<HourlyWeather>;
     optionName: string;
+    measurement: string;
+    icon: string | undefined;
     //eslint-disable-next-line
     formatter: (value: any) => any;
     dataset: ChartData<"line">;
@@ -53,6 +65,8 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
         {
             propName: measurement.value === "C" ? "temp_c" : "temp_f",
             optionName: t("chartOptions.temp"),
+            measurement: measurement.value === "C" ? "°C" : "°F",
+            icon: getChartIcon("temperature"),
             formatter: (value: string) => value + "°",
             dataset: getChartData(
                 measurement.value === "C" ? "temp_c" : "temp_f",
@@ -61,6 +75,8 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
         {
             propName: measurement.value === "C" ? "feelslike_c" : "feelslike_f",
             optionName: t("chartOptions.feelslike"),
+            measurement: measurement.value === "C" ? "°C" : "°F",
+            icon: getChartIcon("feelslike"),
             formatter: (value: string) => value + "°",
             dataset: getChartData(
                 measurement.value === "C" ? "feelslike_c" : "feelslike_f",
@@ -69,48 +85,64 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
         {
             propName: "precip_mm",
             optionName: t("chartOptions.precip"),
+            measurement: t("measurements.mm"),
+            icon: getChartIcon("precip"),
             formatter: (value: string) => value,
             dataset: getChartData("precip_mm"),
         },
         {
             propName: "chance_of_rain",
             optionName: t("chartOptions.rainChance"),
+            measurement: "%",
+            icon: getChartIcon("rain-chance"),
             formatter: (value: string) => value,
             dataset: getChartData("chance_of_rain"),
         },
         {
             propName: "chance_of_snow",
             optionName: t("chartOptions.snowChance"),
+            measurement: "%",
+            icon: getChartIcon("snow-chance"),
             formatter: (value: string) => value,
             dataset: getChartData("chance_of_snow"),
         },
         {
             propName: "wind_kph",
             optionName: t("chartOptions.wind"),
+            measurement: t("measurements.kmh"),
+            icon: getChartIcon("wind"),
             formatter: (value: string) => value,
             dataset: getChartData("wind_kph"),
         },
         {
             propName: "gust_kph",
             optionName: t("chartOptions.gust"),
+            measurement: t("measurements.kmh"),
+            icon: getChartIcon("gust"),
             formatter: (value: string) => value,
             dataset: getChartData("gust_kph"),
         },
         {
             propName: "pressure_mb",
             optionName: t("chartOptions.pressure"),
+            measurement: "hPa",
+            icon: getChartIcon("pressure"),
             formatter: (value: string) => value,
             dataset: getChartData("pressure_mb"),
         },
         {
             propName: "humidity",
             optionName: t("chartOptions.humidity"),
+            measurement: "%",
+            icon: getChartIcon("humidity"),
             formatter: (value: string) => value,
             dataset: getChartData("humidity"),
         },
         {
             propName: measurement.value === "C" ? "dewpoint_c" : "dewpoint_f",
             optionName: t("chartOptions.dewPoint"),
+            measurement: measurement.value === "C" ? "°C" : "°F",
+            icon: getChartIcon("dew-point"),
             formatter: (value: string) => value + "°",
             dataset: getChartData(
                 measurement.value === "C" ? "dewpoint_c" : "dewpoint_f",
@@ -119,56 +151,33 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
         {
             propName: "uv",
             optionName: t("chartOptions.uv"),
+            measurement: "",
+            icon: getChartIcon("uv"),
             formatter: (value: string) => value,
             dataset: getChartData("uv"),
         },
         {
             propName: "vis_km",
             optionName: t("chartOptions.visibility"),
+            measurement: t("measurements.km"),
+            icon: getChartIcon("visibility"),
             formatter: (value: string) => value,
             dataset: getChartData("vis_km"),
         },
     ];
 });
 
-// const chartDataSets = computed(() => {
-//     return chartInfo.value.map((chartItem) => {
-//         // return props.hourlyForecast.map((hour) => {
-//         //     return hour[chartItem.propName];
-//         // });
-//         return getChartData(chartItem.propName);
-//     });
-// });
-
 const getChartData = (propName: ExtractNumberPropKeys<HourlyWeather>) => {
-    const datasets = props.hourlyForecast.map((hourly) => hourly[propName]);
-
-    return datasets.map((dataset) => {
-        return {
-            labels: tickLabels.value,
-            datasets: [
-                {
-                    backgroundColor: colors["accent-300"],
-                    data: dataset,
-                },
-            ],
-        };
-    });
+    return {
+        labels: tickLabels.value,
+        datasets: [
+            {
+                backgroundColor: colors["accent-300"],
+                data: props.hourlyForecast.map((hourly) => hourly[propName]),
+            },
+        ],
+    };
 };
-
-// const dataSets = computed(() => {
-//     return chartDataSets.value.map((dataset) => {
-//         return {
-//             labels: tickLabels.value,
-//             datasets: [
-//                 {
-//                     backgroundColor: colors["accent-300"],
-//                     data: dataset,
-//                 },
-//             ],
-//         };
-//     });
-// });
 
 const chartOptions = computed(() => {
     return chartInfo.value.map((chartItem) => {
@@ -194,17 +203,14 @@ const conditionRange = computed(() => {
 });
 
 const mainContainer = ref<HTMLElement | null>(null);
-const option = ref<HTMLElement[] | null>(null);
 
 useDraggableScroll(mainContainer);
 
-const setAbsolute = () => {
+const optionOffset = ref("20px");
+
+const setOptionOffset = () => {
     const offset = mainContainer.value?.scrollLeft ?? 0;
-    if (option.value) {
-        option.value.forEach((el) => {
-            el.style.left = `${20 + offset}px`;
-        });
-    }
+    optionOffset.value = `${20 + offset}px`;
 };
 </script>
 
@@ -213,37 +219,29 @@ const setAbsolute = () => {
         <div
             ref="mainContainer"
             class="hourly-forecast-charts"
-            @scroll="setAbsolute"
+            @scroll="setOptionOffset"
         >
             <div class="hourly-forecast-charts__top-info">
                 <ConditionIconRange
                     :conditions="conditionRange"
                     :width="1200"
                 />
-                <div class="time">
-                    <div
-                        v-for="value in tickLabels"
-                        :key="value"
-                        class="time__stamp"
-                    >
-                        {{ value }}
-                    </div>
-                </div>
+                <TimeLabelRange :time-labels="tickLabels" />
             </div>
             <div class="hourly-forecast-charts__container">
                 <div
-                    v-for="(dataset, idx) in dataSets"
-                    :key="idx"
+                    v-for="(chart, idx) in chartInfo"
+                    :key="chart.propName"
                     class="hourly-forecast-charts__option"
                 >
-                    <div
-                        ref="option"
-                        class="hourly-forecast-charts__option-text"
-                    >
-                        {{ chartInfo[idx].optionName }}
-                    </div>
+                    <ChartTitle
+                        :icon-src="chart.icon"
+                        :title="chart.optionName"
+                        :measurement="chart.measurement"
+                        class="hourly-forecast-charts__option-title"
+                    />
                     <BasicChart
-                        :data="dataset"
+                        :data="chart.dataset"
                         :options="chartOptions[idx]"
                         class="hourly-forecast-charts__option-chart"
                     />
@@ -254,14 +252,6 @@ const setAbsolute = () => {
 </template>
 
 <style scoped lang="scss">
-.time {
-    display: flex;
-    width: 1200px;
-    justify-content: space-between;
-    font-size: 12px;
-    padding-inline: 5px;
-}
-
 .hourly-forecast-charts-wrapper {
     overflow: hidden;
 }
@@ -296,11 +286,10 @@ const setAbsolute = () => {
     &__option {
         position: relative;
 
-        &-text {
+        &-title {
             position: absolute;
-            left: 20px;
+            left: v-bind(optionOffset);
             top: 5px;
-            font-size: var(--fs-stats);
         }
 
         &-chart {

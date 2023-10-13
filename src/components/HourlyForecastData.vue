@@ -3,12 +3,13 @@ import { HourlyWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
 import type { ChartOption } from "./HourlyForecastChart.vue";
 import { useMeasurement } from "../composables/useMeasurement";
+import { useChart } from "../composables/useChart";
 
-const props = defineProps<{
+defineProps<{
     hourlyForecast: HourlyWeather[];
 }>();
 
-console.log(props.hourlyForecast);
+useChart();
 
 const { t, locale } = useI18n();
 
@@ -41,7 +42,7 @@ const options = computed<ChartOption[]>(() => {
 
 const activeOption = ref(options.value[0]);
 
-const isModalOpen = ref(true);
+const isModalOpen = ref(false);
 </script>
 
 <template>

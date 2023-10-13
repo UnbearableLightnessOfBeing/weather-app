@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useChart } from "../composables/useChart";
+// import { useChart } from "../composables/useChart";
 // import { scalesConfiguration } from "../configs/chartjsConfig";
 import type { ChartData } from "chart.js";
 import { Line } from "vue-chartjs";
@@ -13,7 +13,7 @@ defineProps<{
     // pointFormatter?: (value: any) => any;
 }>();
 
-useChart();
+// useChart();
 </script>
 
 <template>

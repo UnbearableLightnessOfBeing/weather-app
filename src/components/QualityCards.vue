@@ -12,9 +12,9 @@ const props = defineProps<{
 
 const { t, locale } = useI18n();
 
-const epaIndex = computed(() => {
+const epaIndex = computed((): number => {
     if (props.airQuality && props.airQuality["us-epa-index"]) {
-        return props.airQuality["us-epa-index"] as number;
+        return props.airQuality["us-epa-index"];
     } else return 0;
 });
 
