@@ -1,7 +1,9 @@
 {
     "errors" : {
         "dataLoadingError": "An error occured during data loading",
-        "searchError": "An error occured during search"
+        "searchError": "An error occured during search",
+        "noData": "No data",
+        "noDataTooltip": "Some information was lost during data fetching"
     },
     "dayNames": [
         "Sunday",

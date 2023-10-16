@@ -8,6 +8,7 @@ import { useI18n } from "vue-i18n";
 defineProps<{
     dailyForecast: DailyForecast;
     location: string;
+    isLoading: boolean;
 }>();
 
 defineEmits<{
@@ -37,13 +38,18 @@ const computedLocale = computed<"en" | "ru">(() => {
         <div class="daily-forecast-info__container">
             <CurrentDateInfo
                 :language="computedLocale"
-                :unix-date="new Date(dailyForecast.date)"
+                :unix-date="
+                    dailyForecast ? new Date(dailyForecast.date) : new Date()
+                "
                 :time-hidden="true"
             />
             <div class="daily-forecast-info__location-name">{{ location }}</div>
         </div>
         <div class="daily-forecast-info__container">
-            <WeatherCondition :condition="dailyForecast.day.condition" />
+            <WeatherCondition
+                :condition="dailyForecast?.day.condition"
+                :is-loading="isLoading"
+            />
             <BasicDailyTemperature
                 :min-value="
                     measurement === 'C'

@@ -5,6 +5,7 @@ import { CurrentWeather } from "../types/requestTypes";
 defineProps<{
     current?: CurrentWeather;
     location: string;
+    isLoading: boolean;
 }>();
 
 defineEmits<{
@@ -27,8 +28,11 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
             :model-value="location"
             @update:model-value="(value) => $emit('update:location', value)"
         />
-        <WeatherCondition :condition="current?.condition" />
-        <MainInfo :current="current" />
+        <WeatherCondition
+            :condition="current?.condition"
+            :is-loading="isLoading"
+        />
+        <MainInfo :current="current" :is-loading="isLoading" />
     </div>
 </template>
 

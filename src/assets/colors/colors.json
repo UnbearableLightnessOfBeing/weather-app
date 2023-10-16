@@ -5,6 +5,7 @@
     "accent-300": "#AC8EFF",
     "accent-500": "#865CFD",
     "error": "#ce5a5a",
+    "--error-bg": "#EE6C6188",
 
     "basic-light-dull": "rgba(255, 255, 255, 0.3)",
     "basic-light-faded": "rgba(255, 255, 255, 0.7)",

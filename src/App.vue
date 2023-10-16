@@ -27,12 +27,14 @@ const activeDay = ref<number | null>(null);
                     v-if="typeof activeDay === 'number' && data"
                     :daily-forecast="data?.forecast?.forecastday[activeDay]"
                     :location="location"
+                    :is-loading="isLoading"
                     @unset-active-day="activeDay = null"
                 />
                 <CurrentWeatherInfo
                     v-else
                     v-model:location="location"
-                    :current="data?.current"
+                    :current="undefined"
+                    :is-loading="isLoading"
                 />
             </Transition>
             <MeasurementToggler

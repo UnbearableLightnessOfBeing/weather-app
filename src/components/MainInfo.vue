@@ -5,6 +5,7 @@ import type { CurrentWeather } from "../types/requestTypes";
 
 defineProps<{
     current?: CurrentWeather;
+    isLoading: boolean;
 }>();
 
 const i18n = useI18n();
@@ -32,21 +33,23 @@ onUnmounted(() => {
 <template>
     <div class="main-info">
         <div class="main-info__content">
-            <BasicLoader v-if="!current" class="main-info__temp-loader" />
+            <BasicLoader v-if="isLoading" class="main-info__temp-loader" />
             <BasicTemperature
-                v-else
+                v-else-if="current"
                 :value="measurement === 'C' ? current.temp_c : current.temp_f"
                 :measurement="measurement"
             />
+            <BasicNodata v-else class="main-info__temp-no-data" />
             <CurrentDateInfo :language="locale" :unix-date="unixCurrentDate" />
-            <BasicLoader v-if="!current" class="main-info__stats-loader" />
+            <BasicLoader v-if="isLoading" class="main-info__stats-loader" />
             <BasicWeatherStats
-                v-else
+                v-else-if="current"
                 :wind-speed="current.wind_kph"
                 :wind-degree="current.wind_degree"
                 :humidity="current.humidity"
                 :percipitations="current.precip_in"
             />
+            <BasicNodata v-else class="main-info__stats-no-data" />
         </div>
     </div>
 </template>
@@ -59,23 +62,27 @@ onUnmounted(() => {
         }
     }
 
-    &__temp-loader {
+    &__temp-loader,
+    &__temp-no-data {
         width: 165px;
         height: 115px;
     }
 
-    &__stats-loader {
+    &__stats-loader,
+    &__stats-no-data {
         height: 89px;
     }
 }
 
 @media screen and (min-width: 600px) {
     .main-info {
-        &__stats-loader {
+        &__stats-loader,
+        &__stats-no-data {
             height: 26px;
         }
 
-        &__temp-loader {
+        &__temp-loader,
+        &__temp-no-data {
             width: 197px;
             height: 197px;
         }
