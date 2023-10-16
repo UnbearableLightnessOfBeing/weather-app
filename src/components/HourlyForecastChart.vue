@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { useDateFormat } from "@vueuse/core";
-import colors from "../assets/colors/colors.json";
-import { useI18n } from "vue-i18n";
 import { useDraggableScroll } from "../composables/useDraggableScroll";
-import { scalesConfiguration } from "../configs/chartjsConfig";
 import { Line as LineChart } from "vue-chartjs";
 import type {
     HourlyWeather,
     HourlyWeatherNumberKey,
 } from "../types/requestTypes";
+import { useChartData } from "../composables/useChartData";
 
 type ChartOptionName =
     | "temp."
@@ -31,45 +28,15 @@ const props = defineProps<{
     activeOption: ChartOption;
 }>();
 
-const { locale } = useI18n();
+const { conditionRange, getChartOptions, getChartData } = useChartData(
+    computed(() => props.hourlyForecast),
+);
 
-const dateFormat = computed(() => {
-    return locale.value === "ru" ? "HH:mm" : "h A";
-});
+const data = computed(() => getChartData(props.activeOption.propName));
 
-const tickLabels = computed(() => {
-    return props.hourlyForecast.map(
-        (item) => useDateFormat(new Date(item.time), dateFormat.value).value,
-    );
-});
-
-const chartData = computed(() => {
-    return props.hourlyForecast.map(
-        (item) => item[props.activeOption.propName],
-    );
-});
-
-const pointFormatter = computed(() => {
-    if (props.activeOption.propName.includes("temp_")) {
-        return (value: string) => value + "°";
-    } else return;
-});
-
-const conditionRange = computed(() => {
-    return props.hourlyForecast.map((item) => item.condition);
-});
-
-const data = computed(() => {
-    return {
-        labels: tickLabels.value,
-        datasets: [
-            {
-                backgroundColor: colors["accent-300"],
-                data: chartData.value,
-            },
-        ],
-    };
-});
+const chartOptions = computed(() =>
+    getChartOptions(props.activeOption.propName),
+);
 
 const hourlyForecastContainer = ref<HTMLElement | null>(null);
 
@@ -81,22 +48,6 @@ const scrollOnWheel = function (e: WheelEvent) {
         hourlyForecastContainer.value.scrollLeft += e.deltaY / 4;
     }
 };
-
-const chartOptions = computed(() => {
-    return {
-        layout: {
-            padding: {
-                top: 20,
-            },
-        },
-        scales: scalesConfiguration,
-        plugins: {
-            datalabels: {
-                formatter: pointFormatter.value,
-            },
-        },
-    };
-});
 </script>
 
 <template>
