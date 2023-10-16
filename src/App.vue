@@ -69,12 +69,13 @@ const activeDay = ref<number | null>(null);
                     :daily-forecast="data?.forecast?.forecastday[activeDay]"
                     :is-loading="isLoading"
                 />
-                <CurrentWeatherStats
-                    v-else
-                    v-model:location="location"
-                    :current="data?.current"
-                    :is-loading="isLoading"
-                />
+                <KeepAlive v-else>
+                    <CurrentWeatherStats
+                        v-model:location="location"
+                        :current="data?.current"
+                        :is-loading="isLoading"
+                    />
+                </KeepAlive>
             </Transition>
         </AppPanelLayout>
     </AppLayout>

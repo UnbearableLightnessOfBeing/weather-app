@@ -12,32 +12,36 @@ const { t, locale } = useI18n();
 
 const { measurement } = useMeasurement();
 
-const options = computed<ChartOption[]>(() => {
-    return [
-        {
-            propName: measurement.value === "C" ? "temp_c" : "temp_f",
-            name: locale.value === "ru" ? "температура" : "temp.",
-            measurement: measurement.value === "C" ? "°C" : "°F",
-        },
-        {
-            propName: "precip_mm",
-            name: locale.value === "ru" ? "осадки" : "precip.",
-            measurement: t("measurements.mm"),
-        },
-        {
-            propName: "wind_kph",
-            name: locale.value === "ru" ? "ветер" : "wind",
-            measurement: t("measurements.kmh"),
-        },
-        {
-            propName: "pressure_mb",
-            name: locale.value === "ru" ? "давление" : "pressure",
-            measurement: "hPa",
-        },
-    ];
-});
+const options = computed<ChartOption[]>(() => [
+    {
+        propName: measurement.value === "C" ? "temp_c" : "temp_f",
+        name: locale.value === "ru" ? "температура" : "temp.",
+        measurement: measurement.value === "C" ? "°C" : "°F",
+    },
+    {
+        propName: "precip_mm",
+        name: locale.value === "ru" ? "осадки" : "precip.",
+        measurement: t("measurements.mm"),
+    },
+    {
+        propName: "wind_kph",
+        name: locale.value === "ru" ? "ветер" : "wind",
+        measurement: t("measurements.kmh"),
+    },
+    {
+        propName: "pressure_mb",
+        name: locale.value === "ru" ? "давление" : "pressure",
+        measurement: "hPa",
+    },
+]);
 
-const activeOption = ref(options.value[0]);
+const activeOption = ref<ChartOption>(options.value[0]);
+
+watch(options, () => {
+    if (activeOption.value.propName.includes("temp_")) {
+        activeOption.value = options.value[0];
+    }
+});
 
 const isModalOpen = ref(false);
 </script>

@@ -32,7 +32,9 @@ const { conditionRange, getChartOptions, getChartData } = useChartData(
     computed(() => props.hourlyForecast),
 );
 
-const data = computed(() => getChartData(props.activeOption.propName));
+const data = computed(() => {
+    return getChartData(props.activeOption.propName);
+});
 
 const options = computed(() => getChartOptions(props.activeOption.propName));
 

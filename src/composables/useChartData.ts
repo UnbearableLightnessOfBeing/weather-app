@@ -45,10 +45,10 @@ export const useChartData = (
     ): ChartOptions<"line"> => {
         return {
             layout: {
-                padding: {
-                    left: 20,
-                    right: 20,
-                },
+                padding:
+                    chartType === "default"
+                        ? { top: 20 }
+                        : { left: 20, right: 20 },
             },
             scales:
                 chartType === "default"
