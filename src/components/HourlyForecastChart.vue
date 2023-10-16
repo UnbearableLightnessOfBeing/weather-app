@@ -34,9 +34,7 @@ const { conditionRange, getChartOptions, getChartData } = useChartData(
 
 const data = computed(() => getChartData(props.activeOption.propName));
 
-const chartOptions = computed(() =>
-    getChartOptions(props.activeOption.propName),
-);
+const options = computed(() => getChartOptions(props.activeOption.propName));
 
 const hourlyForecastContainer = ref<HTMLElement | null>(null);
 
@@ -57,7 +55,7 @@ const scrollOnWheel = function (e: WheelEvent) {
         @wheel.prevent="scrollOnWheel"
     >
         <div class="hourly-forecast-chart__chart-container">
-            <LineChart :data="data" :options="chartOptions" />
+            <LineChart :data="data" :options="options" />
         </div>
         <ConditionIconRange :conditions="conditionRange" />
     </div>
@@ -74,15 +72,15 @@ const scrollOnWheel = function (e: WheelEvent) {
     overflow-x: scroll;
     margin-left: -16px;
     width: 100vw;
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
 
     &__chart-container {
         width: 1000px;
         min-width: 1000px;
-        cursor: grab;
-
-        &:active {
-            cursor: grabbing;
-        }
     }
 }
 

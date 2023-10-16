@@ -58,11 +58,14 @@ onUnmounted(() => {
     document.body.removeEventListener("click", bodyClickCallback);
 });
 
-const updateModelValue = (value: string) => {
-    emits("update:modelValue", value);
-};
+// const updateModelValue = (value: string) => {
+//     emits("update:modelValue", value);
+// };
 
-const debounceModelValue = createDebounce(updateModelValue, 400);
+const debounceModelValue = createDebounce(
+    (value: string) => emits("update:modelValue", value),
+    400,
+);
 </script>
 
 <template>

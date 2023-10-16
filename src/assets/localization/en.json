@@ -1,6 +1,7 @@
 {
     "errors" : {
-        "dataLoadingError": "An error occured during data loading"
+        "dataLoadingError": "An error occured during data loading",
+        "searchError": "An error occured during search"
     },
     "dayNames": [
         "Sunday",
@@ -42,7 +43,8 @@
         "tooltip": "Click to change the language"
     },
     "search" : {
-        "placeholder": "Search"
+        "placeholder": "Search",
+        "notFound": "Nothing was found"
     },
     "chart": {
         "hourly": "Hourly",
