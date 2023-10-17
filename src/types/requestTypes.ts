@@ -15,6 +15,8 @@ export type WeatherCondition = {
     code: number;
 };
 
+export type ExtendedWeatherCondition = WeatherCondition & { is_day: boolean };
+
 export type AirQuality = {
     co: number;
     no2: number;

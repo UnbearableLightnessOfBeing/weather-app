@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { WeatherCondition } from "../types/requestTypes";
+import { ExtendedWeatherCondition } from "../types/requestTypes";
 import { useConditionIcons } from "../composables/useConditionIcons";
 
 defineProps<{
-    conditions: WeatherCondition[];
+    conditions: ExtendedWeatherCondition[];
     width?: number;
 }>();
 
@@ -19,7 +19,7 @@ const { getIconUrl } = useConditionIcons();
                 theme: 'custom-tooltip',
                 content: condition.text,
             }"
-            :icon-src="getIconUrl(condition.code)"
+            :icon-src="getIconUrl(condition.code, condition.is_day)"
             :type="'tiny'"
         />
     </ItemRange>

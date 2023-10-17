@@ -30,6 +30,7 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
         />
         <WeatherCondition
             :condition="current?.condition"
+            :is-day="current ? Boolean(current.is_day) : undefined"
             :is-loading="isLoading"
         />
         <MainInfo :current="current" :is-loading="isLoading" />

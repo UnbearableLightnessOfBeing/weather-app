@@ -202,8 +202,6 @@ const setOptionOffset = () => {
 </template>
 
 <style scoped lang="scss">
-.hourly-forecast-charts-wrapper {
-}
 .hourly-forecast-charts {
     overflow: hidden;
 

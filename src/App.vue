@@ -33,7 +33,7 @@ const activeDay = ref<number | null>(null);
                 <CurrentWeatherInfo
                     v-else
                     v-model:location="location"
-                    :current="undefined"
+                    :current="data?.current"
                     :is-loading="isLoading"
                 />
             </Transition>
