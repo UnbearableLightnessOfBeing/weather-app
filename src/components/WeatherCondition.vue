@@ -33,7 +33,6 @@ const { getIconUrl } = useConditionIcons();
             {{ condition.text }}
         </div>
         <BasicNodata v-else class="weather-condition__no-data" />
-        {{ typeof isDay }}
     </div>
 </template>
 

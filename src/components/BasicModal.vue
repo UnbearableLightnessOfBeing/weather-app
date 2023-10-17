@@ -25,7 +25,7 @@ watch(computedIsOpen, () => {
 
 <template>
     <Teleport to="body">
-        <Transition name="modal" appear>
+        <Transition name="modal" :duration="500" appear>
             <div
                 v-if="isOpen"
                 class="basic-modal"
@@ -61,15 +61,32 @@ watch(computedIsOpen, () => {
 }
 
 .modal {
-    &-enter-active,
+    &-enter-active {
+        transition: all 0.2s ease-out;
+
+        & .basic-modal__content {
+            transition: all 0.3s ease;
+            transition-delay: 0.2s;
+        }
+    }
+
     &-leave-active {
-        transition: all 0.3s ease-out;
+        transition: all 0.2s ease-out;
+        transition-delay: 0.3s;
+        & .basic-modal__content {
+            transition: all 0.3s ease;
+        }
     }
 
     &-enter-from,
     &-leave-to {
         opacity: 0;
         filter: blur(5px);
+
+        & .basic-modal__content {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
     }
 }
 </style>
