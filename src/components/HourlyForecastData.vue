@@ -5,7 +5,8 @@ import type { ChartOption } from "./HourlyForecastChart.vue";
 import { useMeasurement } from "../composables/useMeasurement";
 
 defineProps<{
-    hourlyForecast: HourlyWeather[];
+    hourlyForecast?: HourlyWeather[];
+    isLoading: boolean;
 }>();
 
 const { t, locale } = useI18n();
@@ -49,18 +50,23 @@ const isModalOpen = ref(false);
 <template>
     <div class="hourly-forecast-data">
         <ForecastHeading
+            v-if="!isLoading && hourlyForecast"
             :title="t('chart.hourly')"
             @open-modal="isModalOpen = true"
         />
+        <BasicLoader v-if="isLoading" class="hourly-forecast-data__loader" />
         <HourlyForecastChart
+            v-else-if="hourlyForecast"
             :hourly-forecast="hourlyForecast"
             :active-option="activeOption"
         />
+        <BasicNodata v-else class="hourly-forecast-data__no-data" />
         <ForecastOptions
+            v-if="!isLoading && hourlyForecast"
             v-model:active-option="activeOption"
             :options="options"
         />
-        <BasicModal v-model:is-open="isModalOpen">
+        <BasicModal v-if="hourlyForecast" v-model:is-open="isModalOpen">
             <HourlyForecastCharts :hourly-forecast="hourlyForecast" />
         </BasicModal>
     </div>
@@ -70,6 +76,12 @@ const isModalOpen = ref(false);
 .hourly-forecast-data {
     & > * + * {
         margin-top: 5px;
+    }
+
+    &__loader,
+    &__no-data {
+        width: 100%;
+        height: 252px;
     }
 }
 </style>

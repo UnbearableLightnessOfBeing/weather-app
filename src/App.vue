@@ -18,13 +18,14 @@ const { data, isError, isLoading } = useQuery({
 
 const activeDay = ref<number | null>(null);
 </script>
+
 <template>
     <AppLayout class="app-layout">
         <BasicError v-if="isError" :text="t('errors.dataLoadingError')" />
         <AppPanelLayout v-else class="app-layout__left-panel">
             <Transition name="panel" mode="out-in">
                 <DailyForecastInfo
-                    v-if="typeof activeDay === 'number' && data"
+                    v-if="typeof activeDay === 'number'"
                     :daily-forecast="data?.forecast?.forecastday[activeDay]"
                     :location="location"
                     :is-loading="isLoading"
@@ -33,7 +34,7 @@ const activeDay = ref<number | null>(null);
                 <CurrentWeatherInfo
                     v-else
                     v-model:location="location"
-                    :current="undefined"
+                    :current="data?.current"
                     :is-loading="isLoading"
                 />
             </Transition>
@@ -67,7 +68,7 @@ const activeDay = ref<number | null>(null);
         <AppPanelLayout v-else class="app-layout__right-panel">
             <Transition name="panel" mode="out-in">
                 <DailyForecastStats
-                    v-if="typeof activeDay === 'number' && data"
+                    v-if="typeof activeDay === 'number'"
                     :daily-forecast="data?.forecast?.forecastday[activeDay]"
                     :is-loading="isLoading"
                 />

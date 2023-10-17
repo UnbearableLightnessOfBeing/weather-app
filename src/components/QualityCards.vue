@@ -32,20 +32,22 @@ const evaluation = computed(() => {
     <div class="quality-cards">
         <BasicLoader v-if="isLoading" class="quality-cards__loader" />
         <BasicQualityCard
-            v-else
+            v-else-if="airQuality"
             :value="epaIndex"
             :max-value="6"
             :evaluation="evaluation"
             :title="t('qualityStats.airQuality')"
         />
-        <BasicLoader v-if="!uvIndex" class="quality-cards__loader" />
+        <BasicNodata v-else class="quality-cards__no-data" />
+        <BasicLoader v-if="isLoading" class="quality-cards__loader" />
         <BasicQualityCard
-            v-else
+            v-else-if="uvIndex"
             :value="uvIndex"
             :max-value="10"
             :evaluation="uvIndecies[Math.round(Number(uvIndex))]"
             :title="t('qualityStats.uvIndex')"
         />
+        <BasicNodata v-else class="quality-cards__no-data" />
     </div>
 </template>
 
@@ -57,7 +59,8 @@ const evaluation = computed(() => {
     align-items: center;
     gap: 50px;
 
-    &__loader {
+    &__loader,
+    &__no-data {
         width: 180px;
         height: 167px;
     }

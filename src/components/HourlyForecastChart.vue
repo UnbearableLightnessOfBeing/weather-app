@@ -83,6 +83,7 @@ const scrollOnWheel = function (e: WheelEvent) {
     &__chart-container {
         width: 1000px;
         min-width: 1000px;
+        overflow-y: hidden;
     }
 }
 

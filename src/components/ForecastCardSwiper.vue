@@ -83,10 +83,7 @@ const missingAmount = computed(() => {
             />
         </SwiperSlide>
         <SwiperSlide v-for="card in missingAmount" :key="card">
-            <div class="swiper__missing-card">
-                <div>{{ t("swiper.unavailable") }}</div>
-                <BasicInfoSign :tooltip-text="t('api.signTooltip')" />
-            </div>
+            <BasicNodata class="swiper__missing-card" />
         </SwiperSlide>
     </Swiper>
 </template>
@@ -113,13 +110,8 @@ const missingAmount = computed(() => {
     &__missing-card {
         width: 110px;
         height: 200px;
-        background-color: var(--basic-dark-dull);
-        border-radius: 10px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
     }
 }
 

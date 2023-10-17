@@ -6,7 +6,7 @@ import { useMeasurement } from "../composables/useMeasurement";
 import { useI18n } from "vue-i18n";
 
 defineProps<{
-    dailyForecast: DailyForecast;
+    dailyForecast?: DailyForecast;
     location: string;
     isLoading: boolean;
 }>();
@@ -36,21 +36,32 @@ const computedLocale = computed<"en" | "ru">(() => {
             @click="$emit('unsetActiveDay')"
         />
         <div class="daily-forecast-info__container">
+            <BasicLoader
+                v-if="isLoading"
+                class="daily-forecast-info__current-info-loader"
+            />
             <CurrentDateInfo
+                v-else-if="dailyForecast"
                 :language="computedLocale"
-                :unix-date="
-                    dailyForecast ? new Date(dailyForecast.date) : new Date()
-                "
+                :unix-date="new Date(dailyForecast.date)"
                 :time-hidden="true"
             />
-            <div class="daily-forecast-info__location-name">{{ location }}</div>
+            <BasicNodata v-else class="daily-forecast-info__no-current-info" />
+            <div class="daily-forecast-info__location-name">
+                {{ location }}
+            </div>
         </div>
         <div class="daily-forecast-info__container">
             <WeatherCondition
                 :condition="dailyForecast?.day.condition"
                 :is-loading="isLoading"
             />
+            <BasicLoader
+                v-if="isLoading"
+                class="daily-forecast-info__temp-loader"
+            />
             <BasicDailyTemperature
+                v-else-if="dailyForecast"
                 :min-value="
                     measurement === 'C'
                         ? dailyForecast.day.mintemp_c
@@ -64,8 +75,12 @@ const computedLocale = computed<"en" | "ru">(() => {
                 :measurement="measurement"
                 class="daily-forecast-info__temp"
             />
+            <BasicNodata v-else class="daily-forecast-info__temp-no-data" />
         </div>
-        <DailyWeatherStats :stats="dailyForecast.day" />
+        <DailyWeatherStats
+            :stats="dailyForecast?.day"
+            :is-loading="isLoading"
+        />
     </div>
 </template>
 
@@ -75,6 +90,12 @@ const computedLocale = computed<"en" | "ru">(() => {
 
     & > * + * {
         margin-top: 20px;
+    }
+
+    &__current-info-loader,
+    &__no-current-info {
+        width: 175px;
+        height: 92px;
     }
 
     &__back-button {
@@ -104,6 +125,12 @@ const computedLocale = computed<"en" | "ru">(() => {
     &__location-name {
         font-size: var(--fs-normal);
         font-weight: var(--fw-normal-thiner);
+    }
+
+    &__temp-loader,
+    &__temp-no-data {
+        width: 300px;
+        height: 62px;
     }
 }
 
