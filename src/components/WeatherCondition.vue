@@ -2,10 +2,17 @@
 import { useConditionIcons } from "../composables/useConditionIcons";
 import { WeatherCondition } from "../types/requestTypes";
 
-defineProps<{
-    condition?: WeatherCondition;
-    isLoading: boolean;
-}>();
+withDefaults(
+    defineProps<{
+        condition?: WeatherCondition;
+        isDay?: boolean;
+        isLoading: boolean;
+    }>(),
+    {
+        isDay: undefined,
+        condition: undefined,
+    },
+);
 
 const { getIconUrl } = useConditionIcons();
 </script>
@@ -16,7 +23,9 @@ const { getIconUrl } = useConditionIcons();
         <BasicConditionIcon
             v-else-if="condition"
             type="big"
-            :icon-src="getIconUrl(condition.code)"
+            :icon-src="
+                getIconUrl(condition.code, isDay === undefined ? true : isDay)
+            "
         />
         <BasicNodata v-else class="weather-condition__no-data" />
         <BasicLoader v-if="isLoading" class="weather-condition__text-loader" />

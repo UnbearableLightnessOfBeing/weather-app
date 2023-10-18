@@ -6,7 +6,10 @@ import {
     scalesConfiguration,
     scalesConfigurationSecond,
 } from "../configs/chartjsConfig";
-import type { HourlyWeatherNumberKey } from "../types/requestTypes";
+import type {
+    ExtendedWeatherCondition,
+    HourlyWeatherNumberKey,
+} from "../types/requestTypes";
 import type { ChartData, ChartOptions } from "chart.js";
 
 export const useChartData = (
@@ -15,8 +18,13 @@ export const useChartData = (
 ) => {
     const { locale } = useI18n();
 
-    const conditionRange = computed(() => {
-        return hourlyForecast.value.map((item) => item.condition);
+    const conditionRange = computed<ExtendedWeatherCondition[]>(() => {
+        return hourlyForecast.value.map((item) => {
+            return {
+                ...item.condition,
+                is_day: Boolean(item.is_day),
+            };
+        });
     });
 
     const dateFormat = computed(() => {
