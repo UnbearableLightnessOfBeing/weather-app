@@ -9,6 +9,10 @@ defineProps<{
     isLoading: boolean;
 }>();
 
+const HourlyForecastCharts = defineAsyncComponent(() => {
+    return import("../components/HourlyForecastCharts.vue");
+});
+
 const { t, locale } = useI18n();
 
 const { measurement } = useMeasurement();
@@ -67,10 +71,17 @@ const isModalOpen = ref(false);
             :options="options"
         />
         <BasicModal v-if="hourlyForecast" v-model:is-open="isModalOpen">
-            <HourlyForecastCharts
-                :hourly-forecast="hourlyForecast"
-                @close-modal="isModalOpen = false"
-            />
+            <Suspense>
+                <div>
+                    <HourlyForecastCharts
+                        :hourly-forecast="hourlyForecast"
+                        @close-modal="isModalOpen = false"
+                    />
+                </div>
+                <template #fallback>
+                    <BasicSpinner class="hourly-forecast-data__spinner" />
+                </template>
+            </Suspense>
         </BasicModal>
     </div>
 </template>
@@ -85,6 +96,11 @@ const isModalOpen = ref(false);
     &__no-data {
         width: 100%;
         height: 252px;
+    }
+
+    &__spinner {
+        width: 50px;
+        height: 50px;
     }
 }
 </style>

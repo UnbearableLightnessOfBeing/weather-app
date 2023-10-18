@@ -11,7 +11,6 @@ import { ChartOptions } from "chart.js";
 import InlineSvg from "vue-inline-svg";
 import ArrowSvgUrl from "/interface/x-mark.svg";
 import colors from "../assets/colors/colors.json";
-import gsap from "gsap";
 
 const props = defineProps<{
     hourlyForecast: HourlyWeather[];
@@ -174,16 +173,6 @@ const setOptionOffset = () => {
     const offset = mainContainer.value?.scrollLeft ?? 0;
     optionOffset.value = `${20 + offset}px`;
 };
-
-function onEnter(el: any, done: any) {
-    gsap.from(el, {
-        opacity: 0,
-        x: el.dataset.index % 2 === 0 ? -600 : 600,
-        delay: 0.3 + el.dataset.index * 0.15,
-        duration: 0.6,
-        onComplete: done,
-    });
-}
 </script>
 
 <template>
@@ -206,26 +195,24 @@ function onEnter(el: any, done: any) {
                 <TimeLabelRange :time-labels="tickLabels" />
             </div>
             <div class="hourly-forecast-charts__container">
-                <TransitionGroup name="charts" appear @enter="onEnter">
-                    <div
-                        v-for="(chart, idx) in chartInfo"
-                        :key="chart.propName"
-                        :data-index="idx"
-                        class="hourly-forecast-charts__option"
-                    >
-                        <ChartTitle
-                            :icon-src="chart.icon"
-                            :title="chart.optionName"
-                            :measurement="chart.measurement"
-                            class="hourly-forecast-charts__option-title"
-                        />
-                        <LineChart
-                            :data="chart.dataset"
-                            :options="chart.options"
-                            class="hourly-forecast-charts__option-chart"
-                        />
-                    </div>
-                </TransitionGroup>
+                <div
+                    v-for="(chart, idx) in chartInfo"
+                    :key="chart.propName"
+                    :data-index="idx"
+                    class="hourly-forecast-charts__option"
+                >
+                    <ChartTitle
+                        :icon-src="chart.icon"
+                        :title="chart.optionName"
+                        :measurement="chart.measurement"
+                        class="hourly-forecast-charts__option-title"
+                    />
+                    <LineChart
+                        :data="chart.dataset"
+                        :options="chart.options"
+                        class="hourly-forecast-charts__option-chart"
+                    />
+                </div>
             </div>
         </div>
     </div>
