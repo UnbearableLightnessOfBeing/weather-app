@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useDraggableScroll } from "../composables/useDraggableScroll";
 import { Line as LineChart } from "vue-chartjs";
+import colors from "../assets/colors/colors.json";
 import type {
     HourlyWeather,
     HourlyWeatherNumberKey,
@@ -33,7 +34,7 @@ const { conditionRange, getChartOptions, getChartData } = useChartData(
 );
 
 const data = computed(() => {
-    return getChartData(props.activeOption.propName);
+    return getChartData(props.activeOption.propName, colors["chart-default"]);
 });
 
 const options = computed(() => getChartOptions(props.activeOption.propName));

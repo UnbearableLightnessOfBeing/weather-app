@@ -8,10 +8,18 @@ import { useChartData } from "../composables/useChartData";
 import type { HourlyWeatherNumberKey } from "../types/requestTypes";
 import { Line as LineChart } from "vue-chartjs";
 import { ChartOptions } from "chart.js";
+import InlineSvg from "vue-inline-svg";
+import ArrowSvgUrl from "/interface/x-mark.svg";
+import colors from "../assets/colors/colors.json";
 import gsap from "gsap";
 
 const props = defineProps<{
     hourlyForecast: HourlyWeather[];
+}>();
+
+defineEmits<{
+    //eslint-disable-next-line
+    (e: "closeModal"): void;
 }>();
 
 const getChartIcon = (name: string): string => {
@@ -49,6 +57,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             icon: getChartIcon("temperature"),
             dataset: getChartData(
                 measurement.value === "C" ? "temp_c" : "temp_f",
+                colors["chart-warm"],
             ),
             options: getChartOptions(
                 measurement.value === "C" ? "temp_c" : "temp_f",
@@ -61,6 +70,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             icon: getChartIcon("feelslike"),
             dataset: getChartData(
                 measurement.value === "C" ? "feelslike_c" : "feelslike_f",
+                colors["chart-warm"],
             ),
             options: getChartOptions(
                 measurement.value === "C" ? "feelslike_c" : "feelslike_f",
@@ -71,7 +81,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.precip"),
             measurement: t("measurements.mm"),
             icon: getChartIcon("precip"),
-            dataset: getChartData("precip_mm"),
+            dataset: getChartData("precip_mm", colors["chart-water"]),
             options: getChartOptions("precip_mm"),
         },
         {
@@ -79,7 +89,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.rainChance"),
             measurement: "%",
             icon: getChartIcon("rain-chance"),
-            dataset: getChartData("chance_of_rain"),
+            dataset: getChartData("chance_of_rain", colors["chart-water"]),
             options: getChartOptions("chance_of_rain"),
         },
         {
@@ -87,7 +97,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.snowChance"),
             measurement: "%",
             icon: getChartIcon("snow-chance"),
-            dataset: getChartData("chance_of_snow"),
+            dataset: getChartData("chance_of_snow", colors["chart-wind"]),
             options: getChartOptions("chance_of_snow"),
         },
         {
@@ -95,7 +105,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.wind"),
             measurement: t("measurements.kmh"),
             icon: getChartIcon("wind"),
-            dataset: getChartData("wind_kph"),
+            dataset: getChartData("wind_kph", colors["chart-wind"]),
             options: getChartOptions("wind_kph"),
         },
         {
@@ -103,7 +113,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.gust"),
             measurement: t("measurements.kmh"),
             icon: getChartIcon("gust"),
-            dataset: getChartData("gust_kph"),
+            dataset: getChartData("gust_kph", colors["chart-wind"]),
             options: getChartOptions("gust_kph"),
         },
         {
@@ -111,7 +121,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.pressure"),
             measurement: "hPa",
             icon: getChartIcon("pressure"),
-            dataset: getChartData("pressure_mb"),
+            dataset: getChartData("pressure_mb", colors["chart-pressure"]),
             options: getChartOptions("pressure_mb"),
         },
         {
@@ -119,7 +129,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.humidity"),
             measurement: "%",
             icon: getChartIcon("humidity"),
-            dataset: getChartData("humidity"),
+            dataset: getChartData("humidity", colors["chart-water"]),
             options: getChartOptions("humidity"),
         },
         {
@@ -129,6 +139,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             icon: getChartIcon("dew-point"),
             dataset: getChartData(
                 measurement.value === "C" ? "dewpoint_c" : "dewpoint_f",
+                colors["chart-water"],
             ),
             options: getChartOptions(
                 measurement.value === "C" ? "dewpoint_c" : "dewpoint_f",
@@ -139,7 +150,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.uv"),
             measurement: "",
             icon: getChartIcon("uv"),
-            dataset: getChartData("uv"),
+            dataset: getChartData("uv", colors["chart-uv"]),
             options: getChartOptions("uv"),
         },
         {
@@ -147,7 +158,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.visibility"),
             measurement: t("measurements.km"),
             icon: getChartIcon("visibility"),
-            dataset: getChartData("vis_km"),
+            dataset: getChartData("vis_km", colors["chart-wind"]),
             options: getChartOptions("vis_km"),
         },
     ];
@@ -177,6 +188,11 @@ function onEnter(el: any, done: any) {
 
 <template>
     <div class="hourly-forecast-charts">
+        <InlineSvg
+            :src="ArrowSvgUrl"
+            class="hourly-forecast-charts__close-btn"
+            @click="$emit('closeModal')"
+        />
         <div
             ref="mainContainer"
             class="hourly-forecast-charts__inner"
@@ -236,7 +252,18 @@ function onEnter(el: any, done: any) {
         background-color: var(--basic-light-dull);
         backdrop-filter: blur(5px);
         z-index: 1;
-        padding-block: 5px;
+        padding-bottom: 5px;
+        padding-top: 45px;
+    }
+
+    &__close-btn {
+        position: fixed;
+        z-index: 2;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        padding-inline: 5px;
     }
 
     &__container {
@@ -270,6 +297,14 @@ function onEnter(el: any, done: any) {
         &__inner {
             height: 800px;
             overflow-x: hidden;
+        }
+
+        &__top-info {
+            padding-block: 5px;
+        }
+
+        &__close-btn {
+            display: none;
         }
     }
 }

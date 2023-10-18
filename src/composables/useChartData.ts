@@ -1,7 +1,6 @@
 import { useDateFormat } from "@vueuse/core";
 import { HourlyWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
-import colors from "../assets/colors/colors.json";
 import {
     scalesConfiguration,
     scalesConfigurationSecond,
@@ -72,15 +71,18 @@ export const useChartData = (
 
     const getChartData = (
         propName: HourlyWeatherNumberKey,
+        fillColor: string,
     ): ChartData<"line"> => {
         return {
             labels: tickLabels.value,
             datasets: [
                 {
-                    backgroundColor: colors["accent-300"],
+                    // backgroundColor: colors["accent-300"],
+                    backgroundColor: fillColor,
                     data: hourlyForecast.value.map(
                         (hourly) => hourly[propName],
                     ),
+                    fill: "origin",
                 },
             ],
         };

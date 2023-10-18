@@ -67,7 +67,10 @@ const isModalOpen = ref(false);
             :options="options"
         />
         <BasicModal v-if="hourlyForecast" v-model:is-open="isModalOpen">
-            <HourlyForecastCharts :hourly-forecast="hourlyForecast" />
+            <HourlyForecastCharts
+                :hourly-forecast="hourlyForecast"
+                @close-modal="isModalOpen = false"
+            />
         </BasicModal>
     </div>
 </template>
