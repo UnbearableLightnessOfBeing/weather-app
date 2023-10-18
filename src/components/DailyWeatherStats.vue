@@ -76,7 +76,7 @@ const weatherStats: DailyWeatherStat[] = [
                 v-if="isLoading"
                 class="daily-weather-stats__stat-loader"
             />
-            <BasicDailyWeatherStat
+            <DailyWeatherStat
                 v-else-if="stats"
                 :key="stat.title"
                 :icon-src="stat.icon"

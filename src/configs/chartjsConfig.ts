@@ -22,7 +22,7 @@ export const scalesConfiguration = {
     },
 };
 
-export const scalesConfigurationSecond = {
+export const modalScalesConfiguration = {
     y: {
         display: false,
         beginAtZero: true,

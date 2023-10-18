@@ -21,7 +21,7 @@ const options = computed<ChartOption[]>(() => [
     {
         propName: measurement.value === "C" ? "temp_c" : "temp_f",
         name: locale.value === "ru" ? "температура" : "temp.",
-        measurement: measurement.value === "C" ? "°C" : "°F",
+        measurement: `°${measurement.value}`,
     },
     {
         propName: "precip_mm",

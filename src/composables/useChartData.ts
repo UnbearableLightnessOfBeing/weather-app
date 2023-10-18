@@ -3,7 +3,7 @@ import { HourlyWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
 import {
     scalesConfiguration,
-    scalesConfigurationSecond,
+    modalScalesConfiguration,
 } from "../configs/chartjsConfig";
 import type {
     ExtendedWeatherCondition,
@@ -60,7 +60,7 @@ export const useChartData = (
             scales:
                 chartType === "default"
                     ? scalesConfiguration
-                    : scalesConfigurationSecond,
+                    : modalScalesConfiguration,
             plugins: {
                 datalabels: {
                     formatter: deriveFormatter(propName),
@@ -77,7 +77,6 @@ export const useChartData = (
             labels: tickLabels.value,
             datasets: [
                 {
-                    // backgroundColor: colors["accent-300"],
                     backgroundColor: fillColor,
                     data: hourlyForecast.value.map(
                         (hourly) => hourly[propName],

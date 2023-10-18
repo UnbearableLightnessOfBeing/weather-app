@@ -52,7 +52,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
         {
             propName: measurement.value === "C" ? "temp_c" : "temp_f",
             optionName: t("chartOptions.temp"),
-            measurement: measurement.value === "C" ? "°C" : "°F",
+            measurement: `°${measurement.value}`,
             icon: getChartIcon("temperature"),
             dataset: getChartData(
                 measurement.value === "C" ? "temp_c" : "temp_f",
@@ -65,7 +65,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
         {
             propName: measurement.value === "C" ? "feelslike_c" : "feelslike_f",
             optionName: t("chartOptions.feelslike"),
-            measurement: measurement.value === "C" ? "°C" : "°F",
+            measurement: `°${measurement.value}`,
             icon: getChartIcon("feelslike"),
             dataset: getChartData(
                 measurement.value === "C" ? "feelslike_c" : "feelslike_f",
@@ -134,7 +134,7 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
         {
             propName: measurement.value === "C" ? "dewpoint_c" : "dewpoint_f",
             optionName: t("chartOptions.dewPoint"),
-            measurement: measurement.value === "C" ? "°C" : "°F",
+            measurement: `°${measurement.value}`,
             icon: getChartIcon("dew-point"),
             dataset: getChartData(
                 measurement.value === "C" ? "dewpoint_c" : "dewpoint_f",
