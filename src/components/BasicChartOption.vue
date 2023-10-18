@@ -9,8 +9,8 @@ defineProps<{
 <template>
     <BasicGlassWrapper
         :active="active"
+        :colored="active"
         class="basic-chart-option"
-        :class="{ 'basic-chart-option--active': active }"
     >
         <div>
             {{ name }}
@@ -31,10 +31,6 @@ defineProps<{
     gap: 5px;
     cursor: pointer;
     box-shadow: none;
-
-    &--active {
-        background-color: var(--accent-200);
-    }
 
     &__measurement {
         color: var(--basic-light-faded);

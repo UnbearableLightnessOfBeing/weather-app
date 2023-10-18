@@ -2,9 +2,13 @@
 withDefaults(
     defineProps<{
         active?: boolean;
+        floats?: boolean;
+        colored?: boolean;
     }>(),
     {
         active: false,
+        floats: false,
+        colored: false,
     },
 );
 </script>
@@ -12,7 +16,11 @@ withDefaults(
 <template>
     <div
         class="basic-glass-wrapper"
-        :class="{ 'basic-glass-wrapper--active': active }"
+        :class="[
+            { 'basic-glass-wrapper--active': active },
+            { 'basic-glass-wrapper--floats': floats },
+            { 'basic-glass-wrapper--colored': colored },
+        ]"
     >
         <slot />
     </div>
@@ -31,6 +39,15 @@ withDefaults(
     &:hover,
     &--active {
         border-color: var(--basic-light);
+    }
+
+    &--colored {
+        background-color: var(--accent-200);
+    }
+
+    &--floats {
+        transform: scale(1.05) translateY(-5px);
+        box-shadow: 0px 5px 12px var(--basic-dark-shadow);
     }
 }
 </style>
