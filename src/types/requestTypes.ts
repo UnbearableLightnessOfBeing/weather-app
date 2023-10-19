@@ -132,3 +132,12 @@ type ExtractNumberPropKeys<T> = {
 }[keyof T];
 
 export type HourlyWeatherNumberKey = ExtractNumberPropKeys<HourlyWeather>;
+
+export type LocationSearchResultType = {
+    id: number;
+    name: string;
+    region: string;
+    country: string;
+    lat: number;
+    lon: number;
+};
