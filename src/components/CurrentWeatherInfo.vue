@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useBreakpoints } from "@vueuse/core";
-import { CurrentWeather } from "../types/requestTypes";
+import { GetForecastResponse } from "../types/requestTypes";
 
 defineProps<{
-    current?: CurrentWeather;
+    data?: GetForecastResponse;
     location: string;
     isLoading: boolean;
 }>();
@@ -29,11 +29,15 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
             @update:model-value="(value) => $emit('update:location', value)"
         />
         <WeatherCondition
-            :condition="current?.condition"
-            :is-day="current ? Boolean(current.is_day) : undefined"
+            :condition="data?.current?.condition"
+            :is-day="data?.current ? Boolean(data.current.is_day) : undefined"
             :is-loading="isLoading"
         />
-        <MainInfo :current="current" :is-loading="isLoading" />
+        <MainInfo
+            :current="data?.current"
+            :location="data?.location"
+            :is-loading="isLoading"
+        />
     </div>
 </template>
 

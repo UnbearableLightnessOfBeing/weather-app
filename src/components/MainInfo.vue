@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useMeasurement } from "../composables/useMeasurement";
 import { useI18n } from "vue-i18n";
-import type { CurrentWeather } from "../types/requestTypes";
+import type { CurrentWeather, LocationType } from "../types/requestTypes";
 
-defineProps<{
+const props = defineProps<{
     current?: CurrentWeather;
+    location?: LocationType;
     isLoading: boolean;
 }>();
 
@@ -15,14 +16,39 @@ const locale = computed(() => {
 
 const { measurement } = useMeasurement();
 
-const unixCurrentDate = ref(new Date());
+const unixCurrentDate = ref<Date | null>(null);
+
+const setDate = (diffInHours: number) => {
+    unixCurrentDate.value = new Date(
+        new Date().getTime() - diffInHours * 60 * 60 * 1000,
+    );
+};
 
 let interval: number = 0;
 
+const setUnixCurrentDate = () => {
+    if (props.location && props.location.localtime) {
+        const localTime = new Date(props.location.localtime).getTime();
+        const now = new Date().getTime();
+        const diffInHours = Math.round((now - localTime) / (1000 * 60 * 60));
+        setDate(diffInHours);
+        interval = setInterval(() => {
+            setDate(diffInHours);
+            console.log("timer");
+        }, 1000);
+    }
+};
+
+watch(
+    computed(() => props.isLoading),
+    () => {
+        clearInterval(interval);
+        setUnixCurrentDate();
+    },
+);
+
 onMounted(() => {
-    interval = setInterval(() => {
-        unixCurrentDate.value = new Date();
-    }, 1000);
+    setUnixCurrentDate();
 });
 
 onUnmounted(() => {
@@ -40,7 +66,13 @@ onUnmounted(() => {
                 :measurement="measurement"
             />
             <BasicNodata v-else class="main-info__temp-no-data" />
-            <CurrentDateInfo :language="locale" :unix-date="unixCurrentDate" />
+            <BasicLoader v-if="isLoading" class="main-info__date-loader" />
+            <CurrentDateInfo
+                v-else-if="unixCurrentDate"
+                :language="locale"
+                :unix-date="unixCurrentDate"
+            />
+            <BasicNodata v-else class="main-info__date-no-data" />
             <BasicLoader v-if="isLoading" class="main-info__stats-loader" />
             <BasicWeatherStats
                 v-else-if="current"
@@ -68,6 +100,11 @@ onUnmounted(() => {
         height: 115px;
     }
 
+    &__date-loader {
+        width: 240px;
+        height: 87px;
+    }
+
     &__stats-loader,
     &__stats-no-data {
         height: 89px;
@@ -85,6 +122,11 @@ onUnmounted(() => {
         &__temp-no-data {
             width: 197px;
             height: 197px;
+        }
+
+        &__date-loader {
+            width: 271px;
+            height: 92px;
         }
     }
 }

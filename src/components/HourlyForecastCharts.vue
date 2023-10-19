@@ -11,6 +11,7 @@ import { ChartOptions } from "chart.js";
 import InlineSvg from "vue-inline-svg";
 import ArrowSvgUrl from "/interface/x-mark.svg";
 import colors from "../assets/colors/colors.json";
+import { ChartTypeEnum } from "../composables/useChartData";
 
 const props = defineProps<{
     hourlyForecast: HourlyWeather[];
@@ -35,7 +36,7 @@ const { measurement } = useMeasurement();
 const { conditionRange, tickLabels, getChartOptions, getChartData } =
     useChartData(
         computed(() => props.hourlyForecast),
-        "modal",
+        ChartTypeEnum.Type1,
     );
 
 type ChartInfoItem = {

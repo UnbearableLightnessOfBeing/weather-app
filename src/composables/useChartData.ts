@@ -11,9 +11,16 @@ import type {
 } from "../types/requestTypes";
 import type { ChartData, ChartOptions } from "chart.js";
 
+export const ChartTypeEnum = {
+    Type1: "default",
+    Type2: "modal",
+} as const;
+
+type ChartTypeEnumKeys = (typeof ChartTypeEnum)[keyof typeof ChartTypeEnum];
+
 export const useChartData = (
     hourlyForecast: ComputedRef<HourlyWeather[]>,
-    chartType: "default" | "modal" = "default",
+    chartType: ChartTypeEnumKeys = ChartTypeEnum.Type1,
 ) => {
     const { locale } = useI18n();
 
@@ -53,12 +60,12 @@ export const useChartData = (
         return {
             layout: {
                 padding:
-                    chartType === "default"
+                    chartType === ChartTypeEnum.Type1
                         ? { top: 20 }
                         : { left: 20, right: 20 },
             },
             scales:
-                chartType === "default"
+                chartType === ChartTypeEnum.Type1
                     ? scalesConfiguration
                     : modalScalesConfiguration,
             plugins: {

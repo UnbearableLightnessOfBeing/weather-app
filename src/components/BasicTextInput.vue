@@ -49,15 +49,6 @@ const writableComputed = computed({
     />
 </template>
 
-<!-- @input="
-            (e: Event) => {
-                $emit(
-                    'update:modelValue',
-                    (e.target as HTMLInputElement).value,
-                );
-            }
-        " -->
-
 <style scoped lang="scss">
 .basic-text-input {
     outline: none;
