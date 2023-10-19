@@ -16,11 +16,12 @@ export const ChartTypeEnum = {
     Type2: "modal",
 } as const;
 
-type ChartTypeEnumKeys = (typeof ChartTypeEnum)[keyof typeof ChartTypeEnum];
+type EnumObjValues<T> = T[keyof T];
+type ChartTypeEnumValues = EnumObjValues<typeof ChartTypeEnum>;
 
 export const useChartData = (
     hourlyForecast: ComputedRef<HourlyWeather[]>,
-    chartType: ChartTypeEnumKeys = ChartTypeEnum.Type1,
+    chartType: ChartTypeEnumValues = ChartTypeEnum.Type1,
 ) => {
     const { locale } = useI18n();
 

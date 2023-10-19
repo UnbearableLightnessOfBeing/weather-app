@@ -5,7 +5,7 @@ import ArrowBackSvgUrl from "/interface/arrow-back.svg";
 import { useMeasurement } from "../composables/useMeasurement";
 import { useI18n } from "vue-i18n";
 
-defineProps<{
+const props = defineProps<{
     dailyForecast?: DailyForecast;
     location: string;
     isLoading: boolean;
@@ -26,6 +26,12 @@ const computedLocale = computed<"en" | "ru">(() => {
         return locale.value;
     } else return "en";
 });
+
+const computedUnixDate = computed(() => {
+    if (props.dailyForecast) {
+        return new Date(props.dailyForecast.date);
+    } else return undefined;
+});
 </script>
 
 <template>
@@ -36,17 +42,12 @@ const computedLocale = computed<"en" | "ru">(() => {
             @click="$emit('unsetActiveDay')"
         />
         <div class="daily-forecast-info__container">
-            <BasicLoader
-                v-if="isLoading"
-                class="daily-forecast-info__current-info-loader"
-            />
             <CurrentDateInfo
-                v-else-if="dailyForecast"
                 :language="computedLocale"
-                :unix-date="new Date(dailyForecast.date)"
-                :time-hidden="true"
+                :unix-date="computedUnixDate"
+                time-hidden
+                :is-loading="isLoading"
             />
-            <BasicNodata v-else class="daily-forecast-info__no-current-info" />
             <div class="daily-forecast-info__location-name">
                 {{ location }}
             </div>

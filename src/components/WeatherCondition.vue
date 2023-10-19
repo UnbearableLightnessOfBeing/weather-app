@@ -19,20 +19,23 @@ const { getIconUrl } = useConditionIcons();
 
 <template>
     <div class="weather-condition">
-        <BasicLoader v-if="isLoading" class="weather-condition__icon-loader" />
         <BasicConditionIcon
-            v-else-if="condition"
             type="big"
+            :is-loading="isLoading"
             :icon-src="
-                getIconUrl(condition.code, isDay === undefined ? true : isDay)
+                condition
+                    ? getIconUrl(
+                          condition.code,
+                          isDay === undefined ? true : isDay,
+                      )
+                    : undefined
             "
         />
-        <BasicNodata v-else class="weather-condition__no-data" />
-        <BasicLoader v-if="isLoading" class="weather-condition__text-loader" />
+        <BasicLoader v-if="isLoading" class="weather-condition__text-filler" />
         <div v-else-if="condition" class="weather-condition__text">
             {{ condition.text }}
         </div>
-        <BasicNodata v-else class="weather-condition__no-data" />
+        <BasicNodata v-else class="weather-condition__text-filler" />
     </div>
 </template>
 
@@ -49,13 +52,7 @@ const { getIconUrl } = useConditionIcons();
         padding-right: 90px;
     }
 
-    &__icon-loader,
-    &__no-data {
-        width: 143px;
-        height: 100px;
-    }
-
-    &__text-loader {
+    &__text-filler {
         width: 160px;
         height: 43px;
     }

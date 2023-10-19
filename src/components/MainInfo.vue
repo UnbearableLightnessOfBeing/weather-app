@@ -16,7 +16,7 @@ const locale = computed(() => {
 
 const { measurement } = useMeasurement();
 
-const unixCurrentDate = ref<Date | null>(null);
+const unixCurrentDate = ref<Date | undefined>(undefined);
 
 const setDate = (diffInHours: number) => {
     unixCurrentDate.value = new Date(
@@ -53,34 +53,41 @@ onMounted(() => {
 onUnmounted(() => {
     clearInterval(interval);
 });
+
+const computedTemperature = computed(() => {
+    if (props.current) {
+        return measurement.value === "C"
+            ? props.current.temp_c
+            : props.current.temp_f;
+    } else return undefined;
+});
+
+const stats = computed(() => {
+    if (props.current) {
+        return {
+            windDegree: props.current.wind_degree,
+            windSpeed: props.current.wind_kph,
+            humidity: props.current.humidity,
+            percipitations: props.current.precip_mm,
+        };
+    } else return undefined;
+});
 </script>
 
 <template>
     <div class="main-info">
         <div class="main-info__content">
-            <BasicLoader v-if="isLoading" class="main-info__temp-loader" />
             <BasicTemperature
-                v-else-if="current"
-                :value="measurement === 'C' ? current.temp_c : current.temp_f"
+                :value="computedTemperature"
                 :measurement="measurement"
+                :is-loading="isLoading"
             />
-            <BasicNodata v-else class="main-info__temp-no-data" />
-            <BasicLoader v-if="isLoading" class="main-info__date-loader" />
             <CurrentDateInfo
-                v-else-if="unixCurrentDate"
                 :language="locale"
                 :unix-date="unixCurrentDate"
+                :is-loading="isLoading"
             />
-            <BasicNodata v-else class="main-info__date-no-data" />
-            <BasicLoader v-if="isLoading" class="main-info__stats-loader" />
-            <BasicWeatherStats
-                v-else-if="current"
-                :wind-speed="current.wind_kph"
-                :wind-degree="current.wind_degree"
-                :humidity="current.humidity"
-                :percipitations="current.precip_in"
-            />
-            <BasicNodata v-else class="main-info__stats-no-data" />
+            <BasicWeatherStats :stats="stats" :is-loading="isLoading" />
         </div>
     </div>
 </template>
@@ -90,42 +97,6 @@ onUnmounted(() => {
     &__content {
         & > * + * {
             margin-top: 15px;
-        }
-    }
-
-    &__temp-loader,
-    &__temp-no-data {
-        width: 165px;
-        height: 115px;
-    }
-
-    &__date-loader {
-        width: 240px;
-        height: 87px;
-    }
-
-    &__stats-loader,
-    &__stats-no-data {
-        height: 89px;
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .main-info {
-        &__stats-loader,
-        &__stats-no-data {
-            height: 26px;
-        }
-
-        &__temp-loader,
-        &__temp-no-data {
-            width: 197px;
-            height: 197px;
-        }
-
-        &__date-loader {
-            width: 271px;
-            height: 92px;
         }
     }
 }
