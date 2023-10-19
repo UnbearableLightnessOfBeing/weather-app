@@ -3,14 +3,24 @@ import { useQuery } from "@tanstack/vue-query";
 import { getSearchResults } from "../api/requests";
 import { useI18n } from "vue-i18n";
 
-defineProps<{
+const props = defineProps<{
     modelValue: string;
 }>();
 
-defineEmits<{
-    //eslint-disable-next-line
+const emits = defineEmits<{
+    // eslint-disable-next-line
     (e: "update:modelValue", vlaue: string): void;
 }>();
+
+const writableComputed = computed({
+    get() {
+        return props.modelValue;
+    },
+    set(value) {
+        emits("update:modelValue", value);
+        isSearchActive.value = false;
+    },
+});
 
 const { t } = useI18n();
 
@@ -112,14 +122,9 @@ const inputWidth = computed(() => {
                 <BasicLocationItem
                     v-for="item in searchData"
                     :key="item.id"
+                    v-model:location="writableComputed"
                     :city="item.name"
                     :country="item.country"
-                    @update:location="
-                        (value) => {
-                            $emit('update:modelValue', value);
-                            isSearchActive = false;
-                        }
-                    "
                 />
             </div>
             <BasicSearchMessage

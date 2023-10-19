@@ -36,7 +36,7 @@ const { measurement } = useMeasurement();
 const { conditionRange, tickLabels, getChartOptions, getChartData } =
     useChartData(
         computed(() => props.hourlyForecast),
-        ChartTypeEnum.Type1,
+        ChartTypeEnum.Type2,
     );
 
 type ChartInfoItem = {

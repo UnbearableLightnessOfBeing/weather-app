@@ -34,7 +34,6 @@ const setUnixCurrentDate = () => {
         setDate(diffInHours);
         interval = setInterval(() => {
             setDate(diffInHours);
-            console.log("timer");
         }, 1000);
     }
 };
