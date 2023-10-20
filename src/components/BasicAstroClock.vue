@@ -3,7 +3,8 @@ import { useI18n } from "vue-i18n";
 
 const props = defineProps<{
     title: string;
-    time: string;
+    time?: string;
+    isLoading?: boolean;
 }>();
 
 const { locale } = useI18n();
@@ -14,16 +15,19 @@ const getStrMatchOrNull = (str: string, regexp: RegExp): string | null => {
     return match ? match : null;
 };
 
-const getDigitTimeStr = (time: string): string | null => {
+const getDigitTimeStr = (time: string | undefined): string | null => {
+    if (typeof time === "undefined") return null;
     return getStrMatchOrNull(time, /\d\d:\d\d/);
 };
 
-const getTimeOfDayStr = (time: string): "AM" | "PM" | null => {
+const getTimeOfDayStr = (time: string | undefined): "AM" | "PM" | null => {
+    if (typeof time === "undefined") return null;
     const match = getStrMatchOrNull(time, /AM|PM/);
     return match ? (match as "AM" | "PM") : null;
 };
 
-const get24HourTimeFormat = (time: string): string | null => {
+const get24HourTimeFormat = (time: string | undefined): string | null => {
+    if (typeof time === "undefined") return null;
     const digitTime = getDigitTimeStr(time);
     const timeOfDay = getTimeOfDayStr(time);
 
@@ -38,6 +42,9 @@ const get24HourTimeFormat = (time: string): string | null => {
 };
 
 const localizedTime = computed(() => {
+    // if (typeof props.time === "undefined") {
+    //     return undefined;
+    // }
     if (locale.value !== "ru") {
         const digitTime = getDigitTimeStr(props.time);
         if (digitTime) {
@@ -80,7 +87,8 @@ const minuteHandCssTransform = computed<string>(() => {
 </script>
 
 <template>
-    <div class="basic-astrology-clock">
+    <BasicLoader v-if="isLoading" class="basic-astrology-clock-filler" />
+    <div v-else-if="time" class="basic-astrology-clock">
         <div class="basic-astrology-clock__title">{{ title }}</div>
         <div class="basic-astrology-clock__clock-site">
             <div class="basic-astrology-clock__clock">
@@ -105,6 +113,7 @@ const minuteHandCssTransform = computed<string>(() => {
             </div>
         </div>
     </div>
+    <BasicNodata v-else class="basic-astrology-clock-filler" />
 </template>
 
 <style scoped lang="scss">
@@ -113,6 +122,11 @@ const minuteHandCssTransform = computed<string>(() => {
 
     & > * + * {
         margin-top: 20px;
+    }
+
+    &-filler {
+        width: 124px;
+        height: 230px;
     }
 
     &__clock-site {

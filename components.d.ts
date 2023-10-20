@@ -41,7 +41,7 @@ declare module 'vue' {
     CurrentDateInfo: typeof import('./src/components/CurrentDateInfo.vue')['default']
     CurrentWeatherInfo: typeof import('./src/components/CurrentWeatherInfo.vue')['default']
     CurrentWeatherStats: typeof import('./src/components/CurrentWeatherStats.vue')['default']
-    DailForecastAstro: typeof import('./src/components/DailForecastAstro.vue')['default']
+    DailyForecastAstro: typeof import('./src/components/DailyForecastAstro.vue')['default']
     DailyForecastInfo: typeof import('./src/components/DailyForecastInfo.vue')['default']
     DailyForecastStats: typeof import('./src/components/DailyForecastStats.vue')['default']
     DailyWeatherStat: typeof import('./src/components/DailyWeatherStat.vue')['default']
@@ -60,7 +60,6 @@ declare module 'vue' {
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']
     QualityCards: typeof import('./src/components/QualityCards.vue')['default']
     StatCards: typeof import('./src/components/StatCards.vue')['default']
-    SwiperLoader: typeof import('./src/components/SwiperLoader.vue')['default']
     TimeLabelRange: typeof import('./src/components/TimeLabelRange.vue')['default']
     WeatherCondition: typeof import('./src/components/WeatherCondition.vue')['default']
   }

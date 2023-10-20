@@ -58,13 +58,13 @@ const isModalOpen = ref(false);
             :title="t('chart.hourly')"
             @open-modal="isModalOpen = true"
         />
-        <BasicLoader v-if="isLoading" class="hourly-forecast-data__loader" />
+        <BasicLoader v-if="isLoading" class="hourly-forecast-data__filler" />
         <HourlyForecastChart
             v-else-if="hourlyForecast"
             :hourly-forecast="hourlyForecast"
             :active-option="activeOption"
         />
-        <BasicNodata v-else class="hourly-forecast-data__no-data" />
+        <BasicNodata v-else class="hourly-forecast-data__filler" />
         <ForecastOptions
             v-if="!isLoading && hourlyForecast"
             v-model:active-option="activeOption"
@@ -92,8 +92,7 @@ const isModalOpen = ref(false);
         margin-top: 5px;
     }
 
-    &__loader,
-    &__no-data {
+    &__filler {
         width: 100%;
         height: 252px;
     }

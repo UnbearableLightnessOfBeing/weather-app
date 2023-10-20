@@ -57,26 +57,21 @@ const computedUnixDate = computed(() => {
                 :condition="dailyForecast?.day.condition"
                 :is-loading="isLoading"
             />
-            <BasicLoader
-                v-if="isLoading"
-                class="daily-forecast-info__temp-loader"
-            />
             <BasicDailyTemperature
-                v-else-if="dailyForecast"
                 :min-value="
                     measurement === 'C'
-                        ? dailyForecast.day.mintemp_c
-                        : dailyForecast.day.mintemp_f
+                        ? dailyForecast?.day.mintemp_c
+                        : dailyForecast?.day.mintemp_f
                 "
                 :max-value="
                     measurement === 'C'
-                        ? dailyForecast.day.maxtemp_c
-                        : dailyForecast.day.maxtemp_f
+                        ? dailyForecast?.day.maxtemp_c
+                        : dailyForecast?.day.maxtemp_f
                 "
                 :measurement="measurement"
+                :is-loading="isLoading"
                 class="daily-forecast-info__temp"
             />
-            <BasicNodata v-else class="daily-forecast-info__temp-no-data" />
         </div>
         <DailyWeatherStats
             :stats="dailyForecast?.day"
@@ -127,12 +122,6 @@ const computedUnixDate = computed(() => {
         font-size: var(--fs-normal);
         font-weight: var(--fw-normal-thiner);
     }
-
-    &__temp-loader,
-    &__temp-no-data {
-        width: 300px;
-        height: 62px;
-    }
 }
 
 @media screen and (min-width: 1440px) {
@@ -140,8 +129,6 @@ const computedUnixDate = computed(() => {
         height: 545px;
         padding-inline: 66px;
         padding-block: 40px;
-        // padding-top: 20px;
-        // padding-bottom: 40px;
 
         &__container {
             flex-direction: row;

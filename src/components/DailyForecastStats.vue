@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
     <div class="daily-forecast-stats">
-        <DailForecastAstro
+        <DailyForecastAstro
             :astro="dailyForecast?.astro"
             :is-loading="isLoading"
         />

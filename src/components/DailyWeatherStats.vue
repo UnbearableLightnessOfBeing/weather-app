@@ -72,21 +72,15 @@ const weatherStats: DailyWeatherStat[] = [
 <template>
     <div class="daily-weather-stats">
         <div v-for="stat in weatherStats" :key="stat.title">
-            <BasicLoader
-                v-if="isLoading"
-                class="daily-weather-stats__stat-loader"
-            />
             <DailyWeatherStat
-                v-else-if="stats"
                 :key="stat.title"
                 :icon-src="stat.icon"
                 :title="stat.title"
-                :value="stat.value ?? 0"
+                :value="stat.value"
                 :measurement="stat.measurement"
                 :class="stat.class"
-                class="daily-weather-stats__stat"
+                :is-loading="isLoading"
             />
-            <BasicNodata v-else class="daily-weather-stats__stat-no-data" />
         </div>
     </div>
 </template>
@@ -96,38 +90,11 @@ const weatherStats: DailyWeatherStat[] = [
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5px;
-
-    &__stat-loader,
-    &__stat-no-data {
-        width: 100%;
-        height: 53px;
-        border-radius: 5px;
-    }
-
-    &__stat {
-        width: 100%;
-        height: 100%;
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .daily-weather-stats {
-        &__stat-loader,
-        &__stat-no-data {
-            height: 78px;
-        }
-    }
 }
 
 @media screen and (min-width: 1440px) {
     .daily-weather-stats {
         grid-template-columns: 1fr 1fr 1fr;
-
-        &__stat-loader,
-        &__stat-no-data {
-            width: 240px;
-            height: 78px;
-        }
 
         &__precip {
             order: 1;

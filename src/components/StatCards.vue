@@ -60,40 +60,14 @@ const statCards = computed<StatCard[]>(() => {
     <div class="stat-cards">
         <div class="stat-cards__content">
             <div v-for="card in statCards" :key="card.title">
-                <BasicLoader v-if="isLoading" class="stat-cards__loader" />
                 <BasicStatCard
-                    v-else-if="current"
                     :icon-src="card.icon"
                     :title="card.title"
-                    :value="card.value ?? 0"
+                    :value="card.value"
                     :measurement="card.measurement"
+                    :is-loading="isLoading"
                 />
-                <BasicNodata v-else class="stat-cards__no-data" />
             </div>
-            <!-- <BasicLoader v-if="!current" class="stat-cards__loader" /> -->
-            <!-- <BasicStatCard
-                v-else
-                :icon-src="CloudCoverSvgUrl"
-                :title="t('weatherStats.cloudCoverage')"
-                :value="`${current.cloud}`"
-                :measurement="'%'"
-            />
-            <BasicLoader v-if="!current" class="stat-cards__loader" />
-            <BasicStatCard
-                v-else
-                :icon-src="VisibilitySvgUrl"
-                :title="t('weatherStats.visibility')"
-                :value="`${current.vis_km}`"
-                :measurement="t('measurements.km')"
-            />
-            <BasicLoader v-if="!current" class="stat-cards__loader" />
-            <BasicStatCard
-                v-else
-                :icon-src="PressureSvgUrl"
-                :title="t('weatherStats.pressure')"
-                :value="`${current.pressure_mb}`"
-                :measurement="'hPa'"
-            /> -->
         </div>
     </div>
 </template>
@@ -110,13 +84,6 @@ const statCards = computed<StatCard[]>(() => {
         justify-content: center;
         align-items: center;
         justify-items: center;
-    }
-
-    &__loader,
-    &__no-data {
-        width: 180px;
-        height: 180px;
-        border-radius: 15px;
     }
 }
 
