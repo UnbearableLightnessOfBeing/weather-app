@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InlineSvg from "vue-inline-svg";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps<{
     iconSrc: string;
@@ -8,6 +9,8 @@ const props = defineProps<{
     measurement: string;
     isLoading?: boolean;
 }>();
+
+const { t } = useI18n();
 
 const valueExists = computed<boolean>(() => {
     return typeof props.value !== "undefined";
@@ -23,7 +26,7 @@ const valueExists = computed<boolean>(() => {
     >
         <div class="basic-daily-weather-stat__left">
             <InlineSvg :src="iconSrc" class="basic-daily-weather-stat__icon" />
-            <div class="basic-daily-weather-stat__title">{{ title }}</div>
+            <div class="basic-daily-weather-stat__title">{{ t(title) }}</div>
         </div>
         <div class="basic-daily-weather-stat__right">
             <div class="basic-daily-weather-stat__value">
@@ -48,6 +51,7 @@ const valueExists = computed<boolean>(() => {
     border-radius: 5px;
     place-content: center;
     background-color: var(--basic-light-dull);
+    height: 100%;
 
     &-filler {
         width: 100%;
