@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import { HourlyWeather } from "../types/requestTypes";
-import { useDateFormat } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
-import colors from "../assets/colors/colors.json";
-import { scalesConfigurationSecond } from "../configs/chartjsConfig";
 import { useDraggableScroll } from "../composables/useDraggableScroll";
 import { useMeasurement } from "../composables/useMeasurement";
 import { ChartData } from "chart.js";
+import { useChartData } from "../composables/useChartData";
 import type { HourlyWeatherNumberKey } from "../types/requestTypes";
-
 import { Line as LineChart } from "vue-chartjs";
+import { ChartOptions } from "chart.js";
+import InlineSvg from "vue-inline-svg";
+import ArrowSvgUrl from "/interface/x-mark.svg";
+import colors from "../assets/colors/colors.json";
+import { ChartTypeEnum } from "../composables/useChartData";
 
 const props = defineProps<{
     hourlyForecast: HourlyWeather[];
+}>();
+
+defineEmits<{
+    //eslint-disable-next-line
+    (e: "closeModal"): void;
 }>();
 
 const getChartIcon = (name: string): string => {
@@ -22,28 +29,23 @@ const getChartIcon = (name: string): string => {
     return iconPath;
 };
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
 
 const { measurement } = useMeasurement();
 
-const dateFormat = computed(() => {
-    return locale.value === "ru" ? "HH:mm" : "h A";
-});
-
-const tickLabels = computed(() => {
-    return props.hourlyForecast.map(
-        (item) => useDateFormat(new Date(item.time), dateFormat.value).value,
+const { conditionRange, tickLabels, getChartOptions, getChartData } =
+    useChartData(
+        computed(() => props.hourlyForecast),
+        ChartTypeEnum.Type2,
     );
-});
 
 type ChartInfoItem = {
     propName: HourlyWeatherNumberKey;
     optionName: string;
     measurement: string;
-    icon: string | undefined;
-    //eslint-disable-next-line
-    formatter: (value: any) => any;
+    icon: string;
     dataset: ChartData<"line">;
+    options: ChartOptions<"line">;
 };
 
 const chartInfo = computed<ChartInfoItem[]>(() => {
@@ -51,20 +53,26 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
         {
             propName: measurement.value === "C" ? "temp_c" : "temp_f",
             optionName: t("chartOptions.temp"),
-            measurement: measurement.value === "C" ? "°C" : "°F",
+            measurement: `°${measurement.value}`,
             icon: getChartIcon("temperature"),
-            formatter: (value: string) => value + "°",
             dataset: getChartData(
+                measurement.value === "C" ? "temp_c" : "temp_f",
+                colors["chart-warm"],
+            ),
+            options: getChartOptions(
                 measurement.value === "C" ? "temp_c" : "temp_f",
             ),
         },
         {
             propName: measurement.value === "C" ? "feelslike_c" : "feelslike_f",
             optionName: t("chartOptions.feelslike"),
-            measurement: measurement.value === "C" ? "°C" : "°F",
+            measurement: `°${measurement.value}`,
             icon: getChartIcon("feelslike"),
-            formatter: (value: string) => value + "°",
             dataset: getChartData(
+                measurement.value === "C" ? "feelslike_c" : "feelslike_f",
+                colors["chart-warm"],
+            ),
+            options: getChartOptions(
                 measurement.value === "C" ? "feelslike_c" : "feelslike_f",
             ),
         },
@@ -73,64 +81,67 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.precip"),
             measurement: t("measurements.mm"),
             icon: getChartIcon("precip"),
-            formatter: (value: string) => value,
-            dataset: getChartData("precip_mm"),
+            dataset: getChartData("precip_mm", colors["chart-water"]),
+            options: getChartOptions("precip_mm"),
         },
         {
             propName: "chance_of_rain",
             optionName: t("chartOptions.rainChance"),
             measurement: "%",
             icon: getChartIcon("rain-chance"),
-            formatter: (value: string) => value,
-            dataset: getChartData("chance_of_rain"),
+            dataset: getChartData("chance_of_rain", colors["chart-water"]),
+            options: getChartOptions("chance_of_rain"),
         },
         {
             propName: "chance_of_snow",
             optionName: t("chartOptions.snowChance"),
             measurement: "%",
             icon: getChartIcon("snow-chance"),
-            formatter: (value: string) => value,
-            dataset: getChartData("chance_of_snow"),
+            dataset: getChartData("chance_of_snow", colors["chart-wind"]),
+            options: getChartOptions("chance_of_snow"),
         },
         {
             propName: "wind_kph",
             optionName: t("chartOptions.wind"),
             measurement: t("measurements.kmh"),
             icon: getChartIcon("wind"),
-            formatter: (value: string) => value,
-            dataset: getChartData("wind_kph"),
+            dataset: getChartData("wind_kph", colors["chart-wind"]),
+            options: getChartOptions("wind_kph"),
         },
         {
             propName: "gust_kph",
             optionName: t("chartOptions.gust"),
             measurement: t("measurements.kmh"),
             icon: getChartIcon("gust"),
-            formatter: (value: string) => value,
-            dataset: getChartData("gust_kph"),
+            dataset: getChartData("gust_kph", colors["chart-wind"]),
+            options: getChartOptions("gust_kph"),
         },
         {
             propName: "pressure_mb",
             optionName: t("chartOptions.pressure"),
             measurement: "hPa",
             icon: getChartIcon("pressure"),
-            formatter: (value: string) => value,
-            dataset: getChartData("pressure_mb"),
+            dataset: getChartData("pressure_mb", colors["chart-pressure"]),
+            options: getChartOptions("pressure_mb"),
         },
         {
             propName: "humidity",
             optionName: t("chartOptions.humidity"),
             measurement: "%",
             icon: getChartIcon("humidity"),
-            formatter: (value: string) => value,
-            dataset: getChartData("humidity"),
+            dataset: getChartData("humidity", colors["chart-water"]),
+            options: getChartOptions("humidity"),
         },
         {
             propName: measurement.value === "C" ? "dewpoint_c" : "dewpoint_f",
             optionName: t("chartOptions.dewPoint"),
-            measurement: measurement.value === "C" ? "°C" : "°F",
+            measurement: `°${measurement.value}`,
             icon: getChartIcon("dew-point"),
-            formatter: (value: string) => value + "°",
             dataset: getChartData(
+                measurement.value === "C" ? "dewpoint_c" : "dewpoint_f",
+                colors["chart-water"],
+            ),
+            options: getChartOptions(
                 measurement.value === "C" ? "dewpoint_c" : "dewpoint_f",
             ),
         },
@@ -139,53 +150,18 @@ const chartInfo = computed<ChartInfoItem[]>(() => {
             optionName: t("chartOptions.uv"),
             measurement: "",
             icon: getChartIcon("uv"),
-            formatter: (value: string) => value,
-            dataset: getChartData("uv"),
+            dataset: getChartData("uv", colors["chart-uv"]),
+            options: getChartOptions("uv"),
         },
         {
             propName: "vis_km",
             optionName: t("chartOptions.visibility"),
             measurement: t("measurements.km"),
             icon: getChartIcon("visibility"),
-            formatter: (value: string) => value,
-            dataset: getChartData("vis_km"),
+            dataset: getChartData("vis_km", colors["chart-wind"]),
+            options: getChartOptions("vis_km"),
         },
     ];
-});
-
-const getChartData = (propName: HourlyWeatherNumberKey) => {
-    return {
-        labels: tickLabels.value,
-        datasets: [
-            {
-                backgroundColor: colors["accent-300"],
-                data: props.hourlyForecast.map((hourly) => hourly[propName]),
-            },
-        ],
-    };
-};
-
-const chartOptions = computed(() => {
-    return chartInfo.value.map((chartItem) => {
-        return {
-            layout: {
-                padding: {
-                    left: 20,
-                    right: 20,
-                },
-            },
-            scales: scalesConfigurationSecond,
-            plugins: {
-                datalabels: {
-                    formatter: chartItem.formatter,
-                },
-            },
-        };
-    });
-});
-
-const conditionRange = computed(() => {
-    return props.hourlyForecast.map((item) => item.condition);
 });
 
 const mainContainer = ref<HTMLElement | null>(null);
@@ -201,23 +177,32 @@ const setOptionOffset = () => {
 </script>
 
 <template>
-    <div class="hourly-forecast-charts-wrapper">
+    <div class="hourly-forecast-charts">
+        <InlineSvg
+            :src="ArrowSvgUrl"
+            class="hourly-forecast-charts__close-btn"
+            @click="$emit('closeModal')"
+        />
         <div
             ref="mainContainer"
-            class="hourly-forecast-charts"
+            class="hourly-forecast-charts__inner"
             @scroll="setOptionOffset"
         >
             <div class="hourly-forecast-charts__top-info">
                 <ConditionIconRange
                     :conditions="conditionRange"
-                    :width="1200"
+                    class="hourly-forecast-charts__item-range"
                 />
-                <TimeLabelRange :time-labels="tickLabels" />
+                <TimeLabelRange
+                    :time-labels="tickLabels"
+                    class="hourly-forecast-charts__item-range"
+                />
             </div>
             <div class="hourly-forecast-charts__container">
                 <div
                     v-for="(chart, idx) in chartInfo"
                     :key="chart.propName"
+                    :data-index="idx"
                     class="hourly-forecast-charts__option"
                 >
                     <ChartTitle
@@ -228,7 +213,7 @@ const setOptionOffset = () => {
                     />
                     <LineChart
                         :data="chart.dataset"
-                        :options="chartOptions[idx]"
+                        :options="chart.options"
                         class="hourly-forecast-charts__option-chart"
                     />
                 </div>
@@ -238,17 +223,18 @@ const setOptionOffset = () => {
 </template>
 
 <style scoped lang="scss">
-.hourly-forecast-charts-wrapper {
-    overflow: hidden;
-}
 .hourly-forecast-charts {
-    max-width: 1204px;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(200deg, #8c6bae 0%, #8c6bae 100%);
-    backdrop-filter: blur(5px);
-    overflow-x: scroll;
-    position: relative;
+    overflow: hidden;
+
+    &__inner {
+        max-width: 1204px;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(200deg, #8c6bae 0%, #8c6bae 100%);
+        backdrop-filter: blur(5px);
+        overflow-x: scroll;
+        position: relative;
+    }
 
     &__top-info {
         width: 1200px;
@@ -257,7 +243,22 @@ const setOptionOffset = () => {
         background-color: var(--basic-light-dull);
         backdrop-filter: blur(5px);
         z-index: 1;
-        padding-block: 5px;
+        padding-bottom: 5px;
+        padding-top: 45px;
+    }
+
+    &__item-range {
+        width: 1200px;
+    }
+
+    &__close-btn {
+        position: fixed;
+        z-index: 2;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        padding-inline: 5px;
     }
 
     &__container {
@@ -285,12 +286,21 @@ const setOptionOffset = () => {
 }
 
 @media screen and (min-width: 1440px) {
-    .hourly-forecast-charts-wrapper {
-        border-radius: 20px;
-    }
     .hourly-forecast-charts {
-        height: 800px;
-        overflow-x: hidden;
+        border-radius: 5px;
+
+        &__inner {
+            height: 800px;
+            overflow-x: hidden;
+        }
+
+        &__top-info {
+            padding-block: 5px;
+        }
+
+        &__close-btn {
+            display: none;
+        }
     }
 }
 </style>

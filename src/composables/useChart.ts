@@ -7,6 +7,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    Filler,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import colors from "../assets/colors/colors.json";
@@ -20,6 +21,7 @@ ChartJS.register(
     Tooltip,
     Legend,
     ChartDataLabels,
+    Filler,
 );
 
 ChartJS.defaults.responsive = true;

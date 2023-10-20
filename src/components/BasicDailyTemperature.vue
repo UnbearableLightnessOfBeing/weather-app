@@ -1,13 +1,19 @@
 <script setup lang="ts">
 defineProps<{
-    minValue: number;
-    maxValue: number;
+    minValue?: number;
+    maxValue?: number;
     measurement: "C" | "F";
+    isLoading?: boolean;
 }>();
 </script>
 
 <template>
-    <div class="basic-daily-temperature">
+    <BasicLoader v-if="isLoading" class="basic-daily-temperature-filler" />
+    <div
+        v-else-if="minValue && maxValue"
+        class="basic-daily-temperature"
+        v-bind="$attrs"
+    >
         <div class="basic-daily-temperature__temp-item">
             <div class="basic-daily-temperature__temp">
                 {{ maxValue }} °{{ measurement }}
@@ -22,6 +28,7 @@ defineProps<{
             <div class="basic-daily-temperature__border">min</div>
         </div>
     </div>
+    <BasicNodata v-else class="basic-daily-temperature-filler" />
 </template>
 
 <style scoped lang="scss">
@@ -47,6 +54,11 @@ defineProps<{
 
     &__border {
         color: var(--basic-light-faded);
+    }
+
+    &-filler {
+        width: 300px;
+        height: 62px;
     }
 }
 

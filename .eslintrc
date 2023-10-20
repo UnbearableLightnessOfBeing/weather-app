@@ -7,7 +7,8 @@
     "parser": "@typescript-eslint/parser",
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended", "plugin:vue/vue3-recommended"],
+  "extends": ["eslint:recommended", "plugin:vue/vue3-recommended", "plugin:typescript-enum/recommended"],
+  "plugins": ["typescript-enum"],
   "rules": {
     "vue/html-self-closing": "off",
     "vue/max-attributes-per-line": "off",

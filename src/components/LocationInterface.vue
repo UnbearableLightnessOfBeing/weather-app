@@ -1,15 +1,28 @@
 <script setup lang="ts">
 import { useQuery } from "@tanstack/vue-query";
 import { getSearchResults } from "../api/requests";
+import { useI18n } from "vue-i18n";
 
-defineProps<{
+const props = defineProps<{
     modelValue: string;
 }>();
 
-defineEmits<{
-    //eslint-disable-next-line
+const emits = defineEmits<{
+    // eslint-disable-next-line
     (e: "update:modelValue", vlaue: string): void;
 }>();
+
+const writableComputed = computed({
+    get() {
+        return props.modelValue;
+    },
+    set(value) {
+        emits("update:modelValue", value);
+        isSearchActive.value = false;
+    },
+});
+
+const { t } = useI18n();
 
 const isActive = ref(false);
 
@@ -50,6 +63,14 @@ watch(searchValue, () => {
         refetch();
     }
 });
+
+const search = ref<HTMLElement | null>(null);
+
+const inputWidth = computed(() => {
+    if (search.value) {
+        return search.value.getBoundingClientRect().width;
+    } else return 450;
+});
 </script>
 
 <template>
@@ -57,61 +78,66 @@ watch(searchValue, () => {
         :theme="'custom-dropdown'"
         :disabled="!isActive"
         :shown="isSearchActive && Boolean(searchValue.length)"
-        class="location-interface"
     >
         <template #default>
-            <BasicSearch
-                v-model="searchValue"
-                v-model:is-search-active="isSearchActive"
-                :active="isActive"
-                @update:active="(value) => (isActive = value)"
-            />
-            <Transition appear name="location">
-                <div v-if="!isActive" class="location-interface__location">
-                    <GeoLocationButton
-                        @update:location="
-                            (value) => $emit('update:modelValue', value)
-                        "
-                    />
-                    <div
-                        v-tooltip="{
-                            content: modelValue,
-                            theme: 'custom-tooltip',
-                        }"
-                        class="location-interface__location-name"
-                    >
-                        {{ modelValue }}
+            <div ref="search" class="location-interface">
+                <BasicSearch
+                    v-model="searchValue"
+                    v-model:is-search-active="isSearchActive"
+                    :active="isActive"
+                    @update:active="(value) => (isActive = value)"
+                />
+                <Transition appear name="location">
+                    <div v-if="!isActive" class="location-interface__location">
+                        <GeoLocationButton
+                            @update:location="
+                                (value) => $emit('update:modelValue', value)
+                            "
+                        />
+                        <div
+                            v-tooltip="{
+                                content: modelValue,
+                                theme: 'custom-tooltip',
+                            }"
+                            class="location-interface__location-name"
+                        >
+                            {{ modelValue }}
+                        </div>
                     </div>
-                </div>
-            </Transition>
+                </Transition>
+            </div>
         </template>
         <template #popper>
-            <BasicList v-if="isFetching">
-                <BasicSearchMessage message="Loading..." />
-            </BasicList>
-            <BasicList v-else-if="searchData && searchData.length">
+            <BasicSearchMessage
+                v-if="isFetching"
+                type="loading"
+                :width="inputWidth"
+            >
+                <BasicSpinner />
+            </BasicSearchMessage>
+            <div
+                v-else-if="searchData && searchData.length"
+                :style="`width: ${inputWidth}px`"
+            >
                 <BasicLocationItem
                     v-for="item in searchData"
                     :key="item.id"
+                    v-model:location="writableComputed"
                     :city="item.name"
                     :country="item.country"
-                    @update:location="
-                        (value) => {
-                            $emit('update:modelValue', value);
-                            isSearchActive = false;
-                        }
-                    "
                 />
-            </BasicList>
-            <BasicList v-else-if="!isError">
-                <BasicSearchMessage message="Nothing was found" />
-            </BasicList>
-            <BasicList v-else>
-                <BasicSearchMessage
-                    type="error"
-                    message="Error has occured during search"
-                />
-            </BasicList>
+            </div>
+            <BasicSearchMessage
+                v-else-if="!isError"
+                :message="t('search.notFound')"
+                :width="inputWidth"
+            />
+            <BasicSearchMessage
+                v-else
+                type="error"
+                :message="t('errors.searchError')"
+                :width="inputWidth"
+            />
         </template>
     </VDropdown>
 </template>

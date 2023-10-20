@@ -20,21 +20,6 @@ const emits = defineEmits<{
 
 const { t } = useI18n();
 
-const isInputShown = ref(false);
-
-watch(
-    computed(() => props.isSearchActive),
-    () => {
-        if (props.isSearchActive) {
-            setTimeout(() => {
-                isInputShown.value = true;
-            }, 300);
-        } else {
-            isInputShown.value = false;
-        }
-    },
-);
-
 const textInput = ref<HTMLInputElement | null>(null);
 
 const openSearch = () => {
@@ -58,11 +43,10 @@ onUnmounted(() => {
     document.body.removeEventListener("click", bodyClickCallback);
 });
 
-const updateModelValue = (value: string) => {
-    emits("update:modelValue", value);
-};
-
-const debounceModelValue = createDebounce(updateModelValue, 400);
+const debounceModelValue = createDebounce(
+    (value: string) => emits("update:modelValue", value),
+    400,
+);
 </script>
 
 <template>
@@ -80,7 +64,7 @@ const debounceModelValue = createDebounce(updateModelValue, 400);
         <InlineSvg :src="SearchSvgUrl" class="basic-search__icon" />
         <Transition name="input" appear>
             <BasicTextInput
-                v-if="isInputShown"
+                v-if="isSearchActive"
                 ref="textInput"
                 :model-value="modelValue"
                 :placeholder="t('search.placeholder')"
@@ -157,6 +141,7 @@ const debounceModelValue = createDebounce(updateModelValue, 400);
 .input {
     &-enter-active {
         transition: all 0.3s ease-out;
+        transition-delay: 0.3s;
     }
 
     &-enter-from {

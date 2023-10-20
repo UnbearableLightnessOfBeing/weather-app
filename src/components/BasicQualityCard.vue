@@ -1,22 +1,32 @@
 <script setup lang="ts">
-defineProps<{
-    value: number;
+const props = defineProps<{
+    value?: number;
     maxValue: number;
-    evaluation: string;
+    evaluation?: string;
     title: string;
+    isLoading?: boolean;
 }>();
+
+const valuesExist = computed<boolean>(() => {
+    return (
+        typeof props.value !== "undefined" &&
+        typeof props.evaluation !== "undefined"
+    );
+});
 </script>
 
 <template>
-    <div class="basic-quality-card">
+    <BasicLoader v-if="isLoading" class="basic-quality-card-filler" />
+    <div v-else-if="valuesExist" class="basic-quality-card" v-bind="$attrs">
         <div class="basic-quality-card__title">{{ title }}</div>
         <BasicQualityMonitor
-            :value="value"
+            :value="value ?? 0"
             :max-value="maxValue"
-            :evaluation="evaluation"
+            :evaluation="evaluation ?? ''"
             class="basic-quality-card__monitor"
         />
     </div>
+    <BasicNodata v-else class="basic-quality-card-filler" />
 </template>
 
 <style scoped lang="scss">
@@ -35,6 +45,11 @@ defineProps<{
 
     &__monitor {
         margin-inline: auto;
+    }
+
+    &-filler {
+        width: 180px;
+        height: 167px;
     }
 }
 

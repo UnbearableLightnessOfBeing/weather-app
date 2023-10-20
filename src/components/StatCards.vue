@@ -7,54 +7,67 @@ import { useMeasurement } from "../composables/useMeasurement";
 import { CurrentWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
 
-defineProps<{
+const props = defineProps<{
     current?: CurrentWeather;
+    isLoading: boolean;
 }>();
 
 const { measurement } = useMeasurement();
 
 const { t } = useI18n();
+
+type StatCard = {
+    title: string;
+    value: number | string | undefined;
+    measurement: string;
+    icon: string;
+};
+
+const statCards = computed<StatCard[]>(() => {
+    return [
+        {
+            title: t("weatherStats.feelsLike"),
+            value:
+                measurement.value === "C"
+                    ? props.current?.feelslike_c
+                    : props.current?.feelslike_f,
+            measurement: `°${measurement.value}`,
+            icon: FeelsLikeSvgUrl,
+        },
+        {
+            title: t("weatherStats.cloudCoverage"),
+            value: props.current?.cloud,
+            measurement: "%",
+            icon: CloudCoverSvgUrl,
+        },
+        {
+            title: t("weatherStats.visibility"),
+            value: props.current?.vis_km,
+            measurement: t("measurements.km"),
+            icon: VisibilitySvgUrl,
+        },
+        {
+            title: t("weatherStats.pressure"),
+            value: props.current?.pressure_mb,
+            measurement: "hPa",
+            icon: PressureSvgUrl,
+        },
+    ];
+});
 </script>
 
 <template>
     <div class="stat-cards">
         <div class="stat-cards__content">
-            <BasicLoader v-if="!current" class="stat-cards__loader" />
-            <BasicStatCard
-                v-else
-                :icon-src="FeelsLikeSvgUrl"
-                :title="t('weatherStats.feelsLike')"
-                :value="
-                    measurement === 'C'
-                        ? current.feelslike_c
-                        : current.feelslike_f
-                "
-                :measurement="`°${measurement}`"
-            />
-            <BasicLoader v-if="!current" class="stat-cards__loader" />
-            <BasicStatCard
-                v-else
-                :icon-src="CloudCoverSvgUrl"
-                :title="t('weatherStats.cloudCoverage')"
-                :value="`${current.cloud}`"
-                :measurement="'%'"
-            />
-            <BasicLoader v-if="!current" class="stat-cards__loader" />
-            <BasicStatCard
-                v-else
-                :icon-src="VisibilitySvgUrl"
-                :title="t('weatherStats.visibility')"
-                :value="`${current.vis_km}`"
-                :measurement="t('measurements.km')"
-            />
-            <BasicLoader v-if="!current" class="stat-cards__loader" />
-            <BasicStatCard
-                v-else
-                :icon-src="PressureSvgUrl"
-                :title="t('weatherStats.pressure')"
-                :value="`${current.pressure_mb}`"
-                :measurement="'hPa'"
-            />
+            <div v-for="card in statCards" :key="card.title">
+                <BasicStatCard
+                    :icon-src="card.icon"
+                    :title="card.title"
+                    :value="card.value"
+                    :measurement="card.measurement"
+                    :is-loading="isLoading"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -71,12 +84,6 @@ const { t } = useI18n();
         justify-content: center;
         align-items: center;
         justify-items: center;
-    }
-
-    &__loader {
-        width: 180px;
-        height: 180px;
-        border-radius: 15px;
     }
 }
 

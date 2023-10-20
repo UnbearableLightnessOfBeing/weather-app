@@ -5,8 +5,9 @@ type Language = "en" | "ru";
 
 const props = defineProps<{
     language: Language;
-    unixDate: Date;
+    unixDate?: Date;
     timeHidden?: boolean;
+    isLoading?: boolean;
 }>();
 
 const monthNames = computed(() => {
@@ -15,36 +16,52 @@ const monthNames = computed(() => {
     } else return dayNames.ru.full;
 });
 
-const date = computed(() => props.unixDate.getDate());
+const date = computed(() =>
+    props.unixDate ? props.unixDate.getDate() : undefined,
+);
 
 const month = computed(() => {
-    const monthName = props.unixDate.toLocaleString(props.language, {
-        month: "long",
-    });
-    if (monthName.length <= 4) {
-        return monthName;
-    } else return monthName.slice(0, 3);
+    if (props.unixDate) {
+        const monthName = props.unixDate.toLocaleString(props.language, {
+            month: "long",
+        });
+        if (monthName.length <= 4) {
+            return monthName;
+        } else return monthName.slice(0, 3);
+    } else return undefined;
 });
 
 const year = computed(() => {
-    const year = props.unixDate.getFullYear().toString();
-    return `‘${year.slice(year.length - 2)}`;
+    if (props.unixDate) {
+        const year = props.unixDate.getFullYear().toString();
+        return `‘${year.slice(year.length - 2)}`;
+    } else return undefined;
 });
 
-const day = computed(() => monthNames.value[props.unixDate.getDay()]);
+const day = computed(() => {
+    if (props.unixDate) {
+        return monthNames.value[props.unixDate.getDay()];
+    } else return undefined;
+});
 
 const time = computed(() => {
-    const timeString = props.unixDate.toLocaleTimeString(props.language);
-    const [time, dayPeriod] = timeString.split(" ");
-    const splitTime = time.split(":");
-    return (
-        splitTime[0] + ":" + splitTime[1] + (dayPeriod ? ` ${dayPeriod}` : "")
-    );
+    if (props.unixDate) {
+        const timeString = props.unixDate.toLocaleTimeString(props.language);
+        const [time, dayPeriod] = timeString.split(" ");
+        const splitTime = time.split(":");
+        return (
+            splitTime[0] +
+            ":" +
+            splitTime[1] +
+            (dayPeriod ? ` ${dayPeriod}` : "")
+        );
+    } else return undefined;
 });
 </script>
 
 <template>
-    <div class="current-date-info">
+    <BasicLoader v-if="isLoading" class="current-date-info-filler" />
+    <div v-else-if="unixDate" class="current-date-info">
         <div class="current-date-info__dmy">
             {{ date }} {{ month }} {{ year }}
         </div>
@@ -58,6 +75,7 @@ const time = computed(() => {
             </div>
         </div>
     </div>
+    <BasicNodata v-else class="current-date-info-filler" />
 </template>
 
 <style scoped lang="scss">
@@ -65,6 +83,11 @@ const time = computed(() => {
     width: fit-content;
     height: fit-content;
     min-width: 175px;
+
+    &-filler {
+        width: 240px;
+        height: 87px;
+    }
 
     & > * + * {
         margin-top: 15px;
@@ -98,6 +121,11 @@ const time = computed(() => {
         &__time {
             font-size: var(--fs-heading);
             font-weight: var(--fw-normal-thiner);
+        }
+
+        &-filler {
+            width: 271px;
+            height: 92px;
         }
     }
 }

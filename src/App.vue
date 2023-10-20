@@ -18,21 +18,24 @@ const { data, isError, isLoading } = useQuery({
 
 const activeDay = ref<number | null>(null);
 </script>
+
 <template>
     <AppLayout class="app-layout">
         <BasicError v-if="isError" :text="t('errors.dataLoadingError')" />
         <AppPanelLayout v-else class="app-layout__left-panel">
             <Transition name="panel" mode="out-in">
                 <DailyForecastInfo
-                    v-if="typeof activeDay === 'number' && data"
+                    v-if="typeof activeDay === 'number'"
                     :daily-forecast="data?.forecast?.forecastday[activeDay]"
                     :location="location"
+                    :is-loading="isLoading"
                     @unset-active-day="activeDay = null"
                 />
                 <CurrentWeatherInfo
                     v-else
                     v-model:location="location"
-                    :current="data?.current"
+                    :data="data"
+                    :is-loading="isLoading"
                 />
             </Transition>
             <MeasurementToggler
@@ -49,11 +52,10 @@ const activeDay = ref<number | null>(null);
                         typeof activeDay === 'number',
                 }"
             />
-            <SwiperLoader v-if="!data" />
             <ForecastCardSwiper
-                v-else
                 v-model:active-day="activeDay"
                 :forecastday="data?.forecast?.forecastday"
+                :is-loading="isLoading"
             />
         </AppPanelLayout>
         <BasicError
@@ -65,16 +67,17 @@ const activeDay = ref<number | null>(null);
         <AppPanelLayout v-else class="app-layout__right-panel">
             <Transition name="panel" mode="out-in">
                 <DailyForecastStats
-                    v-if="typeof activeDay === 'number' && data"
+                    v-if="typeof activeDay === 'number'"
                     :daily-forecast="data?.forecast?.forecastday[activeDay]"
                     :is-loading="isLoading"
                 />
-                <CurrentWeatherStats
-                    v-else
-                    v-model:location="location"
-                    :current="data?.current"
-                    :is-loading="isLoading"
-                />
+                <KeepAlive v-else>
+                    <CurrentWeatherStats
+                        v-model:location="location"
+                        :current="data?.current"
+                        :is-loading="isLoading"
+                    />
+                </KeepAlive>
             </Transition>
         </AppPanelLayout>
     </AppLayout>

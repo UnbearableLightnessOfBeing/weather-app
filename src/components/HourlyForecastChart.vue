@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { useDateFormat } from "@vueuse/core";
-import colors from "../assets/colors/colors.json";
-import { useI18n } from "vue-i18n";
 import { useDraggableScroll } from "../composables/useDraggableScroll";
-import { scalesConfiguration } from "../configs/chartjsConfig";
 import { Line as LineChart } from "vue-chartjs";
+import colors from "../assets/colors/colors.json";
 import type {
     HourlyWeather,
     HourlyWeatherNumberKey,
 } from "../types/requestTypes";
+import { useChartData } from "../composables/useChartData";
 
 type ChartOptionName =
     | "temp."
@@ -31,45 +29,15 @@ const props = defineProps<{
     activeOption: ChartOption;
 }>();
 
-const { locale } = useI18n();
-
-const dateFormat = computed(() => {
-    return locale.value === "ru" ? "HH:mm" : "h A";
-});
-
-const tickLabels = computed(() => {
-    return props.hourlyForecast.map(
-        (item) => useDateFormat(new Date(item.time), dateFormat.value).value,
-    );
-});
-
-const chartData = computed(() => {
-    return props.hourlyForecast.map(
-        (item) => item[props.activeOption.propName],
-    );
-});
-
-const pointFormatter = computed(() => {
-    if (props.activeOption.propName.includes("temp_")) {
-        return (value: string) => value + "°";
-    } else return;
-});
-
-const conditionRange = computed(() => {
-    return props.hourlyForecast.map((item) => item.condition);
-});
+const { conditionRange, getChartOptions, getChartData } = useChartData(
+    computed(() => props.hourlyForecast),
+);
 
 const data = computed(() => {
-    return {
-        labels: tickLabels.value,
-        datasets: [
-            {
-                backgroundColor: colors["accent-300"],
-                data: chartData.value,
-            },
-        ],
-    };
+    return getChartData(props.activeOption.propName, colors["chart-default"]);
 });
+
+const options = computed(() => getChartOptions(props.activeOption.propName));
 
 const hourlyForecastContainer = ref<HTMLElement | null>(null);
 
@@ -81,22 +49,6 @@ const scrollOnWheel = function (e: WheelEvent) {
         hourlyForecastContainer.value.scrollLeft += e.deltaY / 4;
     }
 };
-
-const chartOptions = computed(() => {
-    return {
-        layout: {
-            padding: {
-                top: 20,
-            },
-        },
-        scales: scalesConfiguration,
-        plugins: {
-            datalabels: {
-                formatter: pointFormatter.value,
-            },
-        },
-    };
-});
 </script>
 
 <template>
@@ -106,7 +58,7 @@ const chartOptions = computed(() => {
         @wheel.prevent="scrollOnWheel"
     >
         <div class="hourly-forecast-chart__chart-container">
-            <LineChart :data="data" :options="chartOptions" />
+            <LineChart :data="data" :options="options" />
         </div>
         <ConditionIconRange :conditions="conditionRange" />
     </div>
@@ -123,15 +75,16 @@ const chartOptions = computed(() => {
     overflow-x: scroll;
     margin-left: -16px;
     width: 100vw;
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
 
     &__chart-container {
         width: 1000px;
         min-width: 1000px;
-        cursor: grab;
-
-        &:active {
-            cursor: grabbing;
-        }
+        overflow-y: hidden;
     }
 }
 

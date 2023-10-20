@@ -5,6 +5,7 @@
     "accent-300": "#AC8EFF",
     "accent-500": "#865CFD",
     "error": "#ce5a5a",
+    "--error-bg": "#EE6C6188",
 
     "basic-light-dull": "rgba(255, 255, 255, 0.3)",
     "basic-light-faded": "rgba(255, 255, 255, 0.7)",
@@ -12,5 +13,12 @@
     "basic-dark-shadow": "rgba(0, 0, 0, 0.5)",
 
     "tooltip-bg": "#0a0a0add",
-    "tooltip-text": "white"
+    "tooltip-text": "white",
+
+    "chart-default": "#AC8EFF77",
+    "chart-warm": "#eb866777",
+    "chart-water": "#6e79f077",
+    "chart-wind": "#FFFFFF33",
+    "chart-pressure": "#64eddb55",
+    "chart-uv": "#AC8EFF77"
 }

@@ -12,10 +12,10 @@ const props = defineProps<{
 
 const { t, locale } = useI18n();
 
-const epaIndex = computed((): number => {
+const epaIndex = computed((): number | undefined => {
     if (props.airQuality && props.airQuality["us-epa-index"]) {
         return props.airQuality["us-epa-index"];
-    } else return 0;
+    } else return undefined;
 });
 
 const uvIndecies = computed(() => getUvIndecies(locale.value as "en" | "ru"));
@@ -24,27 +24,27 @@ const usEpaIndecies = computed(() =>
 );
 
 const evaluation = computed(() => {
-    return usEpaIndecies.value[epaIndex.value];
+    if (epaIndex.value) {
+        return usEpaIndecies.value[epaIndex.value];
+    } else return undefined;
 });
 </script>
 
 <template>
     <div class="quality-cards">
-        <BasicLoader v-if="isLoading" class="quality-cards__loader" />
         <BasicQualityCard
-            v-else
             :value="epaIndex"
             :max-value="6"
             :evaluation="evaluation"
             :title="t('qualityStats.airQuality')"
+            :is-loading="isLoading"
         />
-        <BasicLoader v-if="!uvIndex" class="quality-cards__loader" />
         <BasicQualityCard
-            v-else
             :value="uvIndex"
             :max-value="10"
             :evaluation="uvIndecies[Math.round(Number(uvIndex))]"
             :title="t('qualityStats.uvIndex')"
+            :is-loading="isLoading"
         />
     </div>
 </template>
@@ -56,11 +56,6 @@ const evaluation = computed(() => {
     justify-content: center;
     align-items: center;
     gap: 50px;
-
-    &__loader {
-        width: 180px;
-        height: 167px;
-    }
 }
 
 @media screen and (min-width: 600px) {

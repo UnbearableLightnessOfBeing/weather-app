@@ -1,17 +1,27 @@
 <script setup lang="ts">
 import { useBreakpoints } from "@vueuse/core";
-import { CurrentWeather } from "../types/requestTypes";
+import { GetForecastResponse } from "../types/requestTypes";
 
-defineProps<{
-    current?: CurrentWeather;
+const props = defineProps<{
+    data?: GetForecastResponse;
     location: string;
+    isLoading: boolean;
 }>();
 
-defineEmits<{
+const emits = defineEmits<{
     /* eslint-disable */
     (e: "update:location", value: string): void;
     /* eslint-enable */
 }>();
+
+const writableComputedLocation = computed({
+    get() {
+        return props.location;
+    },
+    set(value) {
+        emits("update:location", value);
+    },
+});
 
 const breakPoints = useBreakpoints({
     desktop: 1440,
@@ -24,11 +34,18 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
     <div class="current-weather-info">
         <LocationInterface
             v-if="!isDesktop"
-            :model-value="location"
-            @update:model-value="(value) => $emit('update:location', value)"
+            v-model="writableComputedLocation"
         />
-        <WeatherCondition :condition="current?.condition" />
-        <MainInfo :current="current" />
+        <WeatherCondition
+            :condition="data?.current?.condition"
+            :is-day="data?.current ? Boolean(data.current.is_day) : undefined"
+            :is-loading="isLoading"
+        />
+        <MainInfo
+            :current="data?.current"
+            :location="data?.location"
+            :is-loading="isLoading"
+        />
     </div>
 </template>
 

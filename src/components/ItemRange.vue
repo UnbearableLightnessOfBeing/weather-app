@@ -1,11 +1,7 @@
-<script setup lang="ts">
-defineProps<{
-    width?: number;
-}>();
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <div class="item-range" :style="`width: ${width}px`">
+    <div class="item-range">
         <slot />
     </div>
 </template>

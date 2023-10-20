@@ -2,9 +2,17 @@
 import { useConditionIcons } from "../composables/useConditionIcons";
 import { WeatherCondition } from "../types/requestTypes";
 
-defineProps<{
-    condition?: WeatherCondition;
-}>();
+withDefaults(
+    defineProps<{
+        condition?: WeatherCondition;
+        isDay?: boolean;
+        isLoading: boolean;
+    }>(),
+    {
+        isDay: undefined,
+        condition: undefined,
+    },
+);
 
 const { getIconUrl } = useConditionIcons();
 </script>
@@ -12,15 +20,22 @@ const { getIconUrl } = useConditionIcons();
 <template>
     <div class="weather-condition">
         <BasicConditionIcon
-            v-if="condition"
             type="big"
-            :icon-src="getIconUrl(condition.code)"
+            :is-loading="isLoading"
+            :icon-src="
+                condition
+                    ? getIconUrl(
+                          condition.code,
+                          isDay === undefined ? true : isDay,
+                      )
+                    : undefined
+            "
         />
-        <BasicLoader v-else class="weather-condition__icon-loader" />
-        <div v-if="condition" class="weather-condition__text">
+        <BasicLoader v-if="isLoading" class="weather-condition__text-filler" />
+        <div v-else-if="condition" class="weather-condition__text">
             {{ condition.text }}
         </div>
-        <BasicLoader v-else class="weather-condition__text-loader" />
+        <BasicNodata v-else class="weather-condition__text-filler" />
     </div>
 </template>
 
@@ -37,12 +52,7 @@ const { getIconUrl } = useConditionIcons();
         padding-right: 90px;
     }
 
-    &__icon-loader {
-        width: 143px;
-        height: 100px;
-    }
-
-    &__text-loader {
+    &__text-filler {
         width: 160px;
         height: 43px;
     }

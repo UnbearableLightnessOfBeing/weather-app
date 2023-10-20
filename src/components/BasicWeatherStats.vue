@@ -4,45 +4,56 @@ import HumiditySvgUrl from "/stats/humidity.svg";
 import RainSvgUrl from "/stats/rain.svg";
 import { useI18n } from "vue-i18n";
 
-defineProps<{
+type Stats = {
     windSpeed: number;
     windDegree: number;
     humidity: number;
     percipitations: number;
+};
+
+defineProps<{
+    stats?: Stats;
+    isLoading?: boolean;
 }>();
 
 const { t } = useI18n();
 </script>
 
 <template>
-    <div class="basic-weather-stats">
+    <BasicLoader v-if="isLoading" class="basic-weather-stats-filler" />
+    <div v-else-if="stats" class="basic-weather-stats">
         <div class="basic-weather-stats__stat">
             <BasicStatIcon
                 :icon-src="WindDirSvgUrl"
                 class="basic-weather-stats__wind"
-                :style="`transform: rotate(${windDegree - 90}deg)`"
+                :style="`transform: rotate(${stats.windDegree - 90}deg)`"
             />
             <div>{{ t("weatherStats.wind") }}</div>
-            <div>{{ windSpeed }} {{ t("measurements.kmh") }}</div>
+            <div>{{ stats.windSpeed }} {{ t("measurements.kmh") }}</div>
         </div>
         <BasicVerticalDivider class="basic-weather-stats__divider" />
         <div class="basic-weather-stats__stat">
             <BasicStatIcon :icon-src="HumiditySvgUrl" />
             <div>{{ t("weatherStats.humidity") }}</div>
-            <div>{{ humidity }} %</div>
+            <div>{{ stats.humidity }} %</div>
         </div>
         <BasicVerticalDivider class="basic-weather-stats__divider" />
         <div class="basic-weather-stats__stat">
             <BasicStatIcon :icon-src="RainSvgUrl" />
             <div>{{ t("weatherStats.precipitation") }}</div>
-            <div>{{ percipitations }} {{ t("measurements.mm") }}</div>
+            <div>{{ stats.percipitations }} {{ t("measurements.mm") }}</div>
         </div>
     </div>
+    <BasicNodata v-else class="basic-weather-stats-filler" />
 </template>
 
 <style scoped lang="scss">
 .basic-weather-stats {
     display: block;
+
+    &-filler {
+        height: 89px;
+    }
 
     & > * + * {
         margin-top: 5px;
@@ -77,6 +88,10 @@ const { t } = useI18n();
         width: 100%;
         & > * + * {
             margin: 0;
+        }
+
+        &-filler {
+            height: 26px;
         }
 
         &__divider {

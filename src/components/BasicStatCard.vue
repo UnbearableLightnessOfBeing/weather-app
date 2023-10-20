@@ -1,14 +1,24 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
     iconSrc: string;
     title: string;
-    value: string | number;
+    value?: string | number;
     measurement?: string;
+    isLoading?: boolean;
 }>();
+
+const valueExists = computed<boolean>(() => {
+    return typeof props.value !== "undefined";
+});
 </script>
 
 <template>
-    <BasicGlassWrapper class="basic-stat-card">
+    <BasicLoader v-if="isLoading" class="basic-stat-card-filler" />
+    <BasicGlassWrapper
+        v-else-if="valueExists"
+        class="basic-stat-card"
+        v-bind="$attrs"
+    >
         <BasicStatTitle
             :icon-src="iconSrc"
             :title="title"
@@ -19,6 +29,7 @@ defineProps<{
             <span class="basic-stat-card__measurement">{{ measurement }}</span>
         </div>
     </BasicGlassWrapper>
+    <BasicNodata v-else class="basic-stat-card-filler" />
 </template>
 
 <style scoped lang="scss">
@@ -59,6 +70,12 @@ defineProps<{
                 transform: scale(1.15);
             }
         }
+    }
+
+    &-filler {
+        width: 180px;
+        height: 180px;
+        border-radius: 15px;
     }
 }
 </style>

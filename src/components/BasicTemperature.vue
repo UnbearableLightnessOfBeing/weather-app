@@ -2,16 +2,19 @@
 type MeasurementType = "C" | "F";
 
 defineProps<{
-    value: number;
+    value?: number;
     measurement: MeasurementType;
+    isLoading?: boolean;
 }>();
 </script>
 
 <template>
-    <div class="basic-temperature">
+    <BasicLoader v-if="isLoading" class="basic-temperature__filler" />
+    <div v-else-if="value" class="basic-temperature">
         <div class="basic-temperature__value">{{ value }}</div>
         <div class="basic-temperature__mesurement">°{{ measurement }}</div>
     </div>
+    <BasicNodata v-else class="basic-temperature__filler" />
 </template>
 
 <style scoped lang="scss">
@@ -31,6 +34,11 @@ defineProps<{
         font-size: var(--fs-large-smaller);
         text-shadow: -4px 2.5px 0.75px rgba(0, 0, 0, 0.1);
     }
+
+    &__filler {
+        width: 165px;
+        height: 115px;
+    }
 }
 
 @media screen and (min-width: 600px) {
@@ -38,6 +46,11 @@ defineProps<{
         &__value {
             font-size: var(--fs-huge);
             font-weight: var(--fw-thin);
+        }
+
+        &__filler {
+            width: 197px;
+            height: 197px;
         }
     }
 }

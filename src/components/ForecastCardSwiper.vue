@@ -12,6 +12,7 @@ import { useI18n } from "vue-i18n";
 const props = defineProps<{
     forecastday?: DailyForecast[];
     activeDay: number | null;
+    isLoading?: boolean;
 }>();
 
 defineEmits<{
@@ -67,27 +68,28 @@ const missingAmount = computed(() => {
         }"
     >
         <template #container-start>
-            <span class="swiper__title"> {{ t("swiperTitle") }} </span>
+            <BasicLoader v-if="isLoading" class="swiper__title-loader" />
+            <span v-else class="swiper__title"> {{ t("swiperTitle") }} </span>
         </template>
-        <SwiperSlide v-for="(card, idx) in forecastday" :key="idx">
-            <BasicForecastCard
-                :temperature="
-                    measurement === 'C'
-                        ? getTemperature(card.day.avgtemp_c)
-                        : getTemperature(card.day.avgtemp_f)
-                "
-                :day="getDayName(new Date(card.date).getDay())"
-                :icon-src="getIconUrl(card.day.condition.code)"
-                :active="activeDay === idx"
-                @click="$emit('update:activeDay', idx)"
-            />
-        </SwiperSlide>
-        <SwiperSlide v-for="card in missingAmount" :key="card">
-            <div class="swiper__missing-card">
-                <div>{{ t("swiper.unavailable") }}</div>
-                <BasicInfoSign :tooltip-text="t('api.signTooltip')" />
-            </div>
-        </SwiperSlide>
+        <template #default>
+            <SwiperSlide v-for="(card, idx) in forecastday" :key="card.date">
+                <BasicForecastCard
+                    :temperature="
+                        measurement === 'C'
+                            ? getTemperature(card.day.avgtemp_c)
+                            : getTemperature(card.day.avgtemp_f)
+                    "
+                    :day="getDayName(new Date(card.date).getDay())"
+                    :icon-src="getIconUrl(card.day.condition.code)"
+                    :active="activeDay === idx"
+                    @click="$emit('update:activeDay', idx)"
+                />
+            </SwiperSlide>
+            <SwiperSlide v-for="card in missingAmount" :key="card">
+                <BasicLoader v-if="isLoading" class="swiper__card-filler" />
+                <BasicNodata v-else class="swiper__card-filler" />
+            </SwiperSlide>
+        </template>
     </Swiper>
 </template>
 
@@ -110,16 +112,18 @@ const missingAmount = computed(() => {
         text-align: center;
     }
 
-    &__missing-card {
+    &__title-loader {
+        width: 200px;
+        height: 30px;
+        margin-bottom: 12px;
+        margin-inline: auto;
+    }
+
+    &__card-filler {
         width: 110px;
         height: 200px;
-        background-color: var(--basic-dark-dull);
-        border-radius: 10px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
     }
 }
 

@@ -11,6 +11,8 @@ const emits = defineEmits<{
     (e: "update:location", value: string): void;
 }>();
 
+const { t } = useI18n();
+
 const { coords, error } = useGeolocation();
 
 const latitude = computed(() => coords.value.latitude);
@@ -23,20 +25,26 @@ const { data, refetch, isError } = useQuery({
     enabled: false,
 });
 
-const setLocation = async () => {
-    if (!error.value) {
-        await refetch();
-
-        if (data.value && !isError.value) {
-            emits(
-                "update:location",
-                `${data.value.location.name}, ${data.value.location.country}`,
-            );
-        }
+const emitLocation = () => {
+    if (data.value && !isError.value) {
+        emits(
+            "update:location",
+            `${data.value.location.name}, ${data.value.location.country}`,
+        );
     }
 };
 
-const { t } = useI18n();
+const setLocation = async () => {
+    if (
+        !error.value &&
+        latitude.value !== Infinity &&
+        longitude.value !== Infinity
+    ) {
+        await refetch();
+
+        emitLocation();
+    }
+};
 </script>
 
 <template>

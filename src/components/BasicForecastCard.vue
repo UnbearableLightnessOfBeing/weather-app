@@ -10,8 +10,8 @@ defineProps<{
 <template>
     <BasicGlassWrapper
         class="basic-forecast-card"
-        :class="{ 'basic-forecast-card--active': active }"
         :active="active"
+        :floats="active"
     >
         <div class="basic-forecast-card__temp">
             {{ temperature }}
@@ -46,11 +46,6 @@ defineProps<{
 
     &__icon {
         margin-inline: auto;
-    }
-
-    &--active {
-        transform: scale(1.05) translateY(-5px);
-        box-shadow: 0px 5px 12px var(--basic-dark-shadow);
     }
 }
 </style>

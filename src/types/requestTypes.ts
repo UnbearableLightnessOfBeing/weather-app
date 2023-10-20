@@ -15,6 +15,8 @@ export type WeatherCondition = {
     code: number;
 };
 
+export type ExtendedWeatherCondition = WeatherCondition & { is_day: boolean };
+
 export type AirQuality = {
     co: number;
     no2: number;
@@ -130,3 +132,12 @@ type ExtractNumberPropKeys<T> = {
 }[keyof T];
 
 export type HourlyWeatherNumberKey = ExtractNumberPropKeys<HourlyWeather>;
+
+export type LocationSearchResultType = {
+    id: number;
+    name: string;
+    region: string;
+    country: string;
+    lat: number;
+    lon: number;
+};

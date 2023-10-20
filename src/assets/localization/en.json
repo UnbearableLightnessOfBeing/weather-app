@@ -1,6 +1,9 @@
 {
     "errors" : {
-        "dataLoadingError": "An error occured during data loading"
+        "dataLoadingError": "An error occured during data loading",
+        "searchError": "An error occured during search",
+        "noData": "No data",
+        "noDataTooltip": "This information is not available due to the api plan the app's author is utilizing, or was lost during data fetching"
     },
     "dayNames": [
         "Sunday",
@@ -42,7 +45,8 @@
         "tooltip": "Click to change the language"
     },
     "search" : {
-        "placeholder": "Search"
+        "placeholder": "Search",
+        "notFound": "Nothing was found"
     },
     "chart": {
         "hourly": "Hourly",

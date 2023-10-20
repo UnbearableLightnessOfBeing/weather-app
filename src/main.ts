@@ -4,6 +4,7 @@ import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
 import App from "./App.vue";
 import { VueQueryPlugin } from "@tanstack/vue-query";
+import { useChart } from "./composables/useChart";
 import colors from "./assets/colors/colors.json";
 import cssVars from "css-vars-ponyfill";
 import FloatingVue from "floating-vue";
@@ -22,6 +23,8 @@ const i18n = createI18n({
     fallbackFormat: "en",
     messages: locales,
 });
+
+useChart();
 
 createApp(App)
     .use(VueQueryPlugin)

@@ -2,17 +2,23 @@
 import type { DailyForecast } from "../types/requestTypes";
 
 defineProps<{
-    dailyForecast: DailyForecast;
+    dailyForecast?: DailyForecast;
     isLoading: boolean;
 }>();
 </script>
 
 <template>
     <div class="daily-forecast-stats">
-        <DailForecastAstro :astro="dailyForecast?.astro" />
+        <DailyForecastAstro
+            :astro="dailyForecast?.astro"
+            :is-loading="isLoading"
+        />
         <div class="daily-forecast-stats__hourly-forecast">
             <BasicHorizontalDivider />
-            <HourlyForecastData :hourly-forecast="dailyForecast.hour" />
+            <HourlyForecastData
+                :hourly-forecast="dailyForecast?.hour"
+                :is-loading="isLoading"
+            />
             <BasicHorizontalDivider />
         </div>
         <QualityCards

@@ -1,5 +1,9 @@
 import axios from "axios";
-import { GetForecastResponse, LocationType } from "../types/requestTypes";
+import {
+    GetForecastResponse,
+    LocationSearchResultType,
+    LocationType,
+} from "../types/requestTypes";
 
 const base = "https://api.weatherapi.com/v1";
 const apiKey = "f9c31516a55b4bd7ae0112903232509";
@@ -37,14 +41,14 @@ export const getCurrentWeather = async (
         });
 
     //test
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     return response.data;
 };
 
 export const getSearchResults = async (location: string) => {
     const response = await axiosInstance
-        .get(endPoints.search, {
+        .get<LocationSearchResultType[]>(endPoints.search, {
             params: {
                 q: location,
             },

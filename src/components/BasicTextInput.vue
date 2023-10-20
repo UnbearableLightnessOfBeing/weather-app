@@ -1,5 +1,5 @@
 <script setup lang="ts">
-withDefaults(
+const props = withDefaults(
     defineProps<{
         modelValue: string;
         placeholder?: string;
@@ -9,10 +9,9 @@ withDefaults(
     },
 );
 
-defineEmits<{
+const emits = defineEmits<{
     /* eslint-disable */
     (e: "update:modelValue", value: string): void;
-    (e: "focusout"): void;
     /* eslint-enable */
 }>();
 
@@ -24,31 +23,27 @@ const focus = () => {
     }
 };
 
-onMounted(() => {
-    focus();
-});
+onMounted(() => focus());
 
-defineExpose({
-    focus,
+defineExpose({ focus });
+
+const writableComputed = computed({
+    get() {
+        return props.modelValue;
+    },
+    set(value) {
+        emits("update:modelValue", value);
+    },
 });
 </script>
 
 <template>
     <input
         ref="input"
+        v-model="writableComputed"
         type="text"
-        :value="modelValue"
         :placeholder="placeholder"
         class="basic-text-input"
-        @input="
-            (e: Event) => {
-                $emit(
-                    'update:modelValue',
-                    (e.target as HTMLInputElement).value,
-                );
-            }
-        "
-        @focusout="$emit('focusout')"
     />
 </template>
 
