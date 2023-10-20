@@ -4,14 +4,13 @@ import { useConditionIcons } from "../composables/useConditionIcons";
 
 defineProps<{
     conditions: ExtendedWeatherCondition[];
-    width?: number;
 }>();
 
 const { getIconUrl } = useConditionIcons();
 </script>
 
 <template>
-    <ItemRange :width="width">
+    <ItemRange>
         <BasicConditionIcon
             v-for="condition in conditions"
             :key="condition.id"

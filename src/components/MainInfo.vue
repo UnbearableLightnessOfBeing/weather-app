@@ -39,7 +39,7 @@ const setUnixCurrentDate = () => {
 };
 
 watch(
-    computed(() => props.isLoading),
+    () => props.isLoading,
     () => {
         clearInterval(interval);
         setUnixCurrentDate();

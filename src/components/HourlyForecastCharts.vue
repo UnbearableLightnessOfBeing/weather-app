@@ -191,9 +191,12 @@ const setOptionOffset = () => {
             <div class="hourly-forecast-charts__top-info">
                 <ConditionIconRange
                     :conditions="conditionRange"
-                    :width="1200"
+                    class="hourly-forecast-charts__item-range"
                 />
-                <TimeLabelRange :time-labels="tickLabels" />
+                <TimeLabelRange
+                    :time-labels="tickLabels"
+                    class="hourly-forecast-charts__item-range"
+                />
             </div>
             <div class="hourly-forecast-charts__container">
                 <div
@@ -242,6 +245,10 @@ const setOptionOffset = () => {
         z-index: 1;
         padding-bottom: 5px;
         padding-top: 45px;
+    }
+
+    &__item-range {
+        width: 1200px;
     }
 
     &__close-btn {

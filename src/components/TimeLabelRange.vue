@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-    <ItemRange :width="1200" class="time-label-range">
+    <ItemRange class="time-label-range">
         <div
             v-for="value in timeLabels"
             :key="value"
