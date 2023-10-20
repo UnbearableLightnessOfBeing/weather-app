@@ -23,55 +23,59 @@ type DailyWeatherStat = {
     icon: string;
 };
 
-const weatherStats: DailyWeatherStat[] = [
+const weatherStats = ref<DailyWeatherStat[]>([
     {
-        title: t("weatherStats.precipitation"),
+        title: "weatherStats.precipitation",
         value: props.stats ? props.stats.totalprecip_mm : undefined,
         measurement: t("measurements.mm"),
         class: "daily-weather-stats__precip",
         icon: RainSvgUrl,
     },
     {
-        title: t("weatherStats.wind"),
+        title: "weatherStats.wind",
         value: props.stats ? props.stats.maxwind_kph : undefined,
         measurement: t("measurements.kmh"),
         class: "daily-weather-stats__wind",
         icon: WindSvgUrl,
     },
     {
-        title: t("weatherStats.humidity"),
+        title: "weatherStats.humidity",
         value: props.stats ? props.stats.avghumidity : undefined,
         measurement: "%",
         class: "daily-weather-stats__hum",
         icon: HumiditySvgUrl,
     },
     {
-        title: t("weatherStats.visibility"),
+        title: "weatherStats.visibility",
         value: props.stats ? props.stats.avgvis_km : undefined,
         measurement: t("measurements.km"),
         class: "daily-weather-stats__vis",
         icon: VisibilitySvgUrl,
     },
     {
-        title: t("weatherStats.rain-chance"),
+        title: "weatherStats.rain-chance",
         value: props.stats ? props.stats.daily_chance_of_rain : undefined,
         measurement: "%",
         class: "daily-weather-stats__rain-chance",
         icon: RainChanceSvgUrl,
     },
     {
-        title: t("weatherStats.snow-chance"),
+        title: "weatherStats.snow-chance",
         value: props.stats ? props.stats.daily_chance_of_snow : undefined,
         measurement: "%",
         class: "daily-weather-stats__snow-chance",
         icon: SnowChanceSvgUrl,
     },
-];
+]);
+
+watch(weatherStats, () => {
+    console.log("stats changed");
+});
 </script>
 
 <template>
     <div class="daily-weather-stats">
-        <div v-for="stat in weatherStats" :key="stat.title">
+        <div v-for="stat in weatherStats" :key="stat.class">
             <DailyWeatherStat
                 :key="stat.title"
                 :icon-src="stat.icon"
