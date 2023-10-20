@@ -12,7 +12,6 @@ const props = withDefaults(
 const emits = defineEmits<{
     /* eslint-disable */
     (e: "update:modelValue", value: string): void;
-    (e: "focusout"): void;
     /* eslint-enable */
 }>();
 
@@ -45,7 +44,6 @@ const writableComputed = computed({
         type="text"
         :placeholder="placeholder"
         class="basic-text-input"
-        @focusout="$emit('focusout')"
     />
 </template>
 
