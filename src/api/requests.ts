@@ -40,9 +40,6 @@ export const getCurrentWeather = async (
             throw new Error("error has occured");
         });
 
-    //test
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
     return response.data;
 };
 
