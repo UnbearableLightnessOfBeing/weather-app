@@ -12,16 +12,13 @@
 .app-layout {
     &__wrapper {
         background: var(--bg-light);
-        // padding-block: 25px;
 
         & > ::v-deep(* + *) {
             margin-top: 30px;
         }
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .app-layout {
+    @media screen and (min-width: 1440px) {
         min-height: 100vh;
         display: flex;
         justify-content: center;

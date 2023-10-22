@@ -10,10 +10,8 @@
 .app-panel-layout {
     max-width: 864px;
     margin-inline: auto;
-}
 
-@media screen and (min-width: 1440px) {
-    .app-panel-layout {
+    @media screen and (min-width: 1440px) {
         margin-inline: 0;
         height: 815px;
     }
