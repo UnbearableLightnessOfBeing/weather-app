@@ -3,6 +3,8 @@ import { HourlyWeather } from "../types/requestTypes";
 import { useI18n } from "vue-i18n";
 import type { ChartOption } from "./HourlyForecastChart.vue";
 import { useMeasurement } from "../composables/useMeasurement";
+import { useLocale } from "../composables/useLocale";
+import { LocaleNameEnum } from "../configs/i18nConfig";
 
 defineProps<{
     hourlyForecast?: HourlyWeather[];
@@ -13,29 +15,31 @@ const HourlyForecastCharts = defineAsyncComponent(() => {
     return import("../components/HourlyForecastCharts.vue");
 });
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+
+const { locale } = useLocale();
 
 const { measurement } = useMeasurement();
 
 const options = computed<ChartOption[]>(() => [
     {
         propName: measurement.value === "C" ? "temp_c" : "temp_f",
-        name: locale.value === "ru" ? "температура" : "temp.",
+        name: locale.value === LocaleNameEnum.Ru ? "температура" : "temp.",
         measurement: `°${measurement.value}`,
     },
     {
         propName: "precip_mm",
-        name: locale.value === "ru" ? "осадки" : "precip.",
+        name: locale.value === LocaleNameEnum.Ru ? "осадки" : "precip.",
         measurement: t("measurements.mm"),
     },
     {
         propName: "wind_kph",
-        name: locale.value === "ru" ? "ветер" : "wind",
+        name: locale.value === LocaleNameEnum.Ru ? "ветер" : "wind",
         measurement: t("measurements.kmh"),
     },
     {
         propName: "pressure_mb",
-        name: locale.value === "ru" ? "давление" : "pressure",
+        name: locale.value === LocaleNameEnum.Ru ? "давление" : "pressure",
         measurement: "hPa",
     },
 ]);

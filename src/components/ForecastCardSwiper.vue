@@ -8,6 +8,8 @@ import { useConditionIcons } from "../composables/useConditionIcons";
 import type { DailyForecast } from "../types/requestTypes";
 import dayNames from "../assets/date/dayNames.json";
 import { useI18n } from "vue-i18n";
+import { useLocale } from "../composables/useLocale";
+import { LocaleNameEnum } from "../configs/i18nConfig";
 
 const props = defineProps<{
     forecastday?: DailyForecast[];
@@ -25,10 +27,11 @@ const { getIconUrl } = useConditionIcons();
 
 const { measurement } = useMeasurement();
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+const { locale } = useLocale();
 
 const dayRange = computed(() => {
-    if (locale.value === "ru") {
+    if (locale.value === LocaleNameEnum.Ru) {
         return dayNames.ru.short;
     } else return dayNames.en.short;
 });

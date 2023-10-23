@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import dayNames from "../assets/date/dayNames.json";
-
-type Language = "en" | "ru";
+import type { LanguageName } from "../composables/useLocale";
+import { LocaleNameEnum } from "../configs/i18nConfig";
 
 const props = defineProps<{
-    language: Language;
+    language: LanguageName;
     unixDate?: Date;
     timeHidden?: boolean;
     isLoading?: boolean;
 }>();
 
 const monthNames = computed(() => {
-    if (props.language === "en") {
-        return dayNames.en.full;
-    } else return dayNames.ru.full;
+    if (props.language === LocaleNameEnum.Ru) {
+        return dayNames.ru.full;
+    } else return dayNames.en.full;
 });
 
 const date = computed(() =>

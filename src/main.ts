@@ -1,7 +1,6 @@
 import "floating-vue/dist/style.css";
 import "./assets/scss/index.scss";
 import { createApp } from "vue";
-import { createI18n } from "vue-i18n";
 import App from "./App.vue";
 import { VueQueryPlugin } from "@tanstack/vue-query";
 import { useChart } from "./composables/useChart";
@@ -9,20 +8,7 @@ import colors from "./assets/colors/colors.json";
 import cssVars from "css-vars-ponyfill";
 import FloatingVue from "floating-vue";
 import FloatingVueConfig from "./configs/floatingVueConfig";
-import en from "./assets/localization/en.json";
-import ru from "./assets/localization/ru.json";
-
-const locales = {
-    en: en,
-    ru: ru,
-};
-
-const i18n = createI18n({
-    legacy: false,
-    locale: "en",
-    fallbackFormat: "en",
-    messages: locales,
-});
+import { i18n } from "./configs/i18nConfig";
 
 useChart();
 

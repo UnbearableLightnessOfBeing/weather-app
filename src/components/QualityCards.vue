@@ -3,6 +3,7 @@ import { AirQuality } from "../types/requestTypes";
 import { getUvIndecies } from "../data/uvIndecies";
 import { getUsEpaIndecies } from "../data/usEpaIndecies";
 import { useI18n } from "vue-i18n";
+import { useLocale } from "../composables/useLocale";
 
 const props = defineProps<{
     airQuality?: AirQuality;
@@ -10,7 +11,9 @@ const props = defineProps<{
     isLoading: boolean;
 }>();
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+
+const { locale } = useLocale();
 
 const epaIndex = computed((): number | undefined => {
     if (props.airQuality && props.airQuality["us-epa-index"]) {
@@ -18,10 +21,8 @@ const epaIndex = computed((): number | undefined => {
     } else return undefined;
 });
 
-const uvIndecies = computed(() => getUvIndecies(locale.value as "en" | "ru"));
-const usEpaIndecies = computed(() =>
-    getUsEpaIndecies(locale.value as "en" | "ru"),
-);
+const uvIndecies = computed(() => getUvIndecies(locale.value));
+const usEpaIndecies = computed(() => getUsEpaIndecies(locale.value));
 
 const evaluation = computed(() => {
     if (epaIndex.value) {

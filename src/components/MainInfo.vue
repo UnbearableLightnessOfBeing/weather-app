@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useMeasurement } from "../composables/useMeasurement";
-import { useI18n } from "vue-i18n";
+import { useLocale } from "../composables/useLocale";
 import type { CurrentWeather, LocationType } from "../types/requestTypes";
 
 const props = defineProps<{
@@ -9,10 +9,7 @@ const props = defineProps<{
     isLoading: boolean;
 }>();
 
-const i18n = useI18n();
-const locale = computed(() => {
-    return i18n.locale.value as "en" | "ru";
-});
+const { locale } = useLocale();
 
 const { measurement } = useMeasurement();
 

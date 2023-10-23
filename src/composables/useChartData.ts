@@ -1,6 +1,5 @@
 import { useDateFormat } from "@vueuse/core";
 import { HourlyWeather } from "../types/requestTypes";
-import { useI18n } from "vue-i18n";
 import {
     scalesConfiguration,
     modalScalesConfiguration,
@@ -10,6 +9,8 @@ import type {
     HourlyWeatherNumberKey,
 } from "../types/requestTypes";
 import type { ChartData, ChartOptions } from "chart.js";
+import { useLocale } from "./useLocale";
+import { LocaleNameEnum } from "../configs/i18nConfig";
 
 export const ChartTypeEnum = {
     Type1: "default",
@@ -23,7 +24,7 @@ export const useChartData = (
     hourlyForecast: ComputedRef<HourlyWeather[]>,
     chartType: ChartTypeEnumValues = ChartTypeEnum.Type1,
 ) => {
-    const { locale } = useI18n();
+    const { locale } = useLocale();
 
     const conditionRange = computed<ExtendedWeatherCondition[]>(() => {
         return hourlyForecast.value.map((item) => {
@@ -35,7 +36,7 @@ export const useChartData = (
     });
 
     const dateFormat = computed(() => {
-        return locale.value === "ru" ? "HH:mm" : "h A";
+        return locale.value === LocaleNameEnum.Ru ? "HH:mm" : "h A";
     });
 
     const tickLabels = computed(() => {

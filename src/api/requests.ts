@@ -4,6 +4,7 @@ import {
     LocationSearchResultType,
     LocationType,
 } from "../types/requestTypes";
+import type { LanguageName } from "../composables/useLocale";
 
 const base = "https://api.weatherapi.com/v1";
 const apiKey = "f9c31516a55b4bd7ae0112903232509";
@@ -24,7 +25,7 @@ const axiosInstance = axios.create({
 
 export const getCurrentWeather = async (
     location: string,
-    lang: "en" | "ru",
+    lang: LanguageName,
 ) => {
     const response = await axiosInstance
         .get<GetForecastResponse>(endPoints.forecast, {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
+import { useLocale } from "../composables/useLocale";
+import { LocaleNameEnum } from "../configs/i18nConfig";
 
 const props = defineProps<{
     title: string;
@@ -7,7 +8,7 @@ const props = defineProps<{
     isLoading?: boolean;
 }>();
 
-const { locale } = useI18n();
+const { locale } = useLocale();
 
 const getStrMatchOrNull = (str: string, regexp: RegExp): string | null => {
     const match = str.match(regexp)?.[0];
@@ -42,10 +43,7 @@ const get24HourTimeFormat = (time: string | undefined): string | null => {
 };
 
 const localizedTime = computed(() => {
-    // if (typeof props.time === "undefined") {
-    //     return undefined;
-    // }
-    if (locale.value !== "ru") {
+    if (locale.value !== LocaleNameEnum.Ru) {
         const digitTime = getDigitTimeStr(props.time);
         if (digitTime) {
             return digitTime;
@@ -59,7 +57,7 @@ const localizedTime = computed(() => {
 });
 
 const localizedTimeOfDay = computed(() => {
-    if (locale.value === "ru") {
+    if (locale.value === LocaleNameEnum.Ru) {
         return "";
     } else {
         const timeOfDay = getTimeOfDayStr(props.time);
