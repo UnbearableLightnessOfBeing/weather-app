@@ -4,26 +4,10 @@ const props = defineProps<{
     height?: number;
     borderRadius?: number;
 }>();
-
-const computedStyles = computed((): string => {
-    let style = "";
-
-    if (props.width) {
-        style += "width: " + props.width + "px; ";
-    }
-    if (props.height) {
-        style += "height: " + props.height + "px; ";
-    }
-    if (props.borderRadius) {
-        style += "border-radius: " + props.borderRadius + "px; ";
-    }
-
-    return style;
-});
 </script>
 
 <template>
-    <div class="basic-loader" :style="computedStyles">
+    <div class="basic-loader" :style="props">
         <div class="basic-loader__shimmer"></div>
     </div>
 </template>

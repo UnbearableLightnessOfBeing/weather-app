@@ -10,52 +10,50 @@ const props = defineProps<{
     isLoading?: boolean;
 }>();
 
-const monthNames = computed(() => {
-    if (props.language === LocaleNameEnum.Ru) {
-        return dayNames.ru.full;
-    } else return dayNames.en.full;
-});
+const monthNames = computed(() =>
+    props.language === LocaleNameEnum.Ru ? dayNames.ru.full : dayNames.en.full,
+);
 
 const date = computed(() =>
     props.unixDate ? props.unixDate.getDate() : undefined,
 );
+
+const shortenMonthName = (monthName: string) => {
+    if (monthName.length <= 4) {
+        return monthName;
+    } else return monthName.slice(0, 3);
+};
 
 const month = computed(() => {
     if (props.unixDate) {
         const monthName = props.unixDate.toLocaleString(props.language, {
             month: "long",
         });
-        if (monthName.length <= 4) {
-            return monthName;
-        } else return monthName.slice(0, 3);
-    } else return undefined;
+
+        return shortenMonthName(monthName);
+    }
 });
 
 const year = computed(() => {
     if (props.unixDate) {
         const year = props.unixDate.getFullYear().toString();
         return `‘${year.slice(year.length - 2)}`;
-    } else return undefined;
+    }
 });
 
 const day = computed(() => {
     if (props.unixDate) {
         return monthNames.value[props.unixDate.getDay()];
-    } else return undefined;
+    }
 });
 
 const time = computed(() => {
     if (props.unixDate) {
         const timeString = props.unixDate.toLocaleTimeString(props.language);
         const [time, dayPeriod] = timeString.split(" ");
-        const splitTime = time.split(":");
-        return (
-            splitTime[0] +
-            ":" +
-            splitTime[1] +
-            (dayPeriod ? ` ${dayPeriod}` : "")
-        );
-    } else return undefined;
+        const [hours, minutes] = time.split(":");
+        return hours + ":" + minutes + (dayPeriod ? ` ${dayPeriod}` : "");
+    }
 });
 </script>
 

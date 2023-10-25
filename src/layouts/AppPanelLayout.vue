@@ -6,7 +6,7 @@
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .app-panel-layout {
     max-width: 864px;
     margin-inline: auto;

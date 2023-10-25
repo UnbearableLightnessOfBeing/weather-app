@@ -78,10 +78,12 @@ watch(weatherStats, () => {
         <div v-for="stat in weatherStats" :key="stat.class">
             <DailyWeatherStat
                 :key="stat.title"
-                :icon-src="stat.icon"
-                :title="stat.title"
-                :value="stat.value"
-                :measurement="stat.measurement"
+                :stat="{
+                    iconSrc: stat.icon,
+                    title: stat.title,
+                    value: stat.value,
+                    measurement: stat.measurement,
+                }"
                 :class="stat.class"
                 :is-loading="isLoading"
             />

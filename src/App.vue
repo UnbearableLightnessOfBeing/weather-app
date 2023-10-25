@@ -120,16 +120,6 @@ const activeDay = ref<number | null>(null);
             top: 16px;
         }
     }
-
-    &__error {
-        width: 100%;
-        height: 100%;
-        display: grid;
-        place-items: center;
-        color: var(--error);
-        font-size: var(--fs-heading);
-        font-weight: var(--fw-normal-thiner);
-    }
 }
 
 .flex-between {

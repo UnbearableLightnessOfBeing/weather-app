@@ -21,11 +21,9 @@ const { measurement } = useMeasurement();
 
 const { locale } = useLocale();
 
-const computedUnixDate = computed(() => {
-    if (props.dailyForecast) {
-        return new Date(props.dailyForecast.date);
-    } else return undefined;
-});
+const computedUnixDate = computed(() =>
+    props.dailyForecast ? new Date(props.dailyForecast.date) : undefined,
+);
 </script>
 
 <template>
@@ -51,7 +49,7 @@ const computedUnixDate = computed(() => {
                 :condition="dailyForecast?.day.condition"
                 :is-loading="isLoading"
             />
-            <BasicDailyTemperature
+            <DailyTemperature
                 :min-value="
                     measurement === 'C'
                         ? dailyForecast?.day.mintemp_c
