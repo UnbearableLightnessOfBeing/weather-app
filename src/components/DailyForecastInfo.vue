@@ -114,10 +114,8 @@ const computedUnixDate = computed(() =>
         font-size: var(--fs-normal);
         font-weight: var(--fw-normal-thiner);
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .daily-forecast-info {
+    @media screen and (min-width: 1440px) {
         height: 545px;
         padding-inline: 66px;
         padding-block: 40px;

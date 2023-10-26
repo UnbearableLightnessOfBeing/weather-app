@@ -14,6 +14,12 @@ const emits = defineEmits<{
     /* eslint-enable */
 }>();
 
+const breakPoints = useBreakpoints({
+    desktop: 1440,
+});
+
+const isDesktop = breakPoints.greaterOrEqual("desktop");
+
 const writableComputedLocation = computed({
     get() {
         return props.location;
@@ -22,12 +28,6 @@ const writableComputedLocation = computed({
         emits("update:location", value);
     },
 });
-
-const breakPoints = useBreakpoints({
-    desktop: 1440,
-});
-
-const isDesktop = breakPoints.greaterOrEqual("desktop");
 </script>
 
 <template>

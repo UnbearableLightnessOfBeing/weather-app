@@ -1,16 +1,18 @@
 <script setup lang="ts">
 type MeasurementType = "C" | "F";
 
-defineProps<{
+const props = defineProps<{
     value?: number;
     measurement: MeasurementType;
     isLoading?: boolean;
 }>();
+
+const valueExists = computed(() => typeof props.value !== "undefined");
 </script>
 
 <template>
     <BasicLoader v-if="isLoading" class="basic-temperature__filler" />
-    <div v-else-if="value" class="basic-temperature">
+    <div v-else-if="valueExists" class="basic-temperature">
         <div class="basic-temperature__value">{{ value }}</div>
         <div class="basic-temperature__mesurement">°{{ measurement }}</div>
     </div>

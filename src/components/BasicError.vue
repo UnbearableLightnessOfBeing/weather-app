@@ -11,6 +11,7 @@ const props = defineProps<{
 
 const styles = computed(() => {
     let style = "";
+
     if (props.iconWidth) {
         style += `width: ${props.iconWidth}; `;
     }

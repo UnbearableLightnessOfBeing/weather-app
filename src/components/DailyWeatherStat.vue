@@ -102,10 +102,8 @@ const valueExists = computed<boolean>(() => {
         font-weight: var(--fw-normal-thiner);
         font-size: var(--fs-tooltip);
     }
-}
 
-@media screen and (min-width: 600px) {
-    .basic-daily-weather-stat {
+    @media screen and (min-width: 600px) {
         padding: 10px;
 
         &__icon {
@@ -126,10 +124,8 @@ const valueExists = computed<boolean>(() => {
             height: 78px;
         }
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .basic-daily-weather-stat {
+    @media screen and (min-width: 1440px) {
         &-filler {
             width: 240px;
             height: 78px;

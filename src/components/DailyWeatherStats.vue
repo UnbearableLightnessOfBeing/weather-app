@@ -26,51 +26,47 @@ type DailyWeatherStat = {
 const weatherStats = ref<DailyWeatherStat[]>([
     {
         title: "weatherStats.precipitation",
-        value: props.stats ? props.stats.totalprecip_mm : undefined,
+        value: props.stats?.totalprecip_mm,
         measurement: t("measurements.mm"),
         class: "daily-weather-stats__precip",
         icon: RainSvgUrl,
     },
     {
         title: "weatherStats.wind",
-        value: props.stats ? props.stats.maxwind_kph : undefined,
+        value: props.stats?.maxwind_kph,
         measurement: t("measurements.kmh"),
         class: "daily-weather-stats__wind",
         icon: WindSvgUrl,
     },
     {
         title: "weatherStats.humidity",
-        value: props.stats ? props.stats.avghumidity : undefined,
+        value: props.stats?.avghumidity,
         measurement: "%",
         class: "daily-weather-stats__hum",
         icon: HumiditySvgUrl,
     },
     {
         title: "weatherStats.visibility",
-        value: props.stats ? props.stats.avgvis_km : undefined,
+        value: props.stats?.avgvis_km,
         measurement: t("measurements.km"),
         class: "daily-weather-stats__vis",
         icon: VisibilitySvgUrl,
     },
     {
         title: "weatherStats.rain-chance",
-        value: props.stats ? props.stats.daily_chance_of_rain : undefined,
+        value: props.stats?.daily_chance_of_rain,
         measurement: "%",
         class: "daily-weather-stats__rain-chance",
         icon: RainChanceSvgUrl,
     },
     {
         title: "weatherStats.snow-chance",
-        value: props.stats ? props.stats.daily_chance_of_snow : undefined,
+        value: props.stats?.daily_chance_of_snow,
         measurement: "%",
         class: "daily-weather-stats__snow-chance",
         icon: SnowChanceSvgUrl,
     },
 ]);
-
-watch(weatherStats, () => {
-    console.log("stats changed");
-});
 </script>
 
 <template>
@@ -96,10 +92,8 @@ watch(weatherStats, () => {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5px;
-}
 
-@media screen and (min-width: 1440px) {
-    .daily-weather-stats {
+    @media screen and (min-width: 1440px) {
         grid-template-columns: 1fr 1fr 1fr;
 
         &__precip {

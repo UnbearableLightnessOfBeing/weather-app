@@ -23,6 +23,12 @@ const axiosInstance = axios.create({
     },
 });
 
+export const forecastParams = {
+    days: 7,
+    aqi: "yes",
+    alerts: "no",
+};
+
 export const getCurrentWeather = async (
     location: string,
     lang: LanguageName,
@@ -31,9 +37,7 @@ export const getCurrentWeather = async (
         .get<GetForecastResponse>(endPoints.forecast, {
             params: {
                 q: location,
-                days: 7,
-                aqi: "yes",
-                alerts: "no",
+                ...forecastParams,
                 lang: lang !== "en" ? lang : "",
             },
         })
