@@ -158,10 +158,8 @@ const inputWidth = computed(() => {
             font-weight: var(--fw-normal-thiner);
         }
     }
-}
 
-@media screen and (min-width: 600px) {
-    .location-interface {
+    @media screen and (min-width: 600px) {
         &__location {
             gap: 30px;
 
@@ -170,10 +168,8 @@ const inputWidth = computed(() => {
             }
         }
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .location-interface {
+    @media screen and (min-width: 1440px) {
         &__location-name {
             max-width: 319px;
             white-space: nowrap;

@@ -16,21 +16,21 @@ const valuesExist = computed<boolean>(() => {
 </script>
 
 <template>
-    <BasicLoader v-if="isLoading" class="basic-quality-card-filler" />
-    <div v-else-if="valuesExist" class="basic-quality-card" v-bind="$attrs">
-        <div class="basic-quality-card__title">{{ title }}</div>
-        <BasicQualityMonitor
-            :value="value ?? 0"
+    <BasicLoader v-if="isLoading" class="quality-card-filler" />
+    <div v-else-if="valuesExist" class="quality-card" v-bind="$attrs">
+        <div class="quality-card__title">{{ title }}</div>
+        <QualityMonitor
+            :value="value"
             :max-value="maxValue"
             :evaluation="evaluation ?? ''"
-            class="basic-quality-card__monitor"
+            class="quality-card__monitor"
         />
     </div>
-    <BasicNodata v-else class="basic-quality-card-filler" />
+    <BasicNodata v-else class="quality-card-filler" />
 </template>
 
 <style scoped lang="scss">
-.basic-quality-card {
+.quality-card {
     width: fit-content;
     & > * + * {
         margin-top: 12px;
@@ -51,10 +51,8 @@ const valuesExist = computed<boolean>(() => {
         width: 180px;
         height: 167px;
     }
-}
 
-@media screen and (min-width: 600px) {
-    .basic-quality-card {
+    @media screen and (min-width: 600px) {
         & > * + * {
             margin-top: 33px;
         }

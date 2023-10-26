@@ -37,7 +37,7 @@ const writableComputedLocation = computed({
             v-model="writableComputedLocation"
         />
         <StatCards :current="current" :is-loading="isLoading" />
-        <BasicHorizontalDivider />
+        <HorizontalDivider />
         <QualityCards
             :air-quality="current?.air_quality"
             :uv-index="current?.uv"
@@ -53,10 +53,8 @@ const writableComputedLocation = computed({
     & > * + * {
         margin-top: 20px;
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .current-weather-stats {
+    @media screen and (min-width: 1440px) {
         padding-block: 38px;
         padding-inline: 44px;
 

@@ -60,7 +60,7 @@ const statCards = computed<StatCard[]>(() => {
     <div class="stat-cards">
         <div class="stat-cards__content">
             <div v-for="card in statCards" :key="card.title">
-                <BasicStatCard
+                <StatCard
                     :icon-src="card.icon"
                     :title="card.title"
                     :value="card.value"
@@ -85,18 +85,14 @@ const statCards = computed<StatCard[]>(() => {
         align-items: center;
         justify-items: center;
     }
-}
 
-@media screen and (min-width: 400px) {
-    .stat-cards {
+    @media screen and (min-width: 400px) {
         &__content {
             grid-template-columns: 1fr 1fr;
         }
     }
-}
 
-@media screen and (min-width: 600px) {
-    .stat-cards {
+    @media screen and (min-width: 600px) {
         &__content {
             gap: 25px;
         }

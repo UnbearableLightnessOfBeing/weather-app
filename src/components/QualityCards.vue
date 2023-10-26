@@ -15,32 +15,31 @@ const { t } = useI18n();
 
 const { locale } = useLocale();
 
-const epaIndex = computed((): number | undefined => {
-    if (props.airQuality && props.airQuality["us-epa-index"]) {
-        return props.airQuality["us-epa-index"];
-    } else return undefined;
-});
-
 const uvIndecies = computed(() => getUvIndecies(locale.value));
 const usEpaIndecies = computed(() => getUsEpaIndecies(locale.value));
 
+const epaIndex = computed((): number | undefined => {
+    if (!props.airQuality || !props.airQuality["us-epa-index"])
+        return undefined;
+    return props.airQuality["us-epa-index"];
+});
+
 const evaluation = computed(() => {
-    if (epaIndex.value) {
-        return usEpaIndecies.value[epaIndex.value];
-    } else return undefined;
+    if (!epaIndex.value) return undefined;
+    return usEpaIndecies.value[epaIndex.value];
 });
 </script>
 
 <template>
     <div class="quality-cards">
-        <BasicQualityCard
+        <QualityCard
             :value="epaIndex"
             :max-value="6"
             :evaluation="evaluation"
             :title="t('qualityStats.airQuality')"
             :is-loading="isLoading"
         />
-        <BasicQualityCard
+        <QualityCard
             :value="uvIndex"
             :max-value="10"
             :evaluation="uvIndecies[Math.round(Number(uvIndex))]"
@@ -57,10 +56,8 @@ const evaluation = computed(() => {
     justify-content: center;
     align-items: center;
     gap: 50px;
-}
 
-@media screen and (min-width: 600px) {
-    .quality-cards {
+    @media screen and (min-width: 600px) {
         gap: 90px;
         flex-direction: row;
     }

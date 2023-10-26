@@ -14,12 +14,12 @@ defineProps<{
             :is-loading="isLoading"
         />
         <div class="daily-forecast-stats__hourly-forecast">
-            <BasicHorizontalDivider />
+            <HorizontalDivider />
             <HourlyForecastData
                 :hourly-forecast="dailyForecast?.hour"
                 :is-loading="isLoading"
             />
-            <BasicHorizontalDivider />
+            <HorizontalDivider />
         </div>
         <QualityCards
             :air-quality="dailyForecast?.day?.air_quality"

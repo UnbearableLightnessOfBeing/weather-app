@@ -3,16 +3,18 @@ import InlineSvg from "vue-inline-svg";
 import MeterSvgUrl from "/interface/meter.svg";
 import PointerSvgUrl from "/interface/pointer.svg";
 import { useI18n } from "vue-i18n";
-
 import { gsap } from "gsap";
 
 const props = defineProps<{
-    value: number;
+    value?: number;
     maxValue: number;
     evaluation: string;
 }>();
 
+const { t } = useI18n();
+
 const angleIndicator = computed(() => {
+    if (typeof props.value === "undefined") return undefined;
     return (360 / 2 / props.maxValue) * props.value;
 });
 
@@ -36,28 +38,26 @@ const onEnter = (el: any, done: any) => {
     animateIndicator(el);
     done();
 };
-
-const { t } = useI18n();
 </script>
 
 <template>
-    <div class="basic-quality-monitor">
-        <InlineSvg :src="MeterSvgUrl" class="basic-quality-monitor__meter" />
+    <div class="quality-monitor">
+        <InlineSvg :src="MeterSvgUrl" class="quality-monitor__meter" />
         <Transition appear @enter="onEnter">
-            <div ref="indicator" class="basic-quality-monitor__indicator">
+            <div ref="indicator" class="quality-monitor__indicator">
                 <InlineSvg
                     :src="PointerSvgUrl"
-                    class="basic-quality-monitor__point"
+                    class="quality-monitor__point"
                 />
             </div>
         </Transition>
-        <div class="basic-quality-monitor__content">
-            <div v-if="value !== 0" class="basic-quality-monitor__value">
+        <div class="quality-monitor__content">
+            <div v-if="value !== 0" class="quality-monitor__value">
                 {{ value }}/{{ maxValue }}
             </div>
-            <div class="basic-quality-monitor__eval">
+            <div class="quality-monitor__eval">
                 {{ evaluation }}
-                <BasicInfoSign
+                <InfoSign
                     v-if="value === 0"
                     :tooltip-text="t('api.signTooltip')"
                 />
@@ -67,7 +67,7 @@ const { t } = useI18n();
 </template>
 
 <style scoped lang="scss">
-.basic-quality-monitor {
+.quality-monitor {
     width: 180px;
     height: 100px;
     display: flex;
