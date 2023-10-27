@@ -1,11 +1,12 @@
-const host = new URL("", import.meta.url).origin;
-const base = import.meta.env.BASE_URL;
-
-const getIconUrl = (code: number, isDay: boolean = true) => {
-    return `${host}${base}/${isDay ? "day" : "night"}/${code}-light.svg`;
-};
+import { useAppUrl } from "./useAppUrl";
 
 export const useConditionIcons = () => {
+    const { host, base } = useAppUrl();
+
+    const getIconUrl = (code: number, isDay: boolean = true) => {
+        return `${host}${base}/${isDay ? "day" : "night"}/${code}-light.svg`;
+    };
+
     return {
         getIconUrl,
     };

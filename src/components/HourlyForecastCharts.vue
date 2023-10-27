@@ -12,6 +12,7 @@ import InlineSvg from "vue-inline-svg";
 import ArrowSvgUrl from "/interface/x-mark.svg";
 import colors from "../assets/colors/colors.json";
 import { ChartTypeEnum } from "../composables/useChartData";
+import { useAppUrl } from "../composables/useAppUrl";
 
 const props = defineProps<{
     hourlyForecast: HourlyWeather[];
@@ -22,9 +23,9 @@ defineEmits<{
     (e: "closeModal"): void;
 }>();
 
+const { host, base } = useAppUrl();
+
 const getChartIcon = (name: string): string => {
-    const host = new URL("", import.meta.url).origin;
-    const base = import.meta.env.BASE_URL;
     const iconPath = host + base + "/interface/charts" + `/${name}.svg`;
     return iconPath;
 };
@@ -168,11 +169,13 @@ const mainContainer = ref<HTMLElement | null>(null);
 
 useDraggableScroll(mainContainer);
 
-const optionOffset = ref("20px");
+const minOffset = 20;
+
+const optionOffset = ref(`${minOffset}px`);
 
 const setOptionOffset = () => {
     const offset = mainContainer.value?.scrollLeft ?? 0;
-    optionOffset.value = `${20 + offset}px`;
+    optionOffset.value = `${minOffset + offset}px`;
 };
 </script>
 
@@ -283,10 +286,8 @@ const setOptionOffset = () => {
             height: 150px;
         }
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .hourly-forecast-charts {
+    @media screen and (min-width: 1440px) {
         border-radius: 5px;
 
         &__inner {

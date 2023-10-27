@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { ChartOption } from "./HourlyForecastChart.vue";
+import { ChartOption as ChartOptionType } from "./HourlyForecastChart.vue";
 
 defineProps<{
-    options: ChartOption[];
-    activeOption: ChartOption;
+    options: ChartOptionType[];
+    activeOption: ChartOptionType;
 }>();
 
 defineEmits<{
     //eslint-disable-next-line
-    (e: "update:activeOption", value: ChartOption): void;
+    (e: "update:activeOption", value: ChartOptionType): void;
 }>();
 </script>
 
@@ -24,7 +24,7 @@ defineEmits<{
             :key="idx"
             class="forecast-options__option"
         >
-            <BasicChartOption
+            <ChartOption
                 :name="option.name"
                 :measurement="option.measurement"
                 :active="option.propName === activeOption.propName"
@@ -44,10 +44,8 @@ defineEmits<{
     &__option {
         width: fit-content;
     }
-}
 
-@media screen and (min-width: 600px) {
-    .forecast-options {
+    @media screen and (min-width: 600px) {
         width: 100%;
         margin-left: 0;
         padding-inline: 0px;

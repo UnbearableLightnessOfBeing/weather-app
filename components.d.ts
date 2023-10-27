@@ -9,9 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppLayout: typeof import('./src/layouts/AppLayout.vue')['default']
     AppPanelLayout: typeof import('./src/layouts/AppPanelLayout.vue')['default']
-    BasicAstroClock: typeof import('./src/components/BasicAstroClock.vue')['default']
+    AstroClock: typeof import('./src/components/AstroClock.vue')['default']
     BasicChart: typeof import('./src/components/BasicChart.vue')['default']
-    BasicChartOption: typeof import('./src/components/BasicChartOption.vue')['default']
     BasicConditionIcon: typeof import('./src/components/BasicConditionIcon.vue')['default']
     BasicError: typeof import('./src/components/BasicError.vue')['default']
     BasicForecastCard: typeof import('./src/components/BasicForecastCard.vue')['default']
@@ -30,6 +29,7 @@ declare module 'vue' {
     BasicTextInput: typeof import('./src/components/BasicTextInput.vue')['default']
     BasicVerticalDivider: typeof import('./src/components/BasicVerticalDivider.vue')['default']
     BasicWeatherStats: typeof import('./src/components/BasicWeatherStats.vue')['default']
+    ChartOption: typeof import('./src/components/ChartOption.vue')['default']
     ChartTitle: typeof import('./src/components/ChartTitle.vue')['default']
     ConditionIconRange: typeof import('./src/components/ConditionIconRange.vue')['default']
     CurrentDateInfo: typeof import('./src/components/CurrentDateInfo.vue')['default']

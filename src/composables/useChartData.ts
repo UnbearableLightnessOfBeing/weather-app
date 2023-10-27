@@ -46,14 +46,23 @@ export const useChartData = (
         );
     });
 
-    const deriveFormatter = (propName: HourlyWeatherNumberKey) => {
+    const shouldDisplayDegreeSign = (
+        propName: HourlyWeatherNumberKey,
+    ): boolean => {
         if (
             propName.includes("temp_") ||
             propName.includes("feelslike_") ||
             propName.includes("dewpoint_")
-        ) {
-            return (value: string) => value + "°";
-        } else return (value: string) => value;
+        )
+            return true;
+
+        return false;
+    };
+
+    const deriveFormatterByPropName = (propName: HourlyWeatherNumberKey) => {
+        return shouldDisplayDegreeSign(propName)
+            ? (value: string) => value + "°"
+            : (value: string) => value;
     };
 
     const getChartOptions = (
@@ -72,7 +81,7 @@ export const useChartData = (
                     : modalScalesConfiguration,
             plugins: {
                 datalabels: {
-                    formatter: deriveFormatter(propName),
+                    formatter: deriveFormatterByPropName(propName),
                 },
             },
         };

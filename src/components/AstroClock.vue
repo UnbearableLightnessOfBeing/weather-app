@@ -12,7 +12,6 @@ const { locale } = useLocale();
 
 const getStrMatchOrNull = (str: string, regexp: RegExp): string | null => {
     const match = str.match(regexp)?.[0];
-
     return match ? match : null;
 };
 
@@ -45,24 +44,17 @@ const get24HourTimeFormat = (time: string | undefined): string | null => {
 const localizedTime = computed(() => {
     if (locale.value !== LocaleNameEnum.Ru) {
         const digitTime = getDigitTimeStr(props.time);
-        if (digitTime) {
-            return digitTime;
-        } else return props.time;
+        return digitTime ? digitTime : props.time;
     }
 
     const fullFormat = get24HourTimeFormat(props.time);
-    if (fullFormat) {
-        return fullFormat;
-    } else return props.time;
+    return fullFormat ? fullFormat : props.time;
 });
 
 const localizedTimeOfDay = computed(() => {
-    if (locale.value === LocaleNameEnum.Ru) {
-        return "";
-    } else {
-        const timeOfDay = getTimeOfDayStr(props.time);
-        return timeOfDay ? timeOfDay : props.time;
-    }
+    if (locale.value === LocaleNameEnum.Ru) return "";
+    const timeOfDay = getTimeOfDayStr(props.time);
+    return timeOfDay ? timeOfDay : props.time;
 });
 
 const hourHandCssTransform = computed<string>(() => {
@@ -85,37 +77,37 @@ const minuteHandCssTransform = computed<string>(() => {
 </script>
 
 <template>
-    <BasicLoader v-if="isLoading" class="basic-astrology-clock-filler" />
-    <div v-else-if="time" class="basic-astrology-clock">
-        <div class="basic-astrology-clock__title">{{ title }}</div>
-        <div class="basic-astrology-clock__clock-site">
-            <div class="basic-astrology-clock__clock">
+    <BasicLoader v-if="isLoading" class="astro-clock-filler" />
+    <div v-else-if="time" class="astro-clock">
+        <div class="astro-clock__title">{{ title }}</div>
+        <div class="astro-clock__clock-site">
+            <div class="astro-clock__clock">
                 <div></div>
-                <div class="basic-astrology-clock__pointers">
+                <div class="astro-clock__pointers">
                     <Transition name="hour-hand" appear>
-                        <div class="basic-astrology-clock__hour-hand"></div>
+                        <div class="astro-clock__hour-hand"></div>
                     </Transition>
                     <Transition name="minute-hand" appear>
-                        <div class="basic-astrology-clock__minute-hand"></div>
+                        <div class="astro-clock__minute-hand"></div>
                     </Transition>
                     <Transition name="second-hand" appear>
-                        <div class="basic-astrology-clock__second-hand"></div>
+                        <div class="astro-clock__second-hand"></div>
                     </Transition>
                 </div>
             </div>
-            <div class="basic-astrology-clock__time">
+            <div class="astro-clock__time">
                 {{ localizedTime }}
-                <span class="basic-astrology-clock__time-of-day">{{
+                <span class="astro-clock__time-of-day">{{
                     localizedTimeOfDay
                 }}</span>
             </div>
         </div>
     </div>
-    <BasicNodata v-else class="basic-astrology-clock-filler" />
+    <BasicNodata v-else class="astro-clock-filler" />
 </template>
 
 <style scoped lang="scss">
-.basic-astrology-clock {
+.astro-clock {
     width: fit-content;
 
     & > * + * {

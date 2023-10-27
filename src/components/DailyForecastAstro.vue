@@ -12,12 +12,12 @@ const { t } = useI18n();
 
 <template>
     <div class="daily-forecast-astro">
-        <BasicAstroClock
+        <AstroClock
             :title="t('astro.sunrise')"
             :time="astro?.sunrise"
             :is-loading="isLoading"
         />
-        <BasicAstroClock
+        <AstroClock
             :title="t('astro.sunset')"
             :time="astro?.sunset"
             :is-loading="isLoading"
