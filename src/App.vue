@@ -81,12 +81,15 @@ const activeDay = ref<number | null>(null);
                     />
                 </KeepAlive>
             </Transition>
+            <CreditLink class="app-layout__credit-link" />
         </AppPanelLayout>
     </AppLayout>
 </template>
 
 <style scoped lang="scss">
 .app-layout {
+    position: relative;
+
     &__left-panel {
         position: relative;
 
@@ -119,6 +122,13 @@ const activeDay = ref<number | null>(null);
         &--daily-view {
             top: 16px;
         }
+    }
+
+    &__credit-link {
+        position: absolute;
+        bottom: 5px;
+        right: 6px;
+        left: auto;
     }
 }
 
@@ -163,6 +173,10 @@ const activeDay = ref<number | null>(null);
             &--daily-view {
                 right: 196px;
             }
+        }
+
+        &__credit-link {
+            right: 12px;
         }
     }
 }

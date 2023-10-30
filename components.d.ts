@@ -32,6 +32,7 @@ declare module 'vue' {
     ChartOption: typeof import('./src/components/ChartOption.vue')['default']
     ChartTitle: typeof import('./src/components/ChartTitle.vue')['default']
     ConditionIconRange: typeof import('./src/components/ConditionIconRange.vue')['default']
+    CreditLink: typeof import('./src/components/CreditLink.vue')['default']
     CurrentDateInfo: typeof import('./src/components/CurrentDateInfo.vue')['default']
     CurrentWeatherInfo: typeof import('./src/components/CurrentWeatherInfo.vue')['default']
     CurrentWeatherStats: typeof import('./src/components/CurrentWeatherStats.vue')['default']

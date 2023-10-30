@@ -11,6 +11,7 @@
 <style scoped lang="scss">
 .app-layout {
     &__wrapper {
+        padding-bottom: 20px;
         background: var(--bg-light);
 
         & > ::v-deep(* + *) {
