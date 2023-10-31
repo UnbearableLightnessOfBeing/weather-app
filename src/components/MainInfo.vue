@@ -13,44 +13,6 @@ const { locale } = useLocale();
 
 const { measurement } = useMeasurement();
 
-const unixCurrentDate = ref<Date | undefined>(undefined);
-
-const setDate = (diffInHours: number) => {
-    unixCurrentDate.value = new Date(
-        new Date().getTime() - diffInHours * 60 * 60 * 1000,
-    );
-};
-
-let interval: number = 0;
-
-const setUnixCurrentDate = () => {
-    if (props.location && props.location.localtime) {
-        const localTime = new Date(props.location.localtime).getTime();
-        const now = new Date().getTime();
-        const diffInHours = Math.round((now - localTime) / (1000 * 60 * 60));
-        setDate(diffInHours);
-        interval = setInterval(() => {
-            setDate(diffInHours);
-        }, 1000);
-    }
-};
-
-watch(
-    () => props.isLoading,
-    () => {
-        clearInterval(interval);
-        setUnixCurrentDate();
-    },
-);
-
-onMounted(() => {
-    setUnixCurrentDate();
-});
-
-onUnmounted(() => {
-    clearInterval(interval);
-});
-
 const computedTemperature = computed(() => {
     if (props.current) {
         return measurement.value === "C"
@@ -79,11 +41,17 @@ const stats = computed(() => {
                 :measurement="measurement"
                 :is-loading="isLoading"
             />
-            <CurrentDateInfo
-                :language="locale"
-                :unix-date="unixCurrentDate"
+            <LocalTimeComputer
+                v-slot="{ currentDate }"
+                :localtime="location?.localtime"
                 :is-loading="isLoading"
-            />
+            >
+                <CurrentDateInfo
+                    :language="locale"
+                    :unix-date="currentDate"
+                    :is-loading="isLoading"
+                />
+            </LocalTimeComputer>
             <BasicWeatherStats :stats="stats" :is-loading="isLoading" />
         </div>
     </div>

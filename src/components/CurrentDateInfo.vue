@@ -55,6 +55,14 @@ const time = computed(() => {
         return hours + ":" + minutes + (dayPeriod ? ` ${dayPeriod}` : "");
     }
 });
+
+defineExpose({
+    date,
+    month,
+    year,
+    day,
+    time
+});
 </script>
 
 <template>
