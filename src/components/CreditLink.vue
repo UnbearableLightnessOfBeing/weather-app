@@ -15,10 +15,7 @@
 
 <style scoped lang="scss">
 .credit-link {
-    background-color: #f0b5ce;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+    color: var(--basic-light-faded);
     text-shadow: none;
 
     &__link {

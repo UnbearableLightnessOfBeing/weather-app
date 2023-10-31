@@ -9,7 +9,7 @@ const props = withDefaults(
         isLoading: boolean;
     }>(),
     {
-        isDay: undefined,
+        isDay: true,
         condition: undefined,
     },
 );
@@ -18,7 +18,7 @@ const { getIconUrl } = useConditionIcons();
 
 const iconSrcUrl = computed(() => {
     if (props.condition) {
-        return getIconUrl(props.condition.code, props.isDay ?? false);
+        return getIconUrl(props.condition.code, props.isDay);
     }
 });
 </script>
