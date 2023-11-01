@@ -41,7 +41,6 @@ const setLocation = async () => {
         longitude.value !== Infinity
     ) {
         await refetch();
-
         emitLocation();
     }
 };

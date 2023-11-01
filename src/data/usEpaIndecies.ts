@@ -1,3 +1,6 @@
+import { LanguageName } from "../composables/useLocale";
+import { LocaleNameEnum } from "../configs/i18nConfig";
+
 const usEpaIndeciesEn: Record<number, string> = {
     0: "TBD",
     1: "Good",
@@ -18,6 +21,6 @@ const usEpaIndeciesRu: Record<number, string> = {
     6: "Опасно",
 };
 
-export const getUsEpaIndecies = (locale: "en" | "ru") => {
-    return locale === "en" ? usEpaIndeciesEn : usEpaIndeciesRu;
+export const getUsEpaIndecies = (locale: LanguageName) => {
+    return locale === LocaleNameEnum.Ru ? usEpaIndeciesRu : usEpaIndeciesEn;
 };

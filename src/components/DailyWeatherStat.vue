@@ -2,18 +2,22 @@
 import InlineSvg from "vue-inline-svg";
 import { useI18n } from "vue-i18n";
 
-const props = defineProps<{
+type Stat = {
     iconSrc: string;
     title: string;
     value?: number;
     measurement: string;
+};
+
+const props = defineProps<{
+    stat: Stat;
     isLoading?: boolean;
 }>();
 
 const { t } = useI18n();
 
 const valueExists = computed<boolean>(() => {
-    return typeof props.value !== "undefined";
+    return typeof props.stat.value !== "undefined";
 });
 </script>
 
@@ -25,15 +29,20 @@ const valueExists = computed<boolean>(() => {
         v-bind="$attrs"
     >
         <div class="basic-daily-weather-stat__left">
-            <InlineSvg :src="iconSrc" class="basic-daily-weather-stat__icon" />
-            <div class="basic-daily-weather-stat__title">{{ t(title) }}</div>
+            <InlineSvg
+                :src="stat.iconSrc"
+                class="basic-daily-weather-stat__icon"
+            />
+            <div class="basic-daily-weather-stat__title">
+                {{ t(stat.title) }}
+            </div>
         </div>
         <div class="basic-daily-weather-stat__right">
             <div class="basic-daily-weather-stat__value">
-                {{ Math.round(value ?? 0) }}
+                {{ Math.round(stat.value ?? 0) }}
             </div>
             <div class="basic-daily-weather-stat__measurement">
-                {{ measurement }}
+                {{ stat.measurement }}
             </div>
         </div>
     </div>
@@ -93,10 +102,8 @@ const valueExists = computed<boolean>(() => {
         font-weight: var(--fw-normal-thiner);
         font-size: var(--fs-tooltip);
     }
-}
 
-@media screen and (min-width: 600px) {
-    .basic-daily-weather-stat {
+    @media screen and (min-width: 600px) {
         padding: 10px;
 
         &__icon {
@@ -117,10 +124,8 @@ const valueExists = computed<boolean>(() => {
             height: 78px;
         }
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .basic-daily-weather-stat {
+    @media screen and (min-width: 1440px) {
         &-filler {
             width: 240px;
             height: 78px;

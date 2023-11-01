@@ -29,7 +29,7 @@ const computedStyles = computed((): string => {
 <template>
     <div class="basic-nodata" :style="computedStyles">
         <div>{{ t("errors.noData") }}</div>
-        <BasicInfoSign :tooltip-text="t('errors.noDataTooltip')" />
+        <InfoSign :tooltip-text="t('errors.noDataTooltip')" />
     </div>
 </template>
 

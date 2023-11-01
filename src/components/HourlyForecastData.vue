@@ -13,29 +13,29 @@ const HourlyForecastCharts = defineAsyncComponent(() => {
     return import("../components/HourlyForecastCharts.vue");
 });
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
 
 const { measurement } = useMeasurement();
 
 const options = computed<ChartOption[]>(() => [
     {
         propName: measurement.value === "C" ? "temp_c" : "temp_f",
-        name: locale.value === "ru" ? "температура" : "temp.",
+        name: t("smallChartOptions.temp"),
         measurement: `°${measurement.value}`,
     },
     {
         propName: "precip_mm",
-        name: locale.value === "ru" ? "осадки" : "precip.",
+        name: t("smallChartOptions.precip"),
         measurement: t("measurements.mm"),
     },
     {
         propName: "wind_kph",
-        name: locale.value === "ru" ? "ветер" : "wind",
+        name: t("smallChartOptions.wind"),
         measurement: t("measurements.kmh"),
     },
     {
         propName: "pressure_mb",
-        name: locale.value === "ru" ? "давление" : "pressure",
+        name: t("smallChartOptions.pressure"),
         measurement: "hPa",
     },
 ]);

@@ -1,3 +1,4 @@
+//global state of the app
 const measurementType = ref<"F" | "C">("C");
 
 export const useMeasurement = () => {

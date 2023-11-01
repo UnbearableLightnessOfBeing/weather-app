@@ -8,6 +8,8 @@ import { useConditionIcons } from "../composables/useConditionIcons";
 import type { DailyForecast } from "../types/requestTypes";
 import dayNames from "../assets/date/dayNames.json";
 import { useI18n } from "vue-i18n";
+import { useLocale } from "../composables/useLocale";
+import { forecastParams } from "../api/requests";
 
 const props = defineProps<{
     forecastday?: DailyForecast[];
@@ -25,12 +27,11 @@ const { getIconUrl } = useConditionIcons();
 
 const { measurement } = useMeasurement();
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+const { locale } = useLocale();
 
 const dayRange = computed(() => {
-    if (locale.value === "ru") {
-        return dayNames.ru.short;
-    } else return dayNames.en.short;
+    return dayNames[locale.value].short ?? dayNames.en.short;
 });
 
 const getDayName = (dayNum: number): string => {
@@ -44,8 +45,8 @@ const getTemperature = (temp: number): string => {
 const missingAmount = computed(() => {
     if (props.forecastday) {
         const cardAmount = props.forecastday.length;
-        return 7 - cardAmount;
-    } else return 7;
+        return forecastParams.days - cardAmount;
+    } else return forecastParams.days;
 });
 </script>
 
@@ -55,7 +56,7 @@ const missingAmount = computed(() => {
         :space-between="20"
         :modules="[Navigation]"
         :navigation="true"
-        :class="'swiper'"
+        :class="'forecast-card-swiper'"
         :breakpoints="{
             620: {
                 slidesPerView: 4,
@@ -68,8 +69,13 @@ const missingAmount = computed(() => {
         }"
     >
         <template #container-start>
-            <BasicLoader v-if="isLoading" class="swiper__title-loader" />
-            <span v-else class="swiper__title"> {{ t("swiperTitle") }} </span>
+            <BasicLoader
+                v-if="isLoading"
+                class="forecast-card-swiper__title-loader"
+            />
+            <span v-else class="forecast-card-swiper__title">
+                {{ t("swiperTitle") }}
+            </span>
         </template>
         <template #default>
             <SwiperSlide v-for="(card, idx) in forecastday" :key="card.date">
@@ -86,15 +92,18 @@ const missingAmount = computed(() => {
                 />
             </SwiperSlide>
             <SwiperSlide v-for="card in missingAmount" :key="card">
-                <BasicLoader v-if="isLoading" class="swiper__card-filler" />
-                <BasicNodata v-else class="swiper__card-filler" />
+                <BasicLoader
+                    v-if="isLoading"
+                    class="forecast-card-swiper__card-filler"
+                />
+                <BasicNodata v-else class="forecast-card-swiper__card-filler" />
             </SwiperSlide>
         </template>
     </Swiper>
 </template>
 
 <style scoped lang="scss">
-.swiper {
+.forecast-card-swiper {
     padding: 16px;
     padding-top: 0;
 
@@ -125,10 +134,8 @@ const missingAmount = computed(() => {
         display: flex;
         flex-direction: column;
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .swiper {
+    @media screen and (min-width: 1440px) {
         padding-right: 35px;
         padding-left: 66px;
         max-width: calc(686px + 76px);

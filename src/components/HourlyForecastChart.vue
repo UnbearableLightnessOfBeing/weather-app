@@ -8,19 +8,9 @@ import type {
 } from "../types/requestTypes";
 import { useChartData } from "../composables/useChartData";
 
-type ChartOptionName =
-    | "temp."
-    | "precip."
-    | "wind"
-    | "pressure"
-    | "температура"
-    | "осадки"
-    | "ветер"
-    | "давление";
-
 export type ChartOption = {
     propName: HourlyWeatherNumberKey;
-    name: ChartOptionName;
+    name: string;
     measurement: string;
 };
 
@@ -86,10 +76,8 @@ const scrollOnWheel = function (e: WheelEvent) {
         min-width: 1000px;
         overflow-y: hidden;
     }
-}
 
-@media screen and (min-width: 600px) {
-    .hourly-forecast-chart {
+    @media screen and (min-width: 600px) {
         margin-left: 0;
         width: 100%;
     }

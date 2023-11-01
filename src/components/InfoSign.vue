@@ -8,17 +8,16 @@ defineProps<{
     <div
         v-tooltip="{
             theme: 'custom-tooltip',
-            // content: t('qualityStats.airQualityTooltip'),
             content: tooltipText,
         }"
-        class="basic-info-sign"
+        class="info-sign"
     >
-        <div class="basic-info-sign__inner">i</div>
+        <div class="info-sign__inner">i</div>
     </div>
 </template>
 
 <style scoped lang="scss">
-.basic-info-sign {
+.info-sign {
     display: inline-block;
     width: 25px;
     height: 25px;

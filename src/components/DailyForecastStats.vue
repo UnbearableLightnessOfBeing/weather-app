@@ -14,12 +14,12 @@ defineProps<{
             :is-loading="isLoading"
         />
         <div class="daily-forecast-stats__hourly-forecast">
-            <BasicHorizontalDivider />
+            <HorizontalDivider />
             <HourlyForecastData
                 :hourly-forecast="dailyForecast?.hour"
                 :is-loading="isLoading"
             />
-            <BasicHorizontalDivider />
+            <HorizontalDivider />
         </div>
         <QualityCards
             :air-quality="dailyForecast?.day?.air_quality"
@@ -41,10 +41,8 @@ defineProps<{
             margin-top: 10px;
         }
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .daily-forecast-stats {
+    @media screen and (min-width: 1440px) {
         padding-inline: 66px;
         padding-block: 40px;
         & > * + * {

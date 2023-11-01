@@ -3,7 +3,7 @@ import type { DailyForecast } from "../types/requestTypes";
 import InlineSvg from "vue-inline-svg";
 import ArrowBackSvgUrl from "/interface/arrow-back.svg";
 import { useMeasurement } from "../composables/useMeasurement";
-import { useI18n } from "vue-i18n";
+import { useLocale } from "../composables/useLocale";
 
 const props = defineProps<{
     dailyForecast?: DailyForecast;
@@ -19,19 +19,11 @@ defineEmits<{
 
 const { measurement } = useMeasurement();
 
-const { locale } = useI18n();
+const { locale } = useLocale();
 
-const computedLocale = computed<"en" | "ru">(() => {
-    if (locale.value === "en" || locale.value === "ru") {
-        return locale.value;
-    } else return "en";
-});
-
-const computedUnixDate = computed(() => {
-    if (props.dailyForecast) {
-        return new Date(props.dailyForecast.date);
-    } else return undefined;
-});
+const computedUnixDate = computed(() =>
+    props.dailyForecast ? new Date(props.dailyForecast.date) : undefined,
+);
 </script>
 
 <template>
@@ -43,7 +35,7 @@ const computedUnixDate = computed(() => {
         />
         <div class="daily-forecast-info__container">
             <CurrentDateInfo
-                :language="computedLocale"
+                :language="locale"
                 :unix-date="computedUnixDate"
                 time-hidden
                 :is-loading="isLoading"
@@ -57,7 +49,7 @@ const computedUnixDate = computed(() => {
                 :condition="dailyForecast?.day.condition"
                 :is-loading="isLoading"
             />
-            <BasicDailyTemperature
+            <DailyTemperature
                 :min-value="
                     measurement === 'C'
                         ? dailyForecast?.day.mintemp_c
@@ -122,10 +114,8 @@ const computedUnixDate = computed(() => {
         font-size: var(--fs-normal);
         font-weight: var(--fw-normal-thiner);
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .daily-forecast-info {
+    @media screen and (min-width: 1440px) {
         height: 545px;
         padding-inline: 66px;
         padding-block: 40px;

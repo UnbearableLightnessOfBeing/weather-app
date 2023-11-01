@@ -2,10 +2,13 @@
 import { useMeasurement } from "../composables/useMeasurement";
 import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
+
 const { measurement, toggleMeasurement } = useMeasurement();
+
 const isToggled = computed(() => measurement.value === "F");
 
-const { t } = useI18n();
+const options = ["C", "F"];
 </script>
 
 <template>
@@ -18,11 +21,12 @@ const { t } = useI18n();
         :class="{ 'measurement-toggler--toggled': isToggled }"
         @click="toggleMeasurement"
     >
-        <div class="measurement-toggler__option">
-            <span class="measurement-toggler__degree-sign">°</span>C
-        </div>
-        <div class="measurement-toggler__option">
-            <span class="measurement-toggler__degree-sign">°</span>F
+        <div
+            v-for="option in options"
+            :key="option"
+            class="measurement-toggler__option"
+        >
+            <span class="measurement-toggler__degree-sign">°</span>{{ option }}
         </div>
     </div>
 </template>
@@ -69,10 +73,8 @@ const { t } = useI18n();
             top: 58px;
         }
     }
-}
 
-@media screen and (min-width: 600px) {
-    .measurement-toggler {
+    @media screen and (min-width: 600px) {
         height: 40px;
         width: 102px;
         min-width: 102px;

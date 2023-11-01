@@ -56,10 +56,8 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
     & > * + * {
         margin-top: 20px;
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .current-weather-info {
+    @media screen and (min-width: 1440px) {
         height: 545px;
         padding-inline: 66px;
         padding-block: 40px;

@@ -1,61 +1,67 @@
 <script setup lang="ts">
 import dayNames from "../assets/date/dayNames.json";
-
-type Language = "en" | "ru";
+import type { LanguageName } from "../composables/useLocale";
+import { LocaleNameEnum } from "../configs/i18nConfig";
 
 const props = defineProps<{
-    language: Language;
+    language: LanguageName;
     unixDate?: Date;
     timeHidden?: boolean;
     isLoading?: boolean;
 }>();
 
-const monthNames = computed(() => {
-    if (props.language === "en") {
-        return dayNames.en.full;
-    } else return dayNames.ru.full;
-});
+const computedDayNames = computed(() =>
+    props.language === LocaleNameEnum.Ru ? dayNames.ru.full : dayNames.en.full,
+);
 
 const date = computed(() =>
     props.unixDate ? props.unixDate.getDate() : undefined,
 );
+
+const shortenMonthName = (monthName: string) => {
+    if (monthName.length <= 4) {
+        return monthName;
+    } else return monthName.slice(0, 3);
+};
 
 const month = computed(() => {
     if (props.unixDate) {
         const monthName = props.unixDate.toLocaleString(props.language, {
             month: "long",
         });
-        if (monthName.length <= 4) {
-            return monthName;
-        } else return monthName.slice(0, 3);
-    } else return undefined;
+
+        return shortenMonthName(monthName);
+    }
 });
 
 const year = computed(() => {
     if (props.unixDate) {
         const year = props.unixDate.getFullYear().toString();
         return `‘${year.slice(year.length - 2)}`;
-    } else return undefined;
+    }
 });
 
 const day = computed(() => {
     if (props.unixDate) {
-        return monthNames.value[props.unixDate.getDay()];
-    } else return undefined;
+        return computedDayNames.value[props.unixDate.getDay()];
+    }
 });
 
 const time = computed(() => {
     if (props.unixDate) {
         const timeString = props.unixDate.toLocaleTimeString(props.language);
         const [time, dayPeriod] = timeString.split(" ");
-        const splitTime = time.split(":");
-        return (
-            splitTime[0] +
-            ":" +
-            splitTime[1] +
-            (dayPeriod ? ` ${dayPeriod}` : "")
-        );
-    } else return undefined;
+        const [hours, minutes] = time.split(":");
+        return hours + ":" + minutes + (dayPeriod ? ` ${dayPeriod}` : "");
+    }
+});
+
+defineExpose({
+    date,
+    month,
+    year,
+    day,
+    time,
 });
 </script>
 

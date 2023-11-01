@@ -7,11 +7,11 @@ defineProps<{
 <template>
     <ItemRange class="time-label-range">
         <div
-            v-for="value in timeLabels"
-            :key="value"
+            v-for="label in timeLabels"
+            :key="label"
             class="time-label-range__label"
         >
-            {{ value }}
+            {{ label }}
         </div>
     </ItemRange>
 </template>

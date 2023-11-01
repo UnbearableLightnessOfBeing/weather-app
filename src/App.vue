@@ -3,17 +3,19 @@ import { useQuery } from "@tanstack/vue-query";
 import { getCurrentWeather } from "./api/requests";
 import { useI18n } from "vue-i18n";
 import ShrugSvgUrl from "/interface/shrug.svg";
+import { useLocale } from "./composables/useLocale";
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+
+const { locale } = useLocale();
 
 const location = ref("Moscow, Russia");
 
 const { data, isError, isLoading } = useQuery({
     queryKey: ["currentWeather", location, locale],
-    queryFn: () =>
-        getCurrentWeather(location.value, locale.value as "en" | "ru"),
+    queryFn: () => getCurrentWeather(location.value, locale.value),
     refetchOnWindowFocus: false,
-    // refetchInterval: 30000,
+    refetchInterval: 30000,
 });
 
 const activeDay = ref<number | null>(null);
@@ -79,12 +81,15 @@ const activeDay = ref<number | null>(null);
                     />
                 </KeepAlive>
             </Transition>
+            <CreditLink class="app-layout__credit-link" />
         </AppPanelLayout>
     </AppLayout>
 </template>
 
 <style scoped lang="scss">
 .app-layout {
+    position: relative;
+
     &__left-panel {
         position: relative;
 
@@ -119,14 +124,11 @@ const activeDay = ref<number | null>(null);
         }
     }
 
-    &__error {
-        width: 100%;
-        height: 100%;
-        display: grid;
-        place-items: center;
-        color: var(--error);
-        font-size: var(--fs-heading);
-        font-weight: var(--fw-normal-thiner);
+    &__credit-link {
+        position: absolute;
+        bottom: 5px;
+        right: 6px;
+        left: auto;
     }
 }
 
@@ -171,6 +173,10 @@ const activeDay = ref<number | null>(null);
             &--daily-view {
                 right: 196px;
             }
+        }
+
+        &__credit-link {
+            right: 12px;
         }
     }
 }

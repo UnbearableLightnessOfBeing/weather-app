@@ -77,5 +77,13 @@
         "dewPoint": "Порог конденсации",
         "uv": "UV Индекс",
         "visibility": "Видимость"
-    }
+    },
+    "smallChartOptions": {
+        "temp": "температура",
+        "precip": "осадки",
+        "wind": "ветер",
+        "pressure": "давление"
+    },
+
+    "creditLinkText": "Сделано при помощи"
 }

@@ -14,6 +14,12 @@ const emits = defineEmits<{
     /* eslint-enable */
 }>();
 
+const breakPoints = useBreakpoints({
+    desktop: 1440,
+});
+
+const isDesktop = breakPoints.greaterOrEqual("desktop");
+
 const writableComputedLocation = computed({
     get() {
         return props.location;
@@ -22,12 +28,6 @@ const writableComputedLocation = computed({
         emits("update:location", value);
     },
 });
-
-const breakPoints = useBreakpoints({
-    desktop: 1440,
-});
-
-const isDesktop = breakPoints.greaterOrEqual("desktop");
 </script>
 
 <template>
@@ -37,7 +37,7 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
             v-model="writableComputedLocation"
         />
         <StatCards :current="current" :is-loading="isLoading" />
-        <BasicHorizontalDivider />
+        <HorizontalDivider />
         <QualityCards
             :air-quality="current?.air_quality"
             :uv-index="current?.uv"
@@ -53,10 +53,8 @@ const isDesktop = breakPoints.greaterOrEqual("desktop");
     & > * + * {
         margin-top: 20px;
     }
-}
 
-@media screen and (min-width: 1440px) {
-    .current-weather-stats {
+    @media screen and (min-width: 1440px) {
         padding-block: 38px;
         padding-inline: 44px;
 

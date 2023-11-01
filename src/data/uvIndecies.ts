@@ -1,3 +1,6 @@
+import { LanguageName } from "../composables/useLocale";
+import { LocaleNameEnum } from "../configs/i18nConfig";
+
 const uvIndeciesEn: Record<number, string> = {
     1: "Low",
     2: "Low",
@@ -24,6 +27,6 @@ const uvIndeciesRu: Record<number, string> = {
     10: "Очень высокий",
 };
 
-export const getUvIndecies = (locale: "en" | "ru") => {
-    return locale === "en" ? uvIndeciesEn : uvIndeciesRu;
+export const getUvIndecies = (locale: LanguageName) => {
+    return locale === LocaleNameEnum.Ru ? uvIndeciesRu : uvIndeciesEn;
 };

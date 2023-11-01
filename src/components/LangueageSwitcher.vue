@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { useLocale } from "../composables/useLocale";
+import { languages } from "../configs/i18nConfig";
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+
+const { locale, setLocale } = useLocale();
 </script>
 
 <template>
@@ -31,16 +35,12 @@ const { t, locale } = useI18n();
         <template #popper>
             <div class="language-switcher__popper">
                 <BasicListItem
+                    v-for="lang in languages"
+                    :key="lang.name"
                     class="language-switcher__option"
-                    @click="locale = 'en'"
+                    @click="setLocale(lang.name)"
                 >
-                    English
-                </BasicListItem>
-                <BasicListItem
-                    class="language-switcher__option"
-                    @click="locale = 'ru'"
-                >
-                    Русский
+                    {{ lang.title }}
                 </BasicListItem>
             </div>
         </template>

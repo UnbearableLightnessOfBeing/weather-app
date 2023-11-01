@@ -7,22 +7,18 @@ defineProps<{
 </script>
 
 <template>
-    <BasicGlassWrapper
-        :active="active"
-        :colored="active"
-        class="basic-chart-option"
-    >
+    <BasicGlassWrapper :active="active" :colored="active" class="chart-option">
         <div>
             {{ name }}
         </div>
-        <div v-if="measurement" class="basic-chart-option__measurement">
+        <div v-if="measurement" class="chart-option__measurement">
             {{ measurement }}
         </div>
     </BasicGlassWrapper>
 </template>
 
 <style scoped lang="scss">
-.basic-chart-option {
+.chart-option {
     padding-block: 5px;
     padding-inline: 10px;
     border-radius: 100px;

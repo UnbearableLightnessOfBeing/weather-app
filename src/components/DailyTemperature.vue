@@ -1,16 +1,23 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
     minValue?: number;
     maxValue?: number;
     measurement: "C" | "F";
     isLoading?: boolean;
 }>();
+
+const maxAndMinValuesExist = computed((): boolean => {
+    return (
+        typeof props.minValue !== "undefined" &&
+        typeof props.maxValue !== "undefined"
+    );
+});
 </script>
 
 <template>
     <BasicLoader v-if="isLoading" class="basic-daily-temperature-filler" />
     <div
-        v-else-if="minValue && maxValue"
+        v-else-if="maxAndMinValuesExist"
         class="basic-daily-temperature"
         v-bind="$attrs"
     >

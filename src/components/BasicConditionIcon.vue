@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import InlineSvg from "vue-inline-svg";
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         iconSrc?: string;
         type?: "small" | "big" | "tiny";
@@ -13,6 +13,28 @@ withDefaults(
         isLoading: false,
     },
 );
+
+const iconWidth = computed(() => {
+    switch (props.type) {
+        case "big":
+            return 143;
+        case "small":
+            return 60;
+        case "tiny":
+            return 30;
+    }
+});
+
+const iconHeight = computed(() => {
+    switch (props.type) {
+        case "big":
+            return 100;
+        case "small":
+            return 43;
+        case "tiny":
+            return 20;
+    }
+});
 </script>
 
 <template>
@@ -23,8 +45,8 @@ withDefaults(
         <BasicLoader v-if="isLoading" class="basic-condition-icon__filler" />
         <InlineSvg
             v-else-if="iconSrc"
-            :width="type === 'big' ? 143 : type === 'small' ? 60 : 30"
-            :height="type === 'big' ? 100 : type === 'small' ? 43 : 20"
+            :width="iconWidth"
+            :height="iconHeight"
             :src="iconSrc"
         />
         <BasicNodata v-else class="basic-condition-icon__filler" />

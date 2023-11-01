@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BasicTextInput from "../components/BasicTextInput.vue";
 import SearchSvgUrl from "/interface/search.svg";
 import InlineSvg from "vue-inline-svg";
 import { createDebounce } from "../utils/debounce";
@@ -20,7 +21,7 @@ const emits = defineEmits<{
 
 const { t } = useI18n();
 
-const textInput = ref<HTMLInputElement | null>(null);
+const textInput = ref<InstanceType<typeof BasicTextInput> | null>(null);
 
 const openSearch = () => {
     if (!props.isSearchActive) {
@@ -47,6 +48,10 @@ const debounceModelValue = createDebounce(
     (value: string) => emits("update:modelValue", value),
     400,
 );
+
+defineExpose({
+    debounceModelValue,
+});
 </script>
 
 <template>

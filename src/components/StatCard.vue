@@ -13,27 +13,27 @@ const valueExists = computed<boolean>(() => {
 </script>
 
 <template>
-    <BasicLoader v-if="isLoading" class="basic-stat-card-filler" />
+    <BasicLoader v-if="isLoading" class="stat-card-filler" />
     <BasicGlassWrapper
         v-else-if="valueExists"
-        class="basic-stat-card"
+        class="stat-card"
         v-bind="$attrs"
     >
         <BasicStatTitle
             :icon-src="iconSrc"
             :title="title"
-            class="basic-stat-card__title"
+            class="stat-card__title"
         />
-        <div class="basic-stat-card__value">
+        <div class="stat-card__value">
             {{ value }}
-            <span class="basic-stat-card__measurement">{{ measurement }}</span>
+            <span class="stat-card__measurement">{{ measurement }}</span>
         </div>
     </BasicGlassWrapper>
-    <BasicNodata v-else class="basic-stat-card-filler" />
+    <BasicNodata v-else class="stat-card-filler" />
 </template>
 
 <style scoped lang="scss">
-.basic-stat-card {
+.stat-card {
     padding: 10px;
     width: 180px;
     height: 180px;
@@ -61,7 +61,7 @@ const valueExists = computed<boolean>(() => {
     }
 
     &:hover {
-        .basic-stat-card {
+        .stat-card {
             &__title {
                 color: var(--basic-light);
             }
