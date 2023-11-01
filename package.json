@@ -10,7 +10,8 @@
     "lint": "eslint --ext .js,.vue,.ts src",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
-    "test": "vitest"
+    "test": "vitest",
+    "test:check": "vitest run"
   },
   "dependencies": {
     "@tanstack/vue-query": "^4.35.3",
