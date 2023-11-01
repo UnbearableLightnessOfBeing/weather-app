@@ -28,6 +28,8 @@ jobs:
         run: npm run lint
       - name: Check format with prettier
         run: npm run format:check
+      - name: Run tests with vitest
+        run: npm run test
 
   deploy: 
     needs: build
