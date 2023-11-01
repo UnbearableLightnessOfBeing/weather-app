@@ -29,7 +29,7 @@ jobs:
       - name: Check format with prettier
         run: npm run format:check
       - name: Run tests with vitest
-        run: npm run test
+        run: npm run test:check
 
   deploy: 
     needs: build
