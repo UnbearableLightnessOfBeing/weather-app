@@ -13,8 +13,21 @@ type UseLocaleReturnType = {
 export const useLocale = (): UseLocaleReturnType => {
     const { locale: i18nLocale } = useI18n();
 
+    const isLanguageName = (locale: string): locale is LanguageName => {
+        for (let name of Object.values(LocaleNameEnum)) {
+            if (locale === name) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     const locale = computed<LanguageName>(() => {
-        return i18nLocale.value as LanguageName;
+        if (isLanguageName(i18nLocale.value)) {
+            return i18nLocale.value;
+        }
+        return LocaleNameEnum.En;
     });
 
     const setLocale = (locale: LanguageName) => {

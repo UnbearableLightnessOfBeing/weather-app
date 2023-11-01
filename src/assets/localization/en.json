@@ -83,5 +83,6 @@
         "precip": "precip.",
         "wind": "wind",
         "pressure": "pressure"
-    }
+    },
+    "creditLinkText": "Built with"
 }

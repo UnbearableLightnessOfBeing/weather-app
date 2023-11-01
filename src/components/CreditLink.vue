@@ -1,8 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+</script>
 
 <template>
     <div class="credit-link">
-        Built with
+        {{ t("creditLinkText") }}
         <a
             href="https://www.weatherapi.com/"
             target="_blank"

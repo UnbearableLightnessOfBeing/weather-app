@@ -10,7 +10,7 @@ const props = defineProps<{
     isLoading?: boolean;
 }>();
 
-const monthNames = computed(() =>
+const computedDayNames = computed(() =>
     props.language === LocaleNameEnum.Ru ? dayNames.ru.full : dayNames.en.full,
 );
 
@@ -43,7 +43,7 @@ const year = computed(() => {
 
 const day = computed(() => {
     if (props.unixDate) {
-        return monthNames.value[props.unixDate.getDay()];
+        return computedDayNames.value[props.unixDate.getDay()];
     }
 });
 
@@ -54,6 +54,14 @@ const time = computed(() => {
         const [hours, minutes] = time.split(":");
         return hours + ":" + minutes + (dayPeriod ? ` ${dayPeriod}` : "");
     }
+});
+
+defineExpose({
+    date,
+    month,
+    year,
+    day,
+    time,
 });
 </script>
 

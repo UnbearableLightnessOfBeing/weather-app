@@ -53,6 +53,7 @@ declare module 'vue' {
     InfoSign: typeof import('./src/components/InfoSign.vue')['default']
     ItemRange: typeof import('./src/components/ItemRange.vue')['default']
     LangueageSwitcher: typeof import('./src/components/LangueageSwitcher.vue')['default']
+    LocalTimeComputer: typeof import('./src/components/LocalTimeComputer.vue')['default']
     LocationInterface: typeof import('./src/components/LocationInterface.vue')['default']
     MainInfo: typeof import('./src/components/MainInfo.vue')['default']
     MeasurementToggler: typeof import('./src/components/MeasurementToggler.vue')['default']

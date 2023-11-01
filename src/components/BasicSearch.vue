@@ -48,6 +48,10 @@ const debounceModelValue = createDebounce(
     (value: string) => emits("update:modelValue", value),
     400,
 );
+
+defineExpose({
+    debounceModelValue,
+});
 </script>
 
 <template>
