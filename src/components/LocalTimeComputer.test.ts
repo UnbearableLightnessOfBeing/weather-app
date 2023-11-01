@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import LocalTimeComputer from "./LocalTimeComputer.vue";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
 describe("LocalTimeComputer.vue", () => {
     const createWrapper = (props: { localtime?: string }) => {
@@ -15,9 +15,13 @@ describe("LocalTimeComputer.vue", () => {
         });
     };
 
-    it("renders current date", () => {
-        const now = new Date();
+    let now = new Date();
 
+    beforeEach(() => {
+        now = new Date();
+    });
+
+    it("renders current date", () => {
         const wrapper = createWrapper({ localtime: now.toString() });
         const instanceDate = wrapper.vm.unixCurrentDate;
 
@@ -29,7 +33,6 @@ describe("LocalTimeComputer.vue", () => {
     });
 
     it("renders time 2 hours earlier", () => {
-        const now = new Date();
         const twoHoursEarlier = new Date();
         twoHoursEarlier.setHours(now.getHours() - 2);
 
@@ -42,7 +45,6 @@ describe("LocalTimeComputer.vue", () => {
     });
 
     it("renders time 5 hours later", () => {
-        const now = new Date();
         const fiveHoursLater = new Date();
         fiveHoursLater.setHours(now.getHours() + 5);
 
@@ -54,10 +56,9 @@ describe("LocalTimeComputer.vue", () => {
         expect(instanceDate?.getHours() === now.getHours() + 5).toBe(true);
     });
 
-    it("edge case: should render the next day when 23 hours added", () => {
-        const now = new Date();
+    it("edge case: should render the next day when 24 hours added", () => {
         const nextDay = new Date();
-        nextDay.setHours(now.getHours() + 23);
+        nextDay.setHours(now.getHours() + 24);
 
         const wrapper = createWrapper({
             localtime: nextDay.toString(),
@@ -66,8 +67,9 @@ describe("LocalTimeComputer.vue", () => {
 
         expect(
             instanceDate?.getDate() === now.getDate() + 1 ||
-                instanceDate?.getMonth() === now.getMonth() + 1,
+                instanceDate?.getMonth() === now.getMonth() + 1 ||
+                instanceDate?.getFullYear() === now.getFullYear() + 1,
         ).toBe(true);
-        expect(instanceDate?.getHours() === now.getHours() - 1).toBe(true);
+        expect(instanceDate?.getHours() === now.getHours()).toBe(true);
     });
 });
