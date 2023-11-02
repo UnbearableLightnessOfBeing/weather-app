@@ -41,10 +41,6 @@ onMounted(() => {
 onUnmounted(() => {
     clearInterval(interval);
 });
-
-defineExpose({
-    unixCurrentDate,
-});
 </script>
 
 <template>

@@ -9,13 +9,11 @@ interface PropsObj {
 }
 
 describe("CurrentDateInfo.vue", () => {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
+    const date = new Date(1698930998346); // 16:16 November 2, Thursday, 2023
 
     const createWrapper = (props: PropsObj) => {
         const propsToPass = {
-            unixDate: now,
+            unixDate: date,
             ...props,
         };
 
@@ -27,12 +25,10 @@ describe("CurrentDateInfo.vue", () => {
     it("displays passed date correctly", () => {
         const wrapper = createWrapper({ language: "ru" });
 
-        expect(
-            wrapper.text().includes(`${hours}:${minutes}`) ||
-                wrapper.text().includes(`${hours}:0${minutes}`),
-        ).toBe(true);
-
-        expect(wrapper.vm.date === now.getDate()).toBe(true);
+        expect(wrapper.text().includes("16:16")).toBe(true);
+        expect(wrapper.text().includes("2 ноя")).toBe(true);
+        expect(wrapper.text().includes("Четверг")).toBe(true);
+        expect(wrapper.text().includes("23")).toBe(true);
     });
 
     it("renders date in Russian", () => {
@@ -42,7 +38,7 @@ describe("CurrentDateInfo.vue", () => {
             wrapper.text().includes("AM") || wrapper.text().includes("PM"),
         ).toBe(false);
 
-        expect(wrapper.text().includes(dayNames.ru.full[now.getDay()])).toBe(
+        expect(wrapper.text().includes(dayNames.ru.full[date.getDay()])).toBe(
             true,
         );
     });
@@ -54,7 +50,7 @@ describe("CurrentDateInfo.vue", () => {
             wrapper.text().includes("AM") || wrapper.text().includes("PM"),
         ).toBe(true);
 
-        expect(wrapper.text().includes(dayNames.en.full[now.getDay()])).toBe(
+        expect(wrapper.text().includes(dayNames.en.full[date.getDay()])).toBe(
             true,
         );
     });
