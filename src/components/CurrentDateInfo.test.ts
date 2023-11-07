@@ -25,6 +25,8 @@ describe("CurrentDateInfo.vue", () => {
     it("displays passed date correctly", () => {
         const wrapper = createWrapper({ language: "ru" });
 
+        console.log("text: ", wrapper.text());
+
         expect(wrapper.text().includes("16:16")).toBe(true);
         expect(wrapper.text().includes("2 ноя")).toBe(true);
         expect(wrapper.text().includes("Четверг")).toBe(true);
