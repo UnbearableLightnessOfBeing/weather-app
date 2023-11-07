@@ -72,12 +72,10 @@ const isModalOpen = ref(false);
         />
         <BasicModal v-if="hourlyForecast" v-model:is-open="isModalOpen">
             <Suspense>
-                <div>
-                    <HourlyForecastCharts
-                        :hourly-forecast="hourlyForecast"
-                        @close-modal="isModalOpen = false"
-                    />
-                </div>
+                <HourlyForecastCharts
+                    :hourly-forecast="hourlyForecast"
+                    @close-modal="isModalOpen = false"
+                />
                 <template #fallback>
                     <BasicSpinner class="hourly-forecast-data__spinner" />
                 </template>

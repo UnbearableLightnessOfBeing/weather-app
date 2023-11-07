@@ -23,7 +23,7 @@ type DailyWeatherStat = {
     icon: string;
 };
 
-const weatherStats = ref<DailyWeatherStat[]>([
+const weatherStats = computed<DailyWeatherStat[]>(() => [
     {
         title: "weatherStats.precipitation",
         value: props.stats?.totalprecip_mm,

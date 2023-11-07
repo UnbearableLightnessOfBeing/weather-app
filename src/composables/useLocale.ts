@@ -3,7 +3,7 @@ import { LocaleNameEnum } from "../configs/i18nConfig";
 
 export type LanguageName = (typeof LocaleNameEnum)[keyof typeof LocaleNameEnum];
 
-type UseLocaleReturnType = {
+export type UseLocaleReturnType = {
     /* eslint-disable */
     locale: ComputedRef<LanguageName>;
     setLocale: (locale: LanguageName) => void;

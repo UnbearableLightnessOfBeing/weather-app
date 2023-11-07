@@ -44,6 +44,7 @@ const writableComputed = computed({
         type="text"
         :placeholder="placeholder"
         class="basic-text-input"
+        data-test="basic-input"
     />
 </template>
 
