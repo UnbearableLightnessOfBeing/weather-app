@@ -21,6 +21,14 @@ const createWrapper = (props: { isSearchActive: boolean }) => {
         },
         global: {
             plugins: [i18n],
+            stubs: {
+                Transition: {
+                    template: "<span />",
+                },
+            },
+            directives: {
+                Tooltip: () => {},
+            },
         },
     });
 };
@@ -29,19 +37,21 @@ describe("BasicSearch.vue", () => {
     it("renders without input field", () => {
         const wrapper = createWrapper({ isSearchActive: false });
 
-        expect(wrapper.find("input.basic-text-input").exists()).toBe(false);
+        expect(wrapper.find("[data-test]=input").exists()).toBe(false);
     });
 
     it("renders with input field", () => {
         const wrapper = createWrapper({ isSearchActive: true });
 
-        expect(wrapper.find("input.basic-text-input").exists()).toBe(true);
+        console.log(wrapper.html());
+
+        expect(wrapper.find("[data-test]=input").exists()).toBe(true);
     });
 
     it("emits the update:modelValue event in 400 ms after input change", async () => {
         const wrapper = createWrapper({ isSearchActive: true });
 
-        wrapper.find("input.basic-text-input").setValue("aboba");
+        await wrapper.find("[data-test]=input").setValue("aboba");
 
         expect(wrapper.emitted()["update:modelValue"]).toBe(undefined);
 
@@ -53,11 +63,13 @@ describe("BasicSearch.vue", () => {
     it("debounces the update:modelValue event", async () => {
         const wrapper = createWrapper({ isSearchActive: true });
 
-        wrapper.find("input.basic-text-input").setValue("a");
-        wrapper.find("input.basic-text-input").setValue("ab");
-        wrapper.find("input.basic-text-input").setValue("abo");
-        wrapper.find("input.basic-text-input").setValue("abob");
-        wrapper.find("input.basic-text-input").setValue("aboba");
+        const input = wrapper.find("[data-test]=input");
+
+        await input.setValue("a");
+        await input.setValue("ab");
+        await input.setValue("abo");
+        await input.setValue("abob");
+        await input.setValue("aboba");
 
         await new Promise((resolve) => setTimeout(resolve, 500));
 

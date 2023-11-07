@@ -48,10 +48,6 @@ const debounceModelValue = createDebounce(
     (value: string) => emits("update:modelValue", value),
     400,
 );
-
-defineExpose({
-    debounceModelValue,
-});
 </script>
 
 <template>
@@ -73,6 +69,7 @@ defineExpose({
                 ref="textInput"
                 :model-value="modelValue"
                 :placeholder="t('search.placeholder')"
+                data-test="input"
                 @update:model-value="debounceModelValue"
             />
         </Transition>

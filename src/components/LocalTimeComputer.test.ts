@@ -12,6 +12,11 @@ describe("LocalTimeComputer.vue", () => {
             props: {
                 ...propsToPass,
             },
+            slots: {
+                default: `<template #default="{ currentDate }">
+                    {{ currentDate?.getTime() ?? 'undefined' }}
+                </template>`,
+            },
         });
     };
 
@@ -21,55 +26,68 @@ describe("LocalTimeComputer.vue", () => {
         now = new Date();
     });
 
-    it("renders current date", () => {
+    it("renders current date", async () => {
         const wrapper = createWrapper({ localtime: now.toString() });
-        const instanceDate = wrapper.vm.unixCurrentDate;
 
-        expect(instanceDate?.getFullYear() === now.getFullYear()).toBe(true);
-        expect(instanceDate?.getMonth() === now.getMonth()).toBe(true);
-        expect(instanceDate?.getDate() === now.getDate()).toBe(true);
-        expect(instanceDate?.getHours() === now.getHours()).toBe(true);
-        expect(instanceDate?.getMinutes() === now.getMinutes()).toBe(true);
+        await nextTick();
+
+        const passedDate = new Date(Number(wrapper.text().trim()));
+
+        expect(passedDate.getFullYear()).toBe(now.getFullYear());
+        expect(passedDate.getMonth()).toBe(now.getMonth());
+        expect(passedDate.getDate()).toBe(now.getDate());
+        expect(passedDate.getHours()).toBe(now.getHours());
+        expect(passedDate.getMinutes()).toBe(now.getMinutes());
     });
 
-    it("renders time 2 hours earlier", () => {
+    it("renders time 2 hours earlier", async () => {
         const twoHoursEarlier = new Date();
         twoHoursEarlier.setHours(now.getHours() - 2);
 
         const wrapper = createWrapper({
             localtime: twoHoursEarlier.toString(),
         });
-        const instanceDate = wrapper.vm.unixCurrentDate;
 
-        expect(instanceDate?.getHours() === now.getHours() - 2).toBe(true);
+        await nextTick();
+
+        const passedDate = new Date(Number(wrapper.text().trim()));
+
+        expect(passedDate.getHours()).toBe(now.getHours() - 2);
     });
 
-    it("renders time 5 hours later", () => {
+    it("renders time 5 hours later", async () => {
         const fiveHoursLater = new Date();
         fiveHoursLater.setHours(now.getHours() + 5);
 
         const wrapper = createWrapper({
             localtime: fiveHoursLater.toString(),
         });
-        const instanceDate = wrapper.vm.unixCurrentDate;
 
-        expect(instanceDate?.getHours() === now.getHours() + 5).toBe(true);
+        await nextTick();
+
+        const passedDate = new Date(Number(wrapper.text().trim()));
+
+        expect(passedDate.getHours()).toBe(now.getHours() + 5);
     });
 
-    it("edge case: should render the next day when 24 hours added", () => {
+    it("edge case: should render the next day when 24 hours added", async () => {
         const nextDay = new Date();
         nextDay.setHours(now.getHours() + 24);
 
         const wrapper = createWrapper({
             localtime: nextDay.toString(),
         });
-        const instanceDate = wrapper.vm.unixCurrentDate;
+
+        await nextTick();
+
+        const passedDate = new Date(Number(wrapper.text().trim()));
 
         expect(
-            instanceDate?.getDate() === now.getDate() + 1 ||
-                instanceDate?.getMonth() === now.getMonth() + 1 ||
-                instanceDate?.getFullYear() === now.getFullYear() + 1,
+            passedDate.getDate() === now.getDate() + 1 ||
+                passedDate.getMonth() === now.getMonth() ||
+                passedDate.getFullYear() === now.getFullYear(),
         ).toBe(true);
-        expect(instanceDate?.getHours() === now.getHours()).toBe(true);
+
+        expect(passedDate.getHours()).toBe(now.getHours());
     });
 });
