@@ -9,14 +9,14 @@ interface PropsObj {
 }
 
 describe("CurrentDateInfo.vue", () => {
-    // const dateStr = new Date(1698930998346).toUTCString(); // 16:16 November 2, Thursday, 2023
-    // console.log(dateStr);
-    // const date = new Date(dateStr);
-    const utcDate = new Date(Date.UTC(2023, 10, 2, 16, 16));
+    const utcDate = new Date(Date.UTC(2023, 10, 2, 16, 16)); // 16:16 November 2, Thursday, 2023
+    const msDiff = utcDate.getTimezoneOffset() * 60 * 1000;
+
+    const date = new Date(utcDate.getTime() + msDiff);
 
     const createWrapper = (props: PropsObj) => {
         const propsToPass = {
-            unixDate: utcDate,
+            unixDate: date,
             ...props,
         };
 
@@ -30,7 +30,7 @@ describe("CurrentDateInfo.vue", () => {
 
         console.log("text: ", wrapper.text());
 
-        expect(wrapper.text().includes("19:16")).toBe(true);
+        expect(wrapper.text().includes("16:16")).toBe(true);
         expect(wrapper.text().includes("2 ноя")).toBe(true);
         expect(wrapper.text().includes("Четверг")).toBe(true);
         expect(wrapper.text().includes("23")).toBe(true);
@@ -43,9 +43,9 @@ describe("CurrentDateInfo.vue", () => {
             wrapper.text().includes("AM") || wrapper.text().includes("PM"),
         ).toBe(false);
 
-        expect(
-            wrapper.text().includes(dayNames.ru.full[utcDate.getDay()]),
-        ).toBe(true);
+        expect(wrapper.text().includes(dayNames.ru.full[date.getDay()])).toBe(
+            true,
+        );
     });
 
     it("renders date in English", () => {
@@ -55,8 +55,8 @@ describe("CurrentDateInfo.vue", () => {
             wrapper.text().includes("AM") || wrapper.text().includes("PM"),
         ).toBe(true);
 
-        expect(
-            wrapper.text().includes(dayNames.en.full[utcDate.getDay()]),
-        ).toBe(true);
+        expect(wrapper.text().includes(dayNames.en.full[date.getDay()])).toBe(
+            true,
+        );
     });
 });
