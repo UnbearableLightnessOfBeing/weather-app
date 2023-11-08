@@ -7,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="basic-loader" :style="props">
+    <div class="basic-loader" :style="props" data-test="loader">
         <div class="basic-loader__shimmer"></div>
     </div>
 </template>

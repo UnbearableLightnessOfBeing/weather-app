@@ -43,8 +43,6 @@ describe("BasicSearch.vue", () => {
     it("renders with input field", () => {
         const wrapper = createWrapper({ isSearchActive: true });
 
-        console.log(wrapper.html());
-
         expect(wrapper.find("[data-test]=input").exists()).toBe(true);
     });
 
