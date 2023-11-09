@@ -2,7 +2,7 @@
 import LocationSvgUrl from "/interface/geo-location.svg";
 import InlineSvg from "vue-inline-svg";
 import { useGeolocation } from "@vueuse/core";
-import { getCurrentLocation } from "../api/requests";
+import api from "../api/requests";
 import { useQuery } from "@tanstack/vue-query";
 import { useI18n } from "vue-i18n";
 
@@ -20,7 +20,7 @@ const longitude = computed(() => coords.value.longitude);
 
 const { data, refetch, isError } = useQuery({
     queryKey: ["currentLocation"],
-    queryFn: () => getCurrentLocation(latitude.value, longitude.value),
+    queryFn: () => api.getCurrentLocation(latitude.value, longitude.value),
     refetchOnWindowFocus: false,
     enabled: false,
 });
@@ -53,6 +53,7 @@ const setLocation = async () => {
             content: t('geoLocation.tooltipMessage'),
         }"
         class="geo-location-button"
+        data-test="geo-location-button"
         @click="setLocation"
     >
         <InlineSvg :src="LocationSvgUrl" class="geo-location-button__icon" />
