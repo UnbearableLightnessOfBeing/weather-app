@@ -45,8 +45,6 @@ export const getCurrentWeather = async (
             throw new Error("error has occured");
         });
 
-    // await new Promise((resolve) => setTimeout(resolve, 1500));
-
     return response.data;
 };
 
@@ -81,4 +79,10 @@ export const getCurrentLocation = async (
         });
 
     return response.data;
+};
+
+export default {
+    getCurrentLocation,
+    getCurrentWeather,
+    getSearchResults,
 };

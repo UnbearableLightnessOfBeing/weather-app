@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import BasicSearch from "./BasicSearch.vue";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { i18n } from "../configs/i18nConfig";
 
 interface PropsType {
@@ -34,6 +34,10 @@ const createWrapper = (props: { isSearchActive: boolean }) => {
 };
 
 describe("BasicSearch.vue", () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
     it("renders without input field", () => {
         const wrapper = createWrapper({ isSearchActive: false });
 
@@ -42,8 +46,6 @@ describe("BasicSearch.vue", () => {
 
     it("renders with input field", () => {
         const wrapper = createWrapper({ isSearchActive: true });
-
-        console.log(wrapper.html());
 
         expect(wrapper.find("[data-test]=input").exists()).toBe(true);
     });
@@ -55,7 +57,7 @@ describe("BasicSearch.vue", () => {
 
         expect(wrapper.emitted()["update:modelValue"]).toBe(undefined);
 
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        vi.runAllTimers();
 
         expect(wrapper.emitted()["update:modelValue"][0]).toEqual(["aboba"]);
     });
@@ -71,7 +73,7 @@ describe("BasicSearch.vue", () => {
         await input.setValue("abob");
         await input.setValue("aboba");
 
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        vi.runAllTimers();
 
         expect(wrapper.emitted()["update:modelValue"].length).toBe(1);
         expect(wrapper.emitted()["update:modelValue"][0]).toEqual(["aboba"]);

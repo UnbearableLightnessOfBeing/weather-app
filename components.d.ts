@@ -62,6 +62,7 @@ declare module 'vue' {
     QualityMonitor: typeof import('./src/components/QualityMonitor.vue')['default']
     StatCard: typeof import('./src/components/StatCard.vue')['default']
     StatCards: typeof import('./src/components/StatCards.vue')['default']
+    ThemeSwitcher: typeof import('./src/components/ThemeSwitcher.vue')['default']
     TimeLabelRange: typeof import('./src/components/TimeLabelRange.vue')['default']
     WeatherCondition: typeof import('./src/components/WeatherCondition.vue')['default']
   }

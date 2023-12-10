@@ -44,6 +44,10 @@
         "caption": "Lang",
         "tooltip": "Click to change the language"
     },
+    "theme": {
+        "caption": "Theme",
+        "tooltip": "Change the theme of the app"
+    },
     "search" : {
         "placeholder": "Search",
         "notFound": "Nothing was found"
