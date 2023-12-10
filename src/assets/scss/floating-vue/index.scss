@@ -21,8 +21,8 @@
 .v-popper--theme-custom-dropdown {
     .v-popper {
         &__inner {
-            background: var(--bg-light);
-            border-radius: 10px;
+            background: var(--theme-standard-color-1);
+            border-radius: 5px;
         }
 
         &__arrow-container {

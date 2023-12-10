@@ -78,5 +78,10 @@ const { locale, setLocale } = useLocale();
             color: var(--basic-light);
         }
     }
+
+    &__popper {
+        overflow: hidden;
+        border-radius: inherit;
+    }
 }
 </style>

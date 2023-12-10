@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { useStorage } from "@vueuse/core";
 import { useQuery } from "@tanstack/vue-query";
 import { getCurrentWeather } from "./api/requests";
 import { useI18n } from "vue-i18n";
 import ShrugSvgUrl from "/interface/shrug.svg";
 import { useLocale } from "./composables/useLocale";
+import type { ThemeType } from "./types/enums";
+import { Theme } from "./types/enums";
 
 const { t } = useI18n();
 
@@ -19,10 +22,14 @@ const { data, isError, isLoading } = useQuery({
 });
 
 const activeDay = ref<number | null>(null);
+
+const theme = useStorage("theme", Theme.STANDARD);
+
+const currentTheme = ref<ThemeType>(theme.value as ThemeType);
 </script>
 
 <template>
-    <AppLayout class="app-layout">
+    <AppLayout class="app-layout" :theme="currentTheme">
         <BasicError v-if="isError" :text="t('errors.dataLoadingError')" />
         <AppPanelLayout v-else class="app-layout__left-panel">
             <Transition name="panel" mode="out-in">
@@ -53,6 +60,11 @@ const activeDay = ref<number | null>(null);
                     'app-layout__language-switcher--daily-view':
                         typeof activeDay === 'number',
                 }"
+            />
+            <ThemeSwitcher
+                v-if="typeof activeDay !== 'number'"
+                v-model="currentTheme"
+                class="app-layout__theme-switcher"
             />
             <ForecastCardSwiper
                 v-model:active-day="activeDay"
@@ -124,6 +136,12 @@ const activeDay = ref<number | null>(null);
         }
     }
 
+    &__theme-switcher {
+        position: absolute;
+        top: 196px;
+        right: 16px;
+    }
+
     &__credit-link {
         position: absolute;
         bottom: 5px;
@@ -155,6 +173,8 @@ const activeDay = ref<number | null>(null);
             box-shadow: -5px -5px 250px 0px rgba(255, 255, 255, 0.02) inset;
             border-left: 2px solid var(--basic-light-dull);
             backdrop-filter: blur(21px);
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
         &__measurement-toggler {
@@ -173,6 +193,11 @@ const activeDay = ref<number | null>(null);
             &--daily-view {
                 right: 196px;
             }
+        }
+
+        &__theme-switcher {
+            top: 160px;
+            right: 66px;
         }
 
         &__credit-link {
